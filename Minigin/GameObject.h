@@ -32,14 +32,19 @@ namespace dae
 			return component;
 		}
 
-		//TextRenderer* AddComponentCast(TextRenderer* component)
-		//{
-		//	m_pComponents.push_back(component);
-		//	return component;
-		//}
-
-		template <typename T>
-		T* GetComponent() const;
+		template<typename T>
+		T* GetComponent() const
+		{
+			for (const auto p : m_pComponents)
+			{
+				T* pComponent = dynamic_cast<T*>(p);
+				if (pComponent != nullptr)
+				{
+					return pComponent;
+				}
+			}
+			return nullptr;
+		}
 
 		template <typename T>
 		void RemoveComponent() const;

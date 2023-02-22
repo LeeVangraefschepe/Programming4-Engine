@@ -22,13 +22,8 @@ void dae::GameObject::Render() const
 		p->Render();
 	}
 }
-template<typename T>
-T* dae::GameObject::GetComponent() const
-{
-	return nullptr;
-}
+
 template<typename T>
 void dae::GameObject::RemoveComponent() const
 {
-
 }

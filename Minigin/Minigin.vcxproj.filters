@@ -101,9 +101,6 @@
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
