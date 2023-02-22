@@ -13,6 +13,11 @@ void dae::GameObject::Render() const
 	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
 }
 
+void dae::GameObject::AddComponent(BaseComponent* pComponent)
+{
+	m_pComponents.push_back(pComponent);
+}
+
 void dae::GameObject::SetTexture(const std::string& filename)
 {
 	m_texture = ResourceManager::GetInstance().LoadTexture(filename);

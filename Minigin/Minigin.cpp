@@ -4,11 +4,13 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <chrono>
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Time.h"
 
 SDL_Window* g_window{};
 
@@ -85,10 +87,22 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	// todo: this update loop could use some work.
 	bool doContinue = true;
+	auto end = std::chrono::high_resolution_clock::now();
 	while (doContinue)
 	{
+		//Calculate delta time
+		const auto start = std::chrono::high_resolution_clock::now();
+		const std::chrono::duration<float> elapsedSeconds = end - start;
+
+		//Set delta time
+		Time::SetDeltaTime(elapsedSeconds.count());
+
+		//Core game loop
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
+
+		//Set end time loop
+		end = std::chrono::high_resolution_clock::now();
 	}
 }
