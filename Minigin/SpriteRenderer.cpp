@@ -3,7 +3,7 @@
 #include "Renderer.h"
 
 dae::SpriteRenderer::SpriteRenderer(std::shared_ptr<Texture2D> pSprite)
-	: m_needsUpdate(true), m_pSprite(pSprite)
+	: m_pSprite(pSprite)
 {
 }
 

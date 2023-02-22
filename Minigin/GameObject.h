@@ -12,8 +12,7 @@ namespace dae
 {
 	class Texture2D;
 
-	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		virtual void Update();
@@ -47,10 +46,6 @@ namespace dae
 		template <typename T>
 		void RemoveComponent() const;
 
-
-		void SetTexture(const std::string& filename);
-		virtual void SetPosition(float x, float y);
-
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -60,8 +55,6 @@ namespace dae
 
 	private:
 		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
 		std::vector<BaseComponent*> m_pComponents{};
-		std::shared_ptr<Texture2D> m_texture{};
 	};
 }

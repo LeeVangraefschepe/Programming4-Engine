@@ -11,7 +11,6 @@ dae::GameObject::~GameObject()
 		delete p;
 	}	
 }
-
 void dae::GameObject::Update()
 {
 	for (const auto p : m_pComponents)
@@ -19,30 +18,12 @@ void dae::GameObject::Update()
 		p->Update();
 	}
 }
-
 void dae::GameObject::Render() const
 {
 	for (const auto p : m_pComponents)
 	{
 		p->Render();
 	}
-
-	if (m_texture == nullptr)
-	{
-		return;
-	}
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
-}
-
-void dae::GameObject::SetTexture(const std::string& filename)
-{
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_transform.SetPosition(x, y, 0.0f);
 }
 template<typename T>
 T* dae::GameObject::GetComponent() const
