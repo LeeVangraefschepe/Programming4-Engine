@@ -4,6 +4,8 @@
 
 #include "Transform.h"
 #include "BaseComponent.h"
+#include "RenderComponent.h"
+#include "TextRenderer.h"
 
 namespace dae
 {
@@ -16,10 +18,38 @@ namespace dae
 		virtual void Update();
 		virtual void Render() const;
 
-		void AddComponent(BaseComponent* pComponent);
+
+		template<typename T, typename... Args>
+		T* AddComponent(Args&&... args)
+		{
+			static_assert(std::is_base_of<BaseComponent, T>::value, "T must be derived from BaseComponent");
+			T* component = new T(std::forward<Args>(args)...);
+			m_pComponents.push_back(component);
+			return component;
+		}
+
+
+		template<typename T>
+		T* AddComponentTest(T* component)
+		{
+			return component;
+		}
+
+		//TextRenderer* AddComponentCast(TextRenderer* component)
+		//{
+		//	m_pComponents.push_back(component);
+		//	return component;
+		//}
+
+		template <typename T>
+		T* GetComponent() const;
+
+		template <typename T>
+		void RemoveComponent() const;
+
 
 		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
+		virtual void SetPosition(float x, float y);
 
 		GameObject() = default;
 		virtual ~GameObject();

@@ -8,7 +8,7 @@
 
 namespace dae
 {
-	class TextRenderer : RenderComponent
+	class TextRenderer : public RenderComponent
 	{
 	public:
 		TextRenderer(const std::string& text, std::shared_ptr<Font> font);

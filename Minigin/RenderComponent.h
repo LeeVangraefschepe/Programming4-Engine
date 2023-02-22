@@ -3,13 +3,13 @@
 
 namespace dae
 {
-	class RenderComponent : BaseComponent
+	class RenderComponent : public BaseComponent
 	{
 	public:
 		RenderComponent() = default;
 		virtual ~RenderComponent() override = default;
 
-		virtual void Render() = 0;
+		virtual void Render() override = 0;
 		virtual void Update() override = 0;
 
 		RenderComponent(const RenderComponent& other) = delete;
