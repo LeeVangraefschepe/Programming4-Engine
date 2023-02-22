@@ -4,8 +4,6 @@
 
 #include "Transform.h"
 #include "BaseComponent.h"
-#include "RenderComponent.h"
-#include "SpriteRenderer.h"
 #include "TextRenderer.h"
 
 namespace dae
