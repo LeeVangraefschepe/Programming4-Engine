@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "BaseComponent.h"
 #include "RenderComponent.h"
+#include "SpriteRenderer.h"
 #include "TextRenderer.h"
 
 namespace dae
@@ -27,11 +28,10 @@ namespace dae
 			m_pComponents.push_back(component);
 			return component;
 		}
-
-
 		template<typename T>
-		T* AddComponentTest(T* component)
+		T* AddComponent(T* component)
 		{
+			m_pComponents.push_back(component);
 			return component;
 		}
 
