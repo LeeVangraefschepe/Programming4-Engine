@@ -8,8 +8,8 @@ namespace dae
 	class BaseComponent
 	{
 	public:
-		//BaseComponent(GameObject* pGameObject){}
-		BaseComponent() = default;
+		BaseComponent(GameObject* pGameObject) : m_pGameObject(pGameObject){}
+		//BaseComponent() = default;
 
 		virtual ~BaseComponent() = default;
 		BaseComponent(const BaseComponent& other) = delete;
@@ -20,6 +20,6 @@ namespace dae
 		virtual void Update() = 0;
 		virtual void Render() = 0;
 	protected:
-		GameObject* m_pGameObject{nullptr};
+		GameObject* m_pGameObject;
 	};
 }

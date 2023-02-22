@@ -3,7 +3,7 @@
 
 dae::GameObject::GameObject()
 {
-	m_pComponents.push_back(new Transform{});
+	m_pComponents.push_back(new Transform{this});
 }
 dae::GameObject::~GameObject()
 {

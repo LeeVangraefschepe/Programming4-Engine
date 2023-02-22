@@ -3,12 +3,13 @@
 #include <SDL_surface.h>
 #include <SDL_ttf.h>
 #include <stdexcept>
+#include "GameObject.h"
 #include "Renderer.h"
 
 dae::TextRenderer::TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font)
-	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
+	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr), RenderComponent(pGameObject)
 {
-	m_pGameObject = pGameObject;
+	m_transform = m_pGameObject->GetComponent<Transform>();
 }
 void dae::TextRenderer::Update()
 {
@@ -34,16 +35,19 @@ void dae::TextRenderer::Render()
 {
 	if (m_textTexture != nullptr)
 	{
-		const auto& pos = m_transform.GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
+		if (m_transform != nullptr)
+		{
+			const auto& pos = m_transform->GetPosition();
+			Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
+		}
+		else
+		{
+			Renderer::GetInstance().RenderTexture(*m_textTexture, 0, 0);
+		}
 	}
 }
 void dae::TextRenderer::SetText(const std::string& text)
 {
 	m_text = text;
 	m_needsUpdate = true;
-}
-void dae::TextRenderer::SetPosition(float x, float y)
-{
-	m_transform.SetPosition(x, y, 0.0f);
 }

@@ -16,7 +16,6 @@ namespace dae
 
 		void Update() override {}
 		void Render() override;
-		void SetPosition(float x, float y);
 
 		SpriteRenderer(const SpriteRenderer& other) = delete;
 		SpriteRenderer(SpriteRenderer&& other) = delete;

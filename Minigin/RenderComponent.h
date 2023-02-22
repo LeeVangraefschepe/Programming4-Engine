@@ -6,7 +6,11 @@ namespace dae
 	class RenderComponent : public BaseComponent
 	{
 	public:
-		RenderComponent() = default;
+		RenderComponent(GameObject* pGameObject)
+			: BaseComponent(pGameObject)
+		{
+			
+		};
 		virtual ~RenderComponent() override = default;
 
 		virtual void Render() override = 0;

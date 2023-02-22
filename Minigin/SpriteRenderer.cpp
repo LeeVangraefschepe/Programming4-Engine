@@ -4,9 +4,9 @@
 #include "GameObject.h"
 
 dae::SpriteRenderer::SpriteRenderer(GameObject* pGameObject, std::shared_ptr<Texture2D> pSprite)
-	: m_pSprite(pSprite)
+	: m_pSprite(pSprite),
+	RenderComponent(pGameObject)
 {
-	m_pGameObject = pGameObject;
 	m_transform = m_pGameObject->GetComponent<Transform>();
 }
 
@@ -25,9 +25,4 @@ void dae::SpriteRenderer::Render()
 		}
 		
 	}
-}
-
-void dae::SpriteRenderer::SetPosition(float x, float y)
-{
-	m_transform->SetPosition(x, y, 0.0f);
 }
