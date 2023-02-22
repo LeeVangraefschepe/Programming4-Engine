@@ -1,10 +1,16 @@
 #pragma once
+#include <vector>
+
 namespace dae
 {
+	class GameObject;
+
 	class BaseComponent
 	{
 	public:
+		//BaseComponent(GameObject* pGameObject){}
 		BaseComponent() = default;
+
 		virtual ~BaseComponent() = default;
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;
@@ -13,6 +19,7 @@ namespace dae
 
 		virtual void Update() = 0;
 		virtual void Render() = 0;
-	private:
+	protected:
+		GameObject* m_pGameObject{nullptr};
 	};
 }

@@ -13,6 +13,9 @@ namespace dae
 	class GameObject final
 	{
 	public:
+		GameObject();
+		~GameObject();
+
 		virtual void Update();
 		virtual void Render() const;
 
@@ -21,7 +24,7 @@ namespace dae
 		T* AddComponent(Args&&... args)
 		{
 			static_assert(std::is_base_of<BaseComponent, T>::value, "T must be derived from BaseComponent");
-			T* component = new T(std::forward<Args>(args)...);
+			T* component = new T(this, std::forward<Args>(args)...);
 			m_pComponents.push_back(component);
 			return component;
 		}
@@ -48,16 +51,13 @@ namespace dae
 
 		template <typename T>
 		void RemoveComponent() const;
-
-		GameObject() = default;
-		virtual ~GameObject();
+		
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_transform{};
 		std::vector<BaseComponent*> m_pComponents{};
 	};
 }

@@ -1,6 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
+dae::GameObject::GameObject()
+{
+	m_pComponents.push_back(new Transform{});
+}
 dae::GameObject::~GameObject()
 {
 	for (const auto p : m_pComponents)

@@ -11,7 +11,7 @@ namespace dae
 	class TextRenderer : public RenderComponent
 	{
 	public:
-		TextRenderer(const std::string& text, std::shared_ptr<Font> font);
+		TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font);
 		~TextRenderer() override = default;
 
 		void Update() override;

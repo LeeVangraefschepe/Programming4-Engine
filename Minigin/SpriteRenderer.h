@@ -11,7 +11,7 @@ namespace dae
 	class SpriteRenderer : public RenderComponent
 	{
 	public:
-		SpriteRenderer(std::shared_ptr<Texture2D> pSprite);
+		SpriteRenderer(GameObject* pGameObject ,std::shared_ptr<Texture2D> pSprite);
 		~SpriteRenderer() override = default;
 
 		void Update() override {}
@@ -23,7 +23,7 @@ namespace dae
 		SpriteRenderer& operator=(const SpriteRenderer& other) = delete;
 		SpriteRenderer& operator=(SpriteRenderer&& other) = delete;
 	private:
-		Transform m_transform{};
+		Transform* m_transform{};
 		std::shared_ptr<Texture2D> m_pSprite;
 	};
 }

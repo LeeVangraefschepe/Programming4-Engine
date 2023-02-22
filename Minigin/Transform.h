@@ -16,6 +16,6 @@ namespace dae
 		void Render() override{}
 
 	private:
-		glm::vec3 m_position;
+		glm::vec3 m_position{0,0,0};
 	};
 }

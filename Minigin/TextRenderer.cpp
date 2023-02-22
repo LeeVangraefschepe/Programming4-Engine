@@ -5,10 +5,10 @@
 #include <stdexcept>
 #include "Renderer.h"
 
-dae::TextRenderer::TextRenderer(const std::string& text, std::shared_ptr<Font> font)
+dae::TextRenderer::TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font)
 	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
 {
-
+	m_pGameObject = pGameObject;
 }
 void dae::TextRenderer::Update()
 {
