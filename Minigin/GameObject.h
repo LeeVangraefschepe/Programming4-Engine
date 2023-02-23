@@ -163,6 +163,5 @@ namespace dae
 		std::vector<std::shared_ptr<BaseComponent>> m_pDataComponents{};
 		std::vector<std::shared_ptr<RenderComponent>> m_pRenderComponents{};
 		std::vector<std::shared_ptr<UpdateComponent>> m_pUpdateComponents{};
-		//std::vector<std::shared_ptr<FullComponent>> m_pFullComponents{};
 	};
 }
