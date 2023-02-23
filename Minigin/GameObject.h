@@ -40,17 +40,26 @@ namespace dae
 		{
 			for (const auto p : m_pComponents)
 			{
-				T* pComponent = dynamic_cast<T*>(p);
-				if (pComponent != nullptr)
+				if (typeid(*p) == typeid(T))
 				{
-					return pComponent;
+					return static_cast<T*>(p);
 				}
 			}
 			return nullptr;
 		}
 
-		template <typename T>
-		void RemoveComponent() const;
+		template<typename T>
+		void RemoveComponent() {
+			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it) {
+				T* pComponent = dynamic_cast<T*>(*it);
+				if (pComponent != nullptr) {
+					delete pComponent;
+					pComponent = nullptr;
+					//m_pComponents.erase(it);
+					return;
+				}
+			}
+		}
 		
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;

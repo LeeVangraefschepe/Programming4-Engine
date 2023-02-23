@@ -26,8 +26,3 @@ void dae::GameObject::Render() const
 		p->Render();
 	}
 }
-
-template<typename T>
-void dae::GameObject::RemoveComponent() const
-{
-}
