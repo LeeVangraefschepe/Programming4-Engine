@@ -39,7 +39,6 @@ namespace dae
 			//Add to correct data list
 			if (isData)
 			{
-				std::cout << "Data component\n";
 				auto pRenderComponent = std::dynamic_pointer_cast<BaseComponent>(pComponent);
 				m_pDataComponents.push_back(pRenderComponent);
 			}
@@ -47,13 +46,11 @@ namespace dae
 			{
 				if (isRender)
 				{
-					std::cout << "Render component\n";
 					auto pRenderComponent = std::dynamic_pointer_cast<RenderComponent>(pComponent);
 					m_pRenderComponents.push_back(pRenderComponent);
 				}
 				if (isUpdate)
 				{
-					std::cout << "Update component\n";
 					auto pRenderComponent = std::dynamic_pointer_cast<UpdateComponent>(pComponent);
 					m_pUpdateComponents.push_back(pRenderComponent);
 				}
@@ -64,12 +61,6 @@ namespace dae
 
 			//Return to user
 			return pComponent;
-		}
-		template<typename T>
-		T* AddComponent(T* component)
-		{
-			m_pComponents.push_back(component);
-			return component;
 		}
 
 		template<typename T>
