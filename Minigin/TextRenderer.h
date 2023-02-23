@@ -14,7 +14,6 @@ namespace dae
 		TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font);
 		~TextRenderer() override = default;
 
-		void Update() override{}
 		void Render() const override;
 
 		void SetText(const std::string& text);

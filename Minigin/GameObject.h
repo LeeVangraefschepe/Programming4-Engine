@@ -4,7 +4,9 @@
 
 #include "Transform.h"
 #include "BaseComponent.h"
-#include "TextRenderer.h"
+#include "SpriteRenderer.h"
+#include "UpdateComponent.h"
+#include <iostream>
 
 namespace dae
 {
@@ -28,7 +30,33 @@ namespace dae
 
 			//Create shared pointer
 			auto pComponent{ std::make_shared<T>(this, std::forward<Args>(args)...) };
-			//Add to data list
+
+			//Get type of component
+			const bool isRender = std::is_base_of<RenderComponent, T>::value;
+			const bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
+			const bool isData = isRender == false && isUpdate == false;
+
+			//Add to correct data list
+			if (isData)
+			{
+				std::cout << "Data component\n";
+				m_pDataComponents.push_back(pComponent);
+			}
+			else
+			{
+				if (isRender)
+				{
+					std::cout << "Render component\n";
+					auto pRenderComponent = std::dynamic_pointer_cast<RenderComponent>(pComponent);
+					m_pRenderComponents.push_back(pRenderComponent);
+				}
+				if (isUpdate)
+				{
+					std::cout << "Update component\n";
+				}
+			}
+
+			//Add to global list
 			m_pComponents.push_back(pComponent);
 
 			//Return to user
@@ -44,11 +72,14 @@ namespace dae
 		template<typename T>
 		std::weak_ptr<T> GetComponent() const
 		{
-			for (const auto p : m_pComponents)
+			for (const auto& p : m_pComponents)
 			{
-				if (std::shared_ptr<T> derivedComponent{ std::dynamic_pointer_cast<T>(p) } )
+				if (auto sp = p.lock())
 				{
-					return derivedComponent;
+					if (auto derivedComponent = std::dynamic_pointer_cast<T>(sp))
+					{
+						return derivedComponent;
+					}
 				}
 			}
 			return std::weak_ptr<T>();
@@ -56,22 +87,66 @@ namespace dae
 
 		template<typename T>
 		void RemoveComponent() {
+			//Get type of component
+			const bool isRender = std::is_base_of<RenderComponent, T>::value;
+			const bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
+			const bool isData = isRender == false && isUpdate == false;
+
+			if (isData)
+			{
+				std::cout << "Data removed\n";
+				EraseComponent<T>(m_pDataComponents);
+			}
+			else
+			{
+				if (isRender)
+				{
+					std::cout << "Render removed\n";
+					EraseComponent<T>(m_pRenderComponents);
+				}
+				if (isUpdate)
+				{
+					std::cout << "Update removed\n";
+					EraseComponent<T>(m_pUpdateComponents);
+				}
+			}
+
 			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it) {
-				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>(*it) };
+				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>((it)->lock()) };
 				if (pComponent != nullptr) {
-					it->reset();
 					m_pComponents.erase(it);
 					return;
 				}
 			}
 		}
+
 		
+
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		std::vector<std::shared_ptr<BaseComponent>> m_pComponents{};
+
+
+		template<typename T, typename J>
+		void EraseComponent(std::vector<std::shared_ptr<J>>& list)
+		{
+			for (auto it = list.begin(); it != list.end(); ++it) {
+				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>(*it) };
+				if (pComponent != nullptr) {
+					it->reset();
+					list.erase(it);
+					return;
+				}
+			}
+		}
+
+		std::vector<std::weak_ptr<BaseComponent>> m_pComponents{};
+		std::vector<std::shared_ptr<BaseComponent>> m_pDataComponents{};
+		std::vector<std::shared_ptr<RenderComponent>> m_pRenderComponents{};
+		std::vector<std::shared_ptr<UpdateComponent>> m_pUpdateComponents{};
+		//std::vector<std::shared_ptr<FullComponent>> m_pFullComponents{};
 	};
 }

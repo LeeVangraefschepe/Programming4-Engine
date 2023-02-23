@@ -14,7 +14,6 @@ namespace dae
 		SpriteRenderer(GameObject* pGameObject ,std::shared_ptr<Texture2D> pSprite);
 		~SpriteRenderer() override = default;
 
-		void Update() override {}
 		void Render() const override;
 
 		SpriteRenderer(const SpriteRenderer& other) = delete;
