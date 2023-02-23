@@ -40,7 +40,8 @@ namespace dae
 			if (isData)
 			{
 				std::cout << "Data component\n";
-				m_pDataComponents.push_back(pComponent);
+				auto pRenderComponent = std::dynamic_pointer_cast<BaseComponent>(pComponent);
+				m_pDataComponents.push_back(pRenderComponent);
 			}
 			else
 			{
@@ -53,6 +54,8 @@ namespace dae
 				if (isUpdate)
 				{
 					std::cout << "Update component\n";
+					auto pRenderComponent = std::dynamic_pointer_cast<UpdateComponent>(pComponent);
+					m_pUpdateComponents.push_back(pRenderComponent);
 				}
 			}
 

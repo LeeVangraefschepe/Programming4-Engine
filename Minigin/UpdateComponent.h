@@ -3,7 +3,7 @@
 
 namespace dae
 {
-	class UpdateComponent : BaseComponent
+	class UpdateComponent : public BaseComponent
 	{
 	public:
 		UpdateComponent(GameObject* pGameObject)

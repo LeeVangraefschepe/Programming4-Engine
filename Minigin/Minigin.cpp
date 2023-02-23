@@ -91,18 +91,13 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	while (doContinue)
 	{
 		//Calculate delta time
-		const auto start = std::chrono::high_resolution_clock::now();
-		const std::chrono::duration<float> elapsedSeconds = end - start;
-
-		//Set delta time
-		Time::SetDeltaTime(elapsedSeconds.count());
+		const auto currentTime = std::chrono::high_resolution_clock::now();
+		Time::SetDeltaTime(std::chrono::duration<float>(currentTime - end).count());
+		end = currentTime;
 
 		//Core game loop
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
-
-		//Set end time loop
-		end = std::chrono::high_resolution_clock::now();
 	}
 }
