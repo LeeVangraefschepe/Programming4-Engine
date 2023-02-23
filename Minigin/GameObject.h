@@ -32,12 +32,11 @@ namespace dae
 			auto pComponent{ std::make_shared<T>(this, std::forward<Args>(args)...) };
 
 			//Get type of component
-			const bool isRender = std::is_base_of<RenderComponent, T>::value;
-			const bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
-			const bool isData = isRender == false && isUpdate == false;
+			bool isRender = std::is_base_of<RenderComponent, T>::value;
+			bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
 
 			//Add to correct data list
-			if (isData)
+			if (isRender == false && isUpdate == false)
 			{
 				auto pRenderComponent = std::dynamic_pointer_cast<BaseComponent>(pComponent);
 				m_pDataComponents.push_back(pRenderComponent);
@@ -98,11 +97,10 @@ namespace dae
 		template<typename T>
 		void RemoveComponent() {
 			//Get type of component
-			const bool isRender = std::is_base_of<RenderComponent, T>::value;
-			const bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
-			const bool isData = isRender == false && isUpdate == false;
+			bool isRender = std::is_base_of<RenderComponent, T>::value;
+			bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
 
-			if (isData)
+			if (isRender == false && isUpdate == false)
 			{
 				std::cout << "Data removed\n";
 				EraseComponent<T>(m_pDataComponents);
