@@ -86,6 +86,22 @@ namespace dae
 		}
 
 		template<typename T>
+		bool HasComponent() const
+		{
+			for (const auto& p : m_pComponents)
+			{
+				if (auto sp = p.lock())
+				{
+					if (auto derivedComponent = std::dynamic_pointer_cast<T>(sp))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		template<typename T>
 		void RemoveComponent() {
 			//Get type of component
 			const bool isRender = std::is_base_of<RenderComponent, T>::value;
