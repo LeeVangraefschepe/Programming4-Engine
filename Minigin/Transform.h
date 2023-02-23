@@ -18,7 +18,7 @@ namespace dae
 		//Component stuff
 		~Transform() override = default;
 		void Update() override{}
-		void Render() override{}
+		void Render() const override{}
 
 	private:
 		glm::vec3 m_position{0,0,0};

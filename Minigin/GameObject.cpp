@@ -3,14 +3,10 @@
 
 dae::GameObject::GameObject()
 {
-	m_pComponents.push_back(new Transform{this});
+	AddComponent<Transform>();
 }
 dae::GameObject::~GameObject()
 {
-	for (const auto p : m_pComponents)
-	{
-		delete p;
-	}	
 }
 void dae::GameObject::Update()
 {

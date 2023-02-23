@@ -18,7 +18,7 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 		virtual void Update() = 0;
-		virtual void Render() = 0;
+		virtual void Render() const = 0;
 	protected:
 		GameObject* m_pGameObject;
 	};

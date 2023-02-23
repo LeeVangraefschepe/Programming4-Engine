@@ -21,12 +21,18 @@ namespace dae
 
 
 		template<typename T, typename... Args>
-		T* AddComponent(Args&&... args)
+		std::shared_ptr<T> AddComponent(Args&&... args)
 		{
+			//Make sure its a component
 			static_assert(std::is_base_of<BaseComponent, T>::value, "T must be derived from BaseComponent");
-			T* component = new T(this, std::forward<Args>(args)...);
-			m_pComponents.push_back(component);
-			return component;
+
+			//Create shared pointer
+			auto pComponent{ std::make_shared<T>(this, std::forward<Args>(args)...) };
+			//Add to data list
+			m_pComponents.push_back(pComponent);
+
+			//Return to user
+			return pComponent;
 		}
 		template<typename T>
 		T* AddComponent(T* component)
@@ -36,26 +42,25 @@ namespace dae
 		}
 
 		template<typename T>
-		T* GetComponent() const
+		std::weak_ptr<T> GetComponent() const
 		{
 			for (const auto p : m_pComponents)
 			{
-				if (typeid(*p) == typeid(T))
+				if (std::shared_ptr<T> derivedComponent{ std::dynamic_pointer_cast<T>(p) } )
 				{
-					return static_cast<T*>(p);
+					return derivedComponent;
 				}
 			}
-			return nullptr;
+			return std::weak_ptr<T>();
 		}
 
 		template<typename T>
 		void RemoveComponent() {
 			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it) {
-				T* pComponent = dynamic_cast<T*>(*it);
+				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>(*it) };
 				if (pComponent != nullptr) {
-					delete pComponent;
-					pComponent = nullptr;
-					//m_pComponents.erase(it);
+					it->reset();
+					m_pComponents.erase(it);
 					return;
 				}
 			}
@@ -67,6 +72,6 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		std::vector<BaseComponent*> m_pComponents{};
+		std::vector<std::shared_ptr<BaseComponent>> m_pComponents{};
 	};
 }
