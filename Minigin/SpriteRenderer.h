@@ -15,6 +15,7 @@ namespace dae
 		~SpriteRenderer() override = default;
 
 		void Render() const override;
+		void SetSprite(std::shared_ptr<Texture2D> pSprite);
 
 		SpriteRenderer(const SpriteRenderer& other) = delete;
 		SpriteRenderer(SpriteRenderer&& other) = delete;

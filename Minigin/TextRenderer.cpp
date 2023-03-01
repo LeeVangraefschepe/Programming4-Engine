@@ -7,30 +7,31 @@
 #include "Renderer.h"
 
 dae::TextRenderer::TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font)
-	: m_text(text), m_font(std::move(font)), m_textTexture(nullptr), RenderComponent(pGameObject)
+	: m_text(text), m_font(std::move(font)), m_textTexture(nullptr), UpdateComponent(pGameObject)
 {
 	SetText(text);
 	m_transform = m_pGameObject->GetComponent<Transform>();
-}
-void dae::TextRenderer::Render() const
-{
-	if (m_textTexture != nullptr)
+	m_spriteRenderer = m_pGameObject->GetComponent<SpriteRenderer>();
+	if (m_spriteRenderer.expired())
 	{
-		if (m_transform.expired())
-		{
-			Renderer::GetInstance().RenderTexture(*m_textTexture, 0, 0);
-		}
-		else
-		{
-			const auto transform = m_transform.lock();
-			const auto& pos = transform->GetPosition();
-			Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
-		}
+		m_spriteRenderer = m_pGameObject->AddComponent<SpriteRenderer>(m_textTexture);
 	}
+}
+void dae::TextRenderer::Update()
+{
+	if (m_needsUpdate)
+	{
+		UpdateTexture();
+		const auto spriteRenderer = m_spriteRenderer.lock();
+		spriteRenderer->SetSprite(m_textTexture);
+		m_needsUpdate = false;
+	}
+	
 }
 
 void dae::TextRenderer::UpdateTexture()
 {
+	m_needsUpdate = true;
 	const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_color);
 	if (surf == nullptr)
 	{

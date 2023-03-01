@@ -25,3 +25,8 @@ void dae::SpriteRenderer::Render() const
 		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y);
 	}
 }
+
+void dae::SpriteRenderer::SetSprite(const std::shared_ptr<Texture2D> pSprite)
+{
+	m_pSprite = pSprite;
+}
