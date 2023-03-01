@@ -10,11 +10,11 @@ dae::TextRenderer::TextRenderer(GameObject* pGameObject, const std::string& text
 	: m_text(text), m_font(std::move(font)), m_textTexture(nullptr), UpdateComponent(pGameObject)
 {
 	SetText(text);
-	m_transform = m_pGameObject->GetComponent<Transform>();
-	m_spriteRenderer = m_pGameObject->GetComponent<SpriteRenderer>();
+	m_transform = GetGameObject()->GetComponent<Transform>();
+	m_spriteRenderer = GetGameObject()->GetComponent<SpriteRenderer>();
 	if (m_spriteRenderer.expired())
 	{
-		m_spriteRenderer = m_pGameObject->AddComponent<SpriteRenderer>(m_textTexture);
+		m_spriteRenderer = GetGameObject()->AddComponent<SpriteRenderer>(m_textTexture);
 	}
 }
 void dae::TextRenderer::Update()

@@ -69,9 +69,6 @@
     <ClInclude Include="SpriteRenderer.h">
       <Filter>Components\Render</Filter>
     </ClInclude>
-    <ClInclude Include="TextRenderer.h">
-      <Filter>Components\Render</Filter>
-    </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -80,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>Components\Update</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -119,11 +119,11 @@
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Components\Render</Filter>
     </ClCompile>
-    <ClCompile Include="TextRenderer.cpp">
-      <Filter>Components\Render</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Components\Update</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ dae::SpriteRenderer::SpriteRenderer(GameObject* pGameObject, std::shared_ptr<Tex
 	: m_pSprite(pSprite),
 	RenderComponent(pGameObject)
 {
-	m_transform = m_pGameObject->GetComponent<Transform>();
+	m_transform = GetGameObject()->GetComponent<Transform>();
 }
 
 void dae::SpriteRenderer::Render() const

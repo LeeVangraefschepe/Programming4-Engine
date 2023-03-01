@@ -10,10 +10,10 @@ using namespace dae;
 
 FPS::FPS(GameObject* pGameObject, float updateInterval): UpdateComponent(pGameObject), m_timeInterval(updateInterval)
 {
-	m_pTextRenderer = m_pGameObject->GetComponent<TextRenderer>();
+	m_pTextRenderer = GetGameObject()->GetComponent<TextRenderer>();
 	if (m_pTextRenderer.expired())
 	{
-		m_pTextRenderer = m_pGameObject->AddComponent<TextRenderer>("FPS: ", ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
+		m_pTextRenderer = GetGameObject()->AddComponent<TextRenderer>("FPS: ", ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
 	}
 	m_pTextRenderer.lock()->SetColor(247, 247, 0);
 }
