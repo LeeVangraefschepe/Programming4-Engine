@@ -23,10 +23,18 @@ namespace dae
 
 
 		template<typename T, typename... Args>
-		std::shared_ptr<T> AddComponent(Args&&... args)
+		std::weak_ptr<T> AddComponent(Args&&... args)
 		{
 			//Make sure its a component
 			static_assert(std::is_base_of<BaseComponent, T>::value, "T must be derived from BaseComponent");
+
+
+			//Check if component is already on object
+			std::weak_ptr<T> attachedComp = GetComponent<T>();
+			if (attachedComp.expired() == false)
+			{
+				return attachedComp;
+			}
 
 			//Create shared pointer
 			auto pComponent{ std::make_shared<T>(this, std::forward<Args>(args)...) };
@@ -102,19 +110,16 @@ namespace dae
 
 			if (isRender == false && isUpdate == false)
 			{
-				std::cout << "Data removed\n";
 				EraseComponent<T>(m_pDataComponents);
 			}
 			else
 			{
 				if (isRender)
 				{
-					std::cout << "Render removed\n";
 					EraseComponent<T>(m_pRenderComponents);
 				}
 				if (isUpdate)
 				{
-					std::cout << "Update removed\n";
 					EraseComponent<T>(m_pUpdateComponents);
 				}
 			}
