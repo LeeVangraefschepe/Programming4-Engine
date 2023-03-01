@@ -88,6 +88,10 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	// todo: this update loop could use some work.
 	bool doContinue = true;
 	auto end = std::chrono::high_resolution_clock::now();
+	constexpr float desiredFPS{60.f};
+	constexpr float frameTimeMs{1000/desiredFPS};
+
+
 	while (doContinue)
 	{
 		//Calculate delta time
@@ -99,5 +103,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		doContinue = input.ProcessInput();
 		sceneManager.Update();
 		renderer.Render();
+		const auto sleepTimeMs = frameTimeMs - std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - currentTime).count();
+		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(sleepTimeMs)));
 	}
 }
