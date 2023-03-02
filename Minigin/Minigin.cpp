@@ -85,10 +85,9 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
 	auto end = std::chrono::high_resolution_clock::now();
-	constexpr float desiredFPS{60.f};
+	constexpr float desiredFPS{6000.f};
 	constexpr float frameTimeMs{1000/desiredFPS};
 
 

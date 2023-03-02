@@ -21,7 +21,7 @@ void dae::SpriteRenderer::Render() const
 			return;
 		}
 		const std::shared_ptr<Transform> transform = m_transform.lock();
-		const auto& pos = transform->GetPosition();
+		const auto& pos = transform->GetWorldPosition();
 		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y);
 	}
 }
