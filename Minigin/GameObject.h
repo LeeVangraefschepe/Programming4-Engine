@@ -147,8 +147,6 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-
-
 		template<typename T, typename J>
 		void EraseComponent(std::vector<std::shared_ptr<J>>& list)
 		{

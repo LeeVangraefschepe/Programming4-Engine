@@ -63,6 +63,7 @@ void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
 	for (auto it = m_pChildren.begin(); it != m_pChildren.end(); ++it) {
 		std::weak_ptr pChild{ *it };
 		if (pChild.lock() == child.lock()) {
+			pChild.lock()->SetParent(std::weak_ptr<GameObject>{}, true);
 			m_pChildren.erase(it);
 			return;
 		}

@@ -12,7 +12,7 @@ namespace dae
 		{
 		}
 
-		const glm::vec3& GetPosition() const { return m_localPosition; }
+		const glm::vec3& GetLocalPosition() const;
 		const glm::vec3& GetWorldPosition();
 
 		void SetPosition(float x, float y, float z = 0);
