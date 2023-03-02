@@ -160,6 +160,8 @@ namespace dae
 			}
 		}
 
+		bool IsValidParent(std::weak_ptr<GameObject> parent);
+
 		std::weak_ptr<GameObject> m_pParent{};
 		std::vector<std::weak_ptr<GameObject>> m_pChildren{};
 

@@ -29,6 +29,11 @@ void dae::GameObject::Render() const
 }
 void dae::GameObject::SetParent(std::weak_ptr<GameObject> parent, bool keepWorldPosition)
 {
+	if (IsValidParent(parent) == false)
+	{
+		return;
+	}
+
 	if (m_pParent.expired() == false)
 	{
 		m_pParent.lock()->RemoveChild(weak_from_this());
@@ -68,4 +73,33 @@ void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
 			return;
 		}
 	}
+}
+bool dae::GameObject::IsValidParent(std::weak_ptr<GameObject> parent)
+{
+	const auto sParent = parent.lock();
+	const auto thischild = weak_from_this().lock();
+
+	//Nullptr
+	if (m_pParent.expired())
+	{
+		return true;
+	}
+
+	//Parent equals himself
+	if (sParent == thischild)
+	{
+		return false;
+	}
+
+	//Check if already child
+	const auto parentChildren = sParent->GetChildren();
+	for (const auto child : parentChildren)
+	{
+		if (child.lock() == thischild)
+		{
+			return  false;
+		}
+	}
+
+	return true;
 }
