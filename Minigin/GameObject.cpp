@@ -49,8 +49,22 @@ void dae::GameObject::SetParent(std::weak_ptr<GameObject> parent, bool keepWorld
 		m_pParent.lock()->AddChild(weak_from_this());
 		if (keepWorldPosition)
 		{
-			transform->SetLocalPosition(transform->GetPosition() - m_pParent.lock()->GetComponent<Transform>().lock()->GetWorldPosition());
+			transform->SetLocalPosition(transform->GetLocalPosition() - m_pParent.lock()->GetComponent<Transform>().lock()->GetWorldPosition());
 		}
 		transform->SetPositionDirty();
+	}
+}
+void dae::GameObject::AddChild(std::weak_ptr<GameObject> child)
+{
+	m_pChildren.push_back(child);
+}
+void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
+{
+	for (auto it = m_pChildren.begin(); it != m_pChildren.end(); ++it) {
+		std::weak_ptr pChild{ *it };
+		if (pChild.lock() == child.lock()) {
+			m_pChildren.erase(it);
+			return;
+		}
 	}
 }

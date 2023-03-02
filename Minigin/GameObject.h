@@ -23,20 +23,9 @@ namespace dae
 
 		void SetParent(std::weak_ptr<GameObject> parent, bool keepWorldPosition);
 		std::weak_ptr<GameObject> GetParent() const { return m_pParent; }
-		void AddChild(std::weak_ptr<GameObject> child)
-		{
-			m_pChildren.push_back(child);
-		}
-		void RemoveChild(std::weak_ptr<GameObject> child)
-		{
-			for (auto it = m_pChildren.begin(); it != m_pChildren.end(); ++it) {
-				std::weak_ptr pChild{ *it };
-				if (pChild.lock() == child.lock()) {
-					m_pChildren.erase(it);
-					return;
-				}
-			}
-		}
+		void AddChild(std::weak_ptr<GameObject> child);
+		void RemoveChild(std::weak_ptr<GameObject> child);
+		
 		const std::vector<std::weak_ptr<GameObject>>& GetChildren() { return  m_pChildren; }
 
 #pragma region ComponentTemplate
