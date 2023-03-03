@@ -4,7 +4,9 @@ Minigin is a very small project using [SDL2](https://www.libsdl.org/) and [glm](
 
 [![Build Status](https://github.com/avadae/minigin/actions/workflows/msbuild.yml/badge.svg)](https://github.com/avadae/msbuild/actions)
 [![GitHub Release](https://img.shields.io/github/v/release/avadae/minigin?logo=github&sort=semver)](https://github.com/avadae/minigin/releases/latest)
+<img alt="ViewCount" src="https://views.whatilearened.today/views/github/LeeVangraefschepe/Programming4-Engine.svg">
 [![GitHub Clones](https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://gist.githubusercontent.com/LeeVangraefschepe/2ef2dfb97ccee0a21f130fe1524eaaa7/raw/clone.json&logo=github)](https://github.com/MShawon/github-clone-count-badge)
+
 
 
 # Goal
