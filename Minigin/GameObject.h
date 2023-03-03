@@ -6,6 +6,7 @@
 #include "BaseComponent.h"
 #include "SpriteRenderer.h"
 #include "UpdateComponent.h"
+#include <string>
 #include <iostream>
 
 namespace dae
@@ -35,6 +36,8 @@ namespace dae
 			//Make sure its a component
 			static_assert(std::is_base_of<BaseComponent, T>::value, "T must be derived from BaseComponent");
 
+			//Make sure the args match the constructor
+			static_assert(std::is_constructible<T, GameObject*, Args...>::value, "Unable to construct T with the given arguments in function");
 
 			//Check if component is already on object
 			std::weak_ptr<T> attachedComp = GetComponent<T>();
