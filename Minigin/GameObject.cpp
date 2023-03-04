@@ -15,6 +15,14 @@ dae::GameObject::~GameObject()
 }
 void dae::GameObject::Update()
 {
+	if (m_pDestroyComponents.empty() == false)
+	{
+		for (auto it = m_pDestroyComponents.begin(); it != m_pDestroyComponents.end(); ++it)
+		{
+			EraseComponent(it->lock());
+		}
+		m_pDestroyComponents.clear();
+	}
 	for (const auto p : m_pUpdateComponents)
 	{
 		p->Update();

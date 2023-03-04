@@ -114,30 +114,13 @@ namespace dae
 
 		template<typename T>
 		void RemoveComponent() {
-			//Get type of component
-			bool isRender = std::is_base_of<RenderComponent, T>::value;
-			bool isUpdate = std::is_base_of<UpdateComponent, T>::value;
 
-			if (isRender == false && isUpdate == false)
+			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
 			{
-				EraseComponent<T>(m_pDataComponents);
-			}
-			else
-			{
-				if (isRender)
-				{
-					EraseComponent<T>(m_pRenderComponents);
-				}
-				if (isUpdate)
-				{
-					EraseComponent<T>(m_pUpdateComponents);
-				}
-			}
-
-			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it) {
 				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>((it)->lock()) };
-				if (pComponent != nullptr) {
-					m_pComponents.erase(it);
+				if (pComponent != nullptr)
+				{
+					m_pDestroyComponents.push_back(*it);
 					return;
 				}
 			}
@@ -150,15 +133,41 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		template<typename T, typename J>
-		void EraseComponent(std::vector<std::shared_ptr<J>>& list)
+		template<typename T>
+		void EraseFromList(std::vector<std::shared_ptr<T>>& list, std::shared_ptr<T> item)
 		{
-			for (auto it = list.begin(); it != list.end(); ++it) {
-				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>(*it) };
-				if (pComponent != nullptr) {
-					it->reset();
+			for (auto it = list.begin(); it != list.end(); ++it)
+			{
+				if (*it == item)
+				{
 					list.erase(it);
 					return;
+				}
+			}
+		}
+		void EraseComponent(const std::shared_ptr<BaseComponent> component)
+		{
+			std::shared_ptr prender{ std::dynamic_pointer_cast<RenderComponent>(component) };
+			std::shared_ptr pupdate{ std::dynamic_pointer_cast<UpdateComponent>(component) };
+
+			if (prender != nullptr)
+			{
+				EraseFromList(m_pRenderComponents, prender);
+			}
+			if (pupdate != nullptr)
+			{
+				EraseFromList(m_pUpdateComponents, pupdate);
+			}
+			if (pupdate == nullptr && prender == nullptr)
+			{
+				EraseFromList(m_pDataComponents, component);
+			}
+			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
+			{
+				if (component == it->lock())
+				{
+					m_pComponents.erase(it);
+					break;
 				}
 			}
 		}
@@ -169,6 +178,7 @@ namespace dae
 		std::vector<std::weak_ptr<GameObject>> m_pChildren{};
 
 		std::vector<std::weak_ptr<BaseComponent>> m_pComponents{};
+		std::vector<std::weak_ptr<BaseComponent>> m_pDestroyComponents{};
 		std::vector<std::shared_ptr<BaseComponent>> m_pDataComponents{};
 		std::vector<std::shared_ptr<RenderComponent>> m_pRenderComponents{};
 		std::vector<std::shared_ptr<UpdateComponent>> m_pUpdateComponents{};
