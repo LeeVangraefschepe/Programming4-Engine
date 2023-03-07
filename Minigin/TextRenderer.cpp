@@ -7,7 +7,7 @@
 #include "Renderer.h"
 
 dae::TextRenderer::TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font)
-	: m_text(text), m_font(std::move(font)), m_textTexture(nullptr), UpdateComponent(pGameObject)
+	: m_text(text), m_font(std::move(font)), m_textTexture(nullptr), BaseComponent(pGameObject)
 {
 	SetText(text);
 	m_transform = GetGameObject()->GetComponent<Transform>();

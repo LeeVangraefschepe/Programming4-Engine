@@ -10,6 +10,9 @@ namespace dae
 	public:
 		BaseComponent(GameObject* pGameObject) : m_pGameObject(pGameObject){}
 
+		virtual void Update(){}
+		virtual void Render() const{}
+
 		virtual ~BaseComponent() = default;
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;

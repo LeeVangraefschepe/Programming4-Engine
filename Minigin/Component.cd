@@ -1,28 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="dae::BaseComponent" Collapsed="true">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+    <Position X="7" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAYAAAAAAAAAAAAAAIAAAACAAAAAAAAAABggAAAAAAA=</HashCode>
       <FileName>BaseComponent.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="dae::UpdateComponent" Collapsed="true">
-    <Position X="8.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAEAgAAAAAAA=</HashCode>
-      <FileName>UpdateComponent.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="dae::RenderComponent" Collapsed="true">
-    <Position X="6.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAABAgAAAAgAA=</HashCode>
-      <FileName>RenderComponent.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="dae::FPS" Collapsed="true">
-    <Position X="11.5" Y="3.25" Width="1.5" />
+    <Position X="10.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAIAAAAAAAAUAAAAAAAAAAABAAAAgAA=</HashCode>
       <FileName>FPS.h</FileName>
@@ -31,22 +17,29 @@
   <Class Name="dae::SpriteRenderer" Collapsed="true">
     <Position X="3.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAABEgAAAAIAA=</HashCode>
+      <HashCode>AAAQAAAIAAABAAAAAAAAAAAAAAAAAAAAABEgAAAAIAA=</HashCode>
       <FileName>SpriteRenderer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="dae::TextRenderer" Collapsed="true">
-    <Position X="3.5" Y="4" Width="1.5" />
+    <Position X="5.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABIIEEAAgAAAIAAAACAAAAAAIAAABggAAgAAAA=</HashCode>
+      <HashCode>AAQAAABIIEEAAgAAAIAAAACgAAAAAIAAAAhgAAgAAAA=</HashCode>
       <FileName>TextRenderer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="dae::Transform" Collapsed="true">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Position X="7" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAQAAAAAAgAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAAAgACABQAKAAAAgAAAIAAAAAAgIA=</HashCode>
       <FileName>Transform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dae::RotateAroundComponent" Collapsed="true">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQBAAAAAAAIAAAAAAAAAAAAAAAAIgAEAAQAAAEAAAA=</HashCode>
+      <FileName>RotateAroundComponent.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

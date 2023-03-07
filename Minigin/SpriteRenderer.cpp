@@ -2,11 +2,10 @@
 #include "SpriteRenderer.h"
 #include "Renderer.h"
 #include "GameObject.h"
-#include <iostream>
 
 dae::SpriteRenderer::SpriteRenderer(GameObject* pGameObject, std::shared_ptr<Texture2D> pSprite)
 	: m_pSprite(pSprite),
-	RenderComponent(pGameObject)
+	BaseComponent(pGameObject)
 {
 	m_transform = GetGameObject()->GetComponent<Transform>();
 }

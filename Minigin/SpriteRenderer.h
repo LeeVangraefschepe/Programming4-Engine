@@ -1,14 +1,12 @@
 #pragma once
 #include <memory>
-#include "RenderComponent.h"
-#include <string>
-#include "Font.h"
+#include "BaseComponent.h"
 #include "Texture2D.h"
 #include "Transform.h"
 
 namespace dae
 {
-	class SpriteRenderer : public RenderComponent
+	class SpriteRenderer final : public BaseComponent
 	{
 	public:
 		SpriteRenderer(GameObject* pGameObject ,std::shared_ptr<Texture2D> pSprite);

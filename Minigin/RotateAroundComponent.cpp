@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Time.h"
 
-dae::RotateAroundComponent::RotateAroundComponent(GameObject* pGameObject, float radius, float speed) : m_radius(radius), m_speed(speed), UpdateComponent(pGameObject)
+dae::RotateAroundComponent::RotateAroundComponent(GameObject* pGameObject, float radius, float speed) : m_radius(radius), m_speed(speed), BaseComponent(pGameObject)
 {
 	m_pTransform = GetGameObject()->GetComponent<dae::Transform>();
 	if (m_pTransform.expired())

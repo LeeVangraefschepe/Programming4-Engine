@@ -69,12 +69,6 @@
     <ClInclude Include="SpriteRenderer.h">
       <Filter>Components\Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="UpdateComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Components\Data</Filter>
     </ClInclude>
@@ -82,7 +76,7 @@
       <Filter>Components\Update</Filter>
     </ClInclude>
     <ClInclude Include="RotateAroundComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components\Update</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -129,7 +123,7 @@
       <Filter>Components\Update</Filter>
     </ClCompile>
     <ClCompile Include="RotateAroundComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components\Update</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

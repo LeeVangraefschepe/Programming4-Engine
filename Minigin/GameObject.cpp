@@ -23,14 +23,14 @@ void dae::GameObject::Update()
 		}
 		m_pDestroyComponents.clear();
 	}
-	for (const auto p : m_pUpdateComponents)
+	for (const auto p : m_pComponents)
 	{
 		p->Update();
 	}
 }
 void dae::GameObject::Render() const
 {
-	for (const auto p : m_pRenderComponents)
+	for (const auto p : m_pComponents)
 	{
 		p->Render();
 	}
@@ -79,6 +79,17 @@ void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
 			pChild.lock()->SetParent(std::weak_ptr<GameObject>{}, true);
 			m_pChildren.erase(it);
 			return;
+		}
+	}
+}
+void dae::GameObject::EraseComponent(const std::shared_ptr<BaseComponent> component)
+{
+	for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
+	{
+		if (component == *it)
+		{
+			m_pComponents.erase(it);
+			break;
 		}
 	}
 }

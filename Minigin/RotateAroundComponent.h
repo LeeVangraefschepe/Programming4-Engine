@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
 #include "Transform.h"
-#include "UpdateComponent.h"
+#include "BaseComponent.h"
 
 namespace dae
 {
-	class RotateAroundComponent : public UpdateComponent
+	class RotateAroundComponent final : public BaseComponent
 	{
 	public:
 		explicit RotateAroundComponent(GameObject* pGameObject, float radius, float speed);

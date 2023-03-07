@@ -7,11 +7,10 @@
 #include "SpriteRenderer.h"
 #include "Texture2D.h"
 #include "Transform.h"
-#include "UpdateComponent.h"
 
 namespace dae
 {
-	class TextRenderer : public UpdateComponent
+	class TextRenderer final : public BaseComponent
 	{
 	public:
 		TextRenderer(GameObject* pGameObject, const std::string& text, std::shared_ptr<Font> font);

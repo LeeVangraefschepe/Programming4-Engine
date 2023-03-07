@@ -8,7 +8,7 @@
 
 using namespace dae;
 
-FPS::FPS(GameObject* pGameObject, float updateInterval): UpdateComponent(pGameObject), m_timeInterval(updateInterval)
+FPS::FPS(GameObject* pGameObject, float updateInterval): BaseComponent(pGameObject), m_timeInterval(updateInterval)
 {
 	m_pTextRenderer = GetGameObject()->GetComponent<TextRenderer>();
 	if (m_pTextRenderer.expired())

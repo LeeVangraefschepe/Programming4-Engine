@@ -1,10 +1,9 @@
 #pragma once
-#include "UpdateComponent.h"
 #include "TextRenderer.h"
 
 namespace dae
 {
-	class FPS : public UpdateComponent
+	class FPS final : public BaseComponent
 	{
 	public:
 		explicit FPS(GameObject* pGameObject, float updateInterval = 1.f);
