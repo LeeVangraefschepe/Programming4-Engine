@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObject.h"
+
+#include <algorithm>
+
 #include "ResourceManager.h"
 
 dae::GameObject::GameObject()
@@ -39,6 +42,7 @@ void dae::GameObject::SetParent(std::weak_ptr<GameObject> parent, bool keepWorld
 {
 	if (IsValidParent(parent) == false)
 	{
+		//todo: add throw for user of the engine?
 		return;
 	}
 
@@ -82,6 +86,22 @@ void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
 		}
 	}
 }
+bool dae::GameObject::HasChild(std::weak_ptr<GameObject> child) const
+{
+	for (const auto element : m_pChildren)
+	{
+		const auto sElement = element.lock();
+		if (sElement == child.lock())
+		{
+			return true;
+		}
+		if (sElement->HasChild(child))
+		{
+			return true;
+		}
+	}
+	return false;
+}
 void dae::GameObject::EraseComponent(const std::shared_ptr<BaseComponent> component)
 {
 	for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
@@ -98,8 +118,8 @@ bool dae::GameObject::IsValidParent(std::weak_ptr<GameObject> parent)
 	const auto sParent = parent.lock();
 	const auto thischild = weak_from_this().lock();
 
-	//Nullptr
-	if (m_pParent.expired())
+	//Nullptr is valid
+	if (parent.expired())
 	{
 		return true;
 	}
@@ -110,15 +130,24 @@ bool dae::GameObject::IsValidParent(std::weak_ptr<GameObject> parent)
 		return false;
 	}
 
+	//todo: replace fors with stl
+	//return std::ranges::any_of(parentChildren, [&thischild](const std::weak_ptr<GameObject> child) {return child.lock() == thischild; });
+
 	//Check if already child
 	const auto parentChildren = sParent->GetChildren();
 	for (const auto child : parentChildren)
 	{
 		if (child.lock() == thischild)
 		{
-			return  false;
+			return false;
 		}
 	}
 
+	//Check if this is one of your childs
+	if (HasChild(sParent))
+	{
+		return false;
+	}
+	
 	return true;
 }

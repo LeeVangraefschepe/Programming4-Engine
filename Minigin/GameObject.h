@@ -27,6 +27,7 @@ namespace dae
 		void RemoveChild(std::weak_ptr<GameObject> child);
 		
 		const std::vector<std::weak_ptr<GameObject>>& GetChildren() { return  m_pChildren; }
+		bool HasChild(std::weak_ptr<GameObject> child) const;
 
 #pragma region ComponentTemplate
 		template<typename T, typename... Args>
