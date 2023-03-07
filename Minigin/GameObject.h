@@ -18,13 +18,13 @@ namespace dae
 		explicit GameObject();
 		~GameObject();
 
-		virtual void Update();
-		virtual void Render() const;
+		void Update();
+		void Render() const;
 
 		void SetParent(std::weak_ptr<GameObject> parent, bool keepWorldPosition);
 		std::weak_ptr<GameObject> GetParent() const { return m_pParent; }
 		void AddChild(std::weak_ptr<GameObject> child);
-		void RemoveChild(std::weak_ptr<GameObject> child);
+		
 		
 		const std::vector<std::weak_ptr<GameObject>>& GetChildren() { return  m_pChildren; }
 		bool HasChild(std::shared_ptr<GameObject> child) const;
@@ -111,6 +111,7 @@ namespace dae
 	private:
 		void EraseComponent(const std::shared_ptr<BaseComponent> component);
 		bool IsValidParent(std::weak_ptr<GameObject> parent);
+		void RemoveChild(std::weak_ptr<GameObject> child);
 
 		std::weak_ptr<GameObject> m_pParent{};
 		std::vector<std::weak_ptr<GameObject>> m_pChildren{};

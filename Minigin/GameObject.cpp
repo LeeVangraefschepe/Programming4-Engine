@@ -80,7 +80,7 @@ void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
 	for (auto it = m_pChildren.begin(); it != m_pChildren.end(); ++it) {
 		std::weak_ptr pChild{ *it };
 		if (pChild.lock() == child.lock()) {
-			pChild.lock()->SetParent(std::weak_ptr<GameObject>{}, true);
+			//pChild.lock()->SetParent(std::weak_ptr<GameObject>{}, true);
 			m_pChildren.erase(it);
 			return;
 		}
@@ -115,14 +115,14 @@ void dae::GameObject::EraseComponent(const std::shared_ptr<BaseComponent> compon
 }
 bool dae::GameObject::IsValidParent(std::weak_ptr<GameObject> parent)
 {
-	const auto sParent = parent.lock();
-	const auto thischild = weak_from_this().lock();
-
 	//Nullptr is valid
 	if (parent.expired())
 	{
 		return true;
 	}
+
+	const auto sParent = parent.lock();
+	const auto thischild = weak_from_this().lock();
 
 	//Parent equals himself
 	if (sParent == thischild)
