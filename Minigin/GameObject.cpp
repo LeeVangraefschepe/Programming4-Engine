@@ -86,12 +86,12 @@ void dae::GameObject::RemoveChild(std::weak_ptr<GameObject> child)
 		}
 	}
 }
-bool dae::GameObject::HasChild(std::weak_ptr<GameObject> child) const
+bool dae::GameObject::HasChild(std::shared_ptr<GameObject> child) const
 {
 	for (const auto element : m_pChildren)
 	{
 		const auto sElement = element.lock();
-		if (sElement == child.lock())
+		if (sElement == child)
 		{
 			return true;
 		}
