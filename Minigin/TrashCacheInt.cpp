@@ -25,6 +25,7 @@ void dae::TrashCacheInt::Render()
 				m_isCalculating = true;
 				delete[] m_groupedData;
 				m_groupedData = nullptr;
+				//TrashCacheTest();
 				std::thread t(&TrashCacheInt::TrashCacheTest, this);
 				t.detach();
 			}
@@ -33,7 +34,7 @@ void dae::TrashCacheInt::Render()
 		{
 			//UI while calculating
 			std::stringstream text{};
-			text << "Calculating please standby (" << m_times.size() << "/" << m_samples << ")";
+			text << "Calculating please standby (" << m_progress << "/" << m_samples << ")";
 			ImGui::Text(text.str().c_str());
 		}
 		if (m_times.empty() == false)
@@ -76,44 +77,55 @@ void dae::TrashCacheInt::Render()
 	} ImGui::End();
 }
 
-void dae::TrashCacheInt::Update()
-{
-	if (m_isCalculating && static_cast<int>(m_times.size()) == m_samples)
-	{
-		m_isCalculating = false;
-	}
-}
-
 void dae::TrashCacheInt::TrashCacheTest()
 {
-	constexpr int size{ 300000000 };
+	constexpr int size{ 100000000 };
 
+	m_progress = 0;
 	m_times.clear();
 	m_expectedTimes.clear();
 
 	if (m_samples <= 0)
 	{
+		m_isCalculating = false;
 		return;
 	}
+
+	constexpr int amountOfTests{ 10 };
+	constexpr int maxAmountSteps{ 1024 };
+	m_times.resize(amountOfTests);
 	const auto buffer = new int[size] {};
-	const int maxStepSize = static_cast<int>(pow(2, m_samples));
-	for (int stepsize = 1; stepsize < maxStepSize; stepsize *= 2)
+
+	for (int sample{}; sample < m_samples; ++sample)
 	{
-		const auto start = std::chrono::high_resolution_clock::now();
-		for (int i{}; i < size; i += stepsize)
+		int id{};
+		for (int stepsize = 1; stepsize < maxAmountSteps; stepsize *= 2)
 		{
-			buffer[i] *= 2;
+			const auto start = std::chrono::high_resolution_clock::now();
+			for (int i{}; i < size; i += stepsize)
+			{
+				buffer[i] *= 2;
+			}
+			auto end = std::chrono::high_resolution_clock::now();
+			const auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+			m_times[id] += static_cast<float>(elapsedTime) / 1000.f;
+			++id;
 		}
-		auto end = std::chrono::high_resolution_clock::now();
-		const auto elapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-		m_times.push_back(static_cast<float>(elapsedTime) / 1000.f);
+		++m_progress;
 	}
 	delete[] buffer;
+
+	for (auto& element : m_times)
+	{
+		element /= static_cast<float>(amountOfTests);
+	}
+
+	m_isCalculating = false;
 
 	const float maxTime = m_times[0];
 	float divide{ 2 };
 	m_expectedTimes.push_back(maxTime);
-	for (int i{}; i < m_samples - 1; ++i)
+	for (int i{}; i < amountOfTests - 1; ++i)
 	{
 		m_expectedTimes.push_back(maxTime / divide);
 		divide *= 2.f;

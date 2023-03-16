@@ -9,7 +9,6 @@ namespace dae
 		explicit TrashCacheInt(GameObject* pGameObject) : BaseComponent(pGameObject){}
 		~TrashCacheInt() override;
 		void Render() override;
-		void Update() override;
 
 		TrashCacheInt(const TrashCacheInt& other) = delete;
 		TrashCacheInt(TrashCacheInt&& other) = delete;
@@ -20,6 +19,7 @@ namespace dae
 
 		bool m_isCalculating{ false };
 		int m_samples{ 10 };
+		int m_progress{};
 		const float** m_groupedData{nullptr};
 		std::vector<float> m_times{};
 		std::vector<float> m_expectedTimes{};
