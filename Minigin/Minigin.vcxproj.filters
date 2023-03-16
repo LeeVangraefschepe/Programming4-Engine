@@ -28,6 +28,12 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{7e15a99c-96da-448d-8dfa-7f2e9c498156}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Imgui\Library">
+      <UniqueIdentifier>{a79d0251-af0c-468f-b3aa-3b0cc9c08689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ImGUI">
+      <UniqueIdentifier>{4ff8d14b-2257-4106-96ea-26505335d7cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -82,28 +88,34 @@
       <Filter>Components\Update</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_internal.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_plot.h">
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_rectpack.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_textedit.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="TrashCacheInt.h">
+      <Filter>Components\ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,25 +165,31 @@
       <Filter>Components\Update</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_demo.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_draw.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_sdl2.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_plot.cpp">
+      <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_tables.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_widgets.cpp">
-      <Filter>Imgui</Filter>
+      <Filter>Imgui\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="TrashCacheInt.cpp">
+      <Filter>Components\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
