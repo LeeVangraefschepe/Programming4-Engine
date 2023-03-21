@@ -27,16 +27,16 @@ struct PlotConfig {
     } values;
     struct Scale {
         // Minimum plot value
-        float min;
+        float min{};
         // Maximum plot value
-        float max;
+        float max{};
         enum Type {
             Linear,
             Log10,
         };
         // How to scale the x-axis
         Type type = Linear;
-    } scale;
+    } scale{};
     struct Tooltip {
         bool show = false;
         const char* format = "%g: %8.4g";
