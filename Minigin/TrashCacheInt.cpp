@@ -3,6 +3,10 @@
 #include <chrono>
 #include "imgui_plot.h"
 
+dae::TrashCacheInt::TrashCacheInt(GameObject* pGameObject) : BaseComponent(pGameObject)
+{
+}
+
 dae::TrashCacheInt::~TrashCacheInt()
 {
 	delete[] m_groupedData;
@@ -25,14 +29,12 @@ void dae::TrashCacheInt::Render()
 				m_isCalculating = true;
 				delete[] m_groupedData;
 				m_groupedData = nullptr;
-				//TrashCacheTest();
 				std::thread t(&TrashCacheInt::TrashCacheTest, this);
 				t.detach();
 			}
 		}
 		else
 		{
-			//UI while calculating
 			std::stringstream text{};
 			text << "Calculating please standby (" << m_progress << "/" << m_samples << ")";
 			ImGui::Text(text.str().c_str());
@@ -99,7 +101,7 @@ void dae::TrashCacheInt::TrashCacheTest()
 	for (int sample{}; sample < m_samples; ++sample)
 	{
 		int id{};
-		for (int stepsize = 1; stepsize < maxAmountSteps; stepsize *= 2)
+		for (int stepsize = 1; stepsize <= maxAmountSteps; stepsize *= 2)
 		{
 			const auto start = std::chrono::high_resolution_clock::now();
 			for (int i{}; i < size; i += stepsize)

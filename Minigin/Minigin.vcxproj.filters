@@ -118,7 +118,7 @@
       <Filter>Components\ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="TrashCacheGameObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components\ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +195,7 @@
       <Filter>Components\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="TrashCacheGameObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

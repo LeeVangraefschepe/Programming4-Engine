@@ -1,12 +1,13 @@
 #pragma once
 #include "BaseComponent.h"
+#include "imgui_plot.h"
 
 namespace dae
 {
 	class TrashCacheInt final : public BaseComponent
 	{
 	public:
-		explicit TrashCacheInt(GameObject* pGameObject) : BaseComponent(pGameObject){}
+		explicit TrashCacheInt(GameObject* pGameObject);
 		~TrashCacheInt() override;
 		void Render() override;
 

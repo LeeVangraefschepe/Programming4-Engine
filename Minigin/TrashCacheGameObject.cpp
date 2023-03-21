@@ -105,7 +105,7 @@ void dae::TrashCacheGameObject::Render()
 
 void dae::TrashCacheGameObject::TrashCacheTest3D()
 {
-	constexpr int size{ 5000000 };
+	constexpr int size{ 1000000 };
 	m_times3D.clear();
 	m_progress = 0;
 
@@ -122,7 +122,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3D()
 	for (int sample{}; sample < m_samples; ++sample)
 	{
 		int id{};
-		for (int stepsize = 1; stepsize < maxAmountSteps; stepsize *= 2)
+		for (int stepsize = 1; stepsize <= maxAmountSteps; stepsize *= 2)
 		{
 			const auto start = std::chrono::high_resolution_clock::now();
 			for (int i{}; i < size; i += stepsize)
@@ -152,7 +152,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3D()
 }
 void dae::TrashCacheGameObject::TrashCacheTest3DP()
 {
-	constexpr int size{ 2000000 };
+	constexpr int size{ 1000000 };
 	m_times3DP.clear();
 	m_progress = 0;
 
@@ -169,7 +169,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3DP()
 	for (int sample{}; sample < m_samples; ++sample)
 	{
 		int id{};
-		for (int stepsize = 1; stepsize < maxAmountSteps; stepsize *= 2)
+		for (int stepsize = 1; stepsize <= maxAmountSteps; stepsize *= 2)
 		{
 			const auto start = std::chrono::high_resolution_clock::now();
 			for (int i{}; i < size; i += stepsize)

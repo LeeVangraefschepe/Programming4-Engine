@@ -50,12 +50,6 @@ void dae::Renderer::Render()
 
 	SceneManager::GetInstance().Render();
 
-	
-
-	// hint: something should come here :)
-	
-	
-
 	if (m_showDemo)
 		ImGui::ShowDemoWindow(&m_showDemo);
 	ImGui::Render();
