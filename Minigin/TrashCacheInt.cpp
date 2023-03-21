@@ -95,7 +95,7 @@ void dae::TrashCacheInt::TrashCacheTest()
 
 	constexpr int amountOfTests{ 10 };
 	constexpr int maxAmountSteps{ 1024 };
-	m_times.resize(amountOfTests);
+	m_times.resize(amountOfTests+1);
 	const auto buffer = new int[size] {};
 
 	for (int sample{}; sample < m_samples; ++sample)

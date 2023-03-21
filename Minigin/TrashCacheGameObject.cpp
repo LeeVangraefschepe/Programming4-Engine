@@ -116,7 +116,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3D()
 
 	constexpr int amountOfTests{ 10 };
 	constexpr int maxAmountSteps{ 1024 };
-	m_times3D.resize(amountOfTests);
+	m_times3D.resize(amountOfTests+1);
 	const auto buffer = new GameObject3D[size] {};
 
 	for (int sample{}; sample < m_samples; ++sample)
@@ -145,7 +145,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3D()
 
 	m_isCalculating3D = false;
 
-	if (static_cast<int>(m_times3DP.size()) == amountOfTests && static_cast<int>(m_times3D.size()) == amountOfTests)
+	if (static_cast<int>(m_times3DP.size()) == amountOfTests + 1 && static_cast<int>(m_times3D.size()) == amountOfTests + 1)
 	{
 		m_groupedData = new const float* [2] {m_times3D.data(), m_times3DP.data()};
 	}
@@ -163,7 +163,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3DP()
 
 	constexpr int amountOfTests{ 10 };
 	constexpr int maxAmountSteps{ 1024 };
-	m_times3DP.resize(amountOfTests);
+	m_times3DP.resize(amountOfTests+1);
 	const auto buffer = new GameObject3DP[size]{};
 
 	for (int sample{}; sample < m_samples; ++sample)
@@ -192,7 +192,7 @@ void dae::TrashCacheGameObject::TrashCacheTest3DP()
 
 	m_isCalculating3DP = false;
 
-	if (static_cast<int>(m_times3DP.size()) == amountOfTests && static_cast<int>(m_times3D.size()) == amountOfTests)
+	if (static_cast<int>(m_times3DP.size()) == amountOfTests + 1 && static_cast<int>(m_times3D.size()) == amountOfTests + 1)
 	{
 		m_groupedData = new const float* [2] {m_times3D.data(), m_times3DP.data()};
 	}
