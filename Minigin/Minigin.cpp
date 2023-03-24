@@ -65,6 +65,7 @@ dae::Minigin::Minigin(const std::string &dataPath, int width, int height)
 	}
 
 	Renderer::GetInstance().Init(g_window);
+	SceneManager::GetInstance().SetDimensions(width, height);
 
 	ResourceManager::GetInstance().Init(dataPath);
 }

@@ -25,7 +25,6 @@ void dae::TextRenderer::Update()
 		m_spriteRenderer->SetSprite(m_textTexture);
 		m_needsUpdate = false;
 	}
-	
 }
 
 void dae::TextRenderer::UpdateTexture()
@@ -43,4 +42,8 @@ void dae::TextRenderer::UpdateTexture()
 	}
 	SDL_FreeSurface(surf);
 	m_textTexture = std::make_shared<Texture2D>(texture);
+
+	const auto size = m_textTexture->GetSize();
+	m_size.x = static_cast<float>(size.x);
+	m_size.y = static_cast<float>(size.y);
 }

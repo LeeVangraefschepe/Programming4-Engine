@@ -23,6 +23,8 @@ namespace dae
 		void SetColor(int r, int g, int b) { m_color = SDL_Color{ static_cast<uint8_t>(r),static_cast<uint8_t>(g),static_cast<uint8_t>(b) }; UpdateTexture(); }
 		void SetColor(SDL_Color color) { m_color = color; UpdateTexture(); }
 
+		const glm::vec2& GetDimensions() const { return m_size; }
+
 		TextRenderer(const TextRenderer& other) = delete;
 		TextRenderer(TextRenderer&& other) = delete;
 		TextRenderer& operator=(const TextRenderer& other) = delete;
@@ -35,6 +37,7 @@ namespace dae
 		std::shared_ptr<Font> m_font;
 		std::shared_ptr<Texture2D> m_textTexture;
 		SDL_Color m_color{255,255,255};
+		glm::vec2 m_size;
 
 		//Other components
 		Transform* m_transform;

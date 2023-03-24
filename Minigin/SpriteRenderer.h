@@ -13,7 +13,8 @@ namespace dae
 		~SpriteRenderer() override = default;
 
 		void Render() override;
-		void SetSprite(std::shared_ptr<Texture2D> pSprite);
+		void SetSprite(const std::shared_ptr<Texture2D>& pSprite);
+		const glm::vec2& GetDimensions() const;
 
 		SpriteRenderer(const SpriteRenderer& other) = delete;
 		SpriteRenderer(SpriteRenderer&& other) = delete;
@@ -21,6 +22,7 @@ namespace dae
 		SpriteRenderer& operator=(SpriteRenderer&& other) = delete;
 	private:
 		Transform* m_transform{};
+		glm::vec2 m_size{};
 		std::shared_ptr<Texture2D> m_pSprite;
 	};
 }

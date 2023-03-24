@@ -1,13 +1,18 @@
 #pragma once
 #include "SpriteRenderer.h"
 #include "Renderer.h"
+
+#include <utility>
 #include "GameObject.h"
 
 dae::SpriteRenderer::SpriteRenderer(GameObject* pGameObject, std::shared_ptr<Texture2D> pSprite)
-	: m_pSprite(pSprite),
-	BaseComponent(pGameObject)
+	: BaseComponent(pGameObject),
+	  m_pSprite(std::move(pSprite))
 {
 	m_transform = GetGameObject()->GetComponent<Transform>();
+	const auto size = m_pSprite->GetSize();
+	m_size.x = static_cast<float>(size.x);
+	m_size.y = static_cast<float>(size.y);
 }
 
 void dae::SpriteRenderer::Render()
@@ -24,7 +29,12 @@ void dae::SpriteRenderer::Render()
 	}
 }
 
-void dae::SpriteRenderer::SetSprite(const std::shared_ptr<Texture2D> pSprite)
+void dae::SpriteRenderer::SetSprite(const std::shared_ptr<Texture2D>& pSprite)
 {
 	m_pSprite = pSprite;
+}
+
+const glm::vec2& dae::SpriteRenderer::GetDimensions() const
+{
+	return m_size;
 }
