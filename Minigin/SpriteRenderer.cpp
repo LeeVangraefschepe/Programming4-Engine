@@ -14,13 +14,12 @@ void dae::SpriteRenderer::Render()
 {
 	if (m_pSprite != nullptr)
 	{
-		if (m_transform.expired())
+		if (m_transform == nullptr)
 		{
 			Renderer::GetInstance().RenderTexture(*m_pSprite, 0, 0);
 			return;
 		}
-		const std::shared_ptr<Transform> transform = m_transform.lock();
-		const auto& pos = transform->GetWorldPosition();
+		const auto& pos = m_transform->GetWorldPosition();
 		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y);
 	}
 }

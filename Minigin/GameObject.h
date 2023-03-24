@@ -21,6 +21,7 @@ namespace dae
 		void Update();
 		void Render() const;
 
+#pragma region Parenting
 		void SetParent(std::weak_ptr<GameObject> parent, bool keepWorldPosition);
 		std::weak_ptr<GameObject> GetParent() const { return m_pParent; }
 		void AddChild(std::weak_ptr<GameObject> child);
@@ -28,10 +29,11 @@ namespace dae
 		
 		const std::vector<std::weak_ptr<GameObject>>& GetChildren() { return  m_pChildren; }
 		bool HasChild(std::shared_ptr<GameObject> child) const;
+#pragma endregion
 
 #pragma region ComponentTemplate
 		template<typename T, typename... Args>
-		std::weak_ptr<T> AddComponent(Args&&... args)
+		T* AddComponent(Args&&... args)
 		{
 			//Make sure its a component
 			static_assert(std::is_base_of<BaseComponent, T>::value, "T must be derived from BaseComponent");
@@ -40,36 +42,36 @@ namespace dae
 			static_assert(std::is_constructible<T, GameObject*, Args...>::value, "Unable to construct T with the given arguments in function");
 
 			//Check if component is already on object
-			std::weak_ptr<T> attachedComp = GetComponent<T>();
-			if (attachedComp.expired() == false)
+			if (T* attachedComp = GetComponent<T>())
 			{
 				return attachedComp;
 			}
 
 			//Create shared pointer
-			auto pComponent{ std::make_shared<T>(this, std::forward<Args>(args)...) };
+			auto pComponent{ std::make_unique<T>(this, std::forward<Args>(args)...) };
+			auto rawPointer = pComponent.get();
 
 			//Add to global list
-			m_pComponents.push_back(pComponent);
+			m_pComponents.push_back(std::move(pComponent));
 
 			//Return to user
-			return pComponent;
+			return rawPointer;
 		}
 
 		template<typename T>
-		std::weak_ptr<T> GetComponent() const
+		T* GetComponent() const
 		{
 			for (const auto& p : m_pComponents)
 			{
-				if (const auto sp = p)
+				if (p)
 				{
-					if (auto derivedComponent = std::dynamic_pointer_cast<T>(sp))
+					if (auto* derivedComponent = dynamic_cast<T*>(p.get()))
 					{
 						return derivedComponent;
 					}
 				}
 			}
-			return std::weak_ptr<T>();
+			return nullptr;
 		}
 
 		template<typename T>
@@ -77,9 +79,9 @@ namespace dae
 		{
 			for (const auto& p : m_pComponents)
 			{
-				if (auto sp = p)
+				if (p)
 				{
-					if (auto derivedComponent = std::dynamic_pointer_cast<T>(sp))
+					if (auto* derivedComponent = dynamic_cast<T*>(p.get()))
 					{
 						return true;
 					}
@@ -93,10 +95,10 @@ namespace dae
 
 			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
 			{
-				std::shared_ptr<T> pComponent{ std::dynamic_pointer_cast<T>(*it) };
+				auto* pComponent = dynamic_cast<T*>(it->get());
 				if (pComponent != nullptr)
 				{
-					m_pDestroyComponents.push_back(*it);
+					m_pDestroyComponents.push_back(it->get());
 					return;
 				}
 			}
@@ -109,13 +111,13 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		void EraseComponent(const std::shared_ptr<BaseComponent> component);
+		void EraseComponent(const BaseComponent* component);
 		bool IsValidParent(std::weak_ptr<GameObject> parent);
 		void RemoveChild(std::weak_ptr<GameObject> child);
 
 		std::weak_ptr<GameObject> m_pParent{};
 		std::vector<std::weak_ptr<GameObject>> m_pChildren{};
-		std::vector<std::shared_ptr<BaseComponent>> m_pComponents{};
-		std::vector<std::weak_ptr<BaseComponent>> m_pDestroyComponents{};
+		std::vector<std::unique_ptr<BaseComponent>> m_pComponents{};
+		std::vector<BaseComponent*> m_pDestroyComponents{};
 	};
 }

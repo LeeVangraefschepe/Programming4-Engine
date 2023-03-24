@@ -11,11 +11,11 @@ using namespace dae;
 FPS::FPS(GameObject* pGameObject, float updateInterval): BaseComponent(pGameObject), m_timeInterval(updateInterval)
 {
 	m_pTextRenderer = GetGameObject()->GetComponent<TextRenderer>();
-	if (m_pTextRenderer.expired())
+	if (m_pTextRenderer == nullptr)
 	{
 		m_pTextRenderer = GetGameObject()->AddComponent<TextRenderer>("FPS: ", ResourceManager::GetInstance().LoadFont("Lingua.otf", 12));
 	}
-	m_pTextRenderer.lock()->SetColor(247, 247, 0);
+	m_pTextRenderer->SetColor(247, 247, 0);
 }
 
 FPS::~FPS()
@@ -28,11 +28,11 @@ void FPS::Update()
 	
 	if (m_timeTillUpdate <= 0.f)
 	{
-		if (m_pTextRenderer.expired() == false)
+		if (m_pTextRenderer)
 		{
 			std::stringstream ss{};
 			ss << "FPS: " << static_cast<int>(1.f / Time::GetDeltaTime());
-			m_pTextRenderer.lock()->SetText(ss.str());
+			m_pTextRenderer->SetText(ss.str());
 		}
 		m_timeTillUpdate = m_timeInterval;
 	}

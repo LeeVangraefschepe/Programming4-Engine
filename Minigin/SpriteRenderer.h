@@ -20,7 +20,7 @@ namespace dae
 		SpriteRenderer& operator=(const SpriteRenderer& other) = delete;
 		SpriteRenderer& operator=(SpriteRenderer&& other) = delete;
 	private:
-		std::weak_ptr<Transform> m_transform{};
+		Transform* m_transform{};
 		std::shared_ptr<Texture2D> m_pSprite;
 	};
 }

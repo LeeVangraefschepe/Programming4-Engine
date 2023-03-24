@@ -34,6 +34,9 @@
     <Filter Include="Components\ImGUI">
       <UniqueIdentifier>{4ff8d14b-2257-4106-96ea-26505335d7cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{9f421067-ce67-4c7f-aa63-7d882de0429f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -120,6 +123,15 @@
     <ClInclude Include="TrashCacheGameObject.h">
       <Filter>Components\ImGUI</Filter>
     </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -196,6 +208,12 @@
     </ClCompile>
     <ClCompile Include="TrashCacheGameObject.cpp">
       <Filter>Components\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

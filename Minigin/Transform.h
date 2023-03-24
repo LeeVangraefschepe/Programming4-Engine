@@ -12,13 +12,13 @@ namespace dae
 		{
 		}
 
-		const glm::vec3& GetLocalPosition() const;
-		const glm::vec3& GetWorldPosition();
+		const glm::vec2& GetLocalPosition() const;
+		const glm::vec2& GetWorldPosition();
 
-		void SetPosition(float x, float y, float z = 0);
-		void SetLocalPosition(float x, float y, float z = 0);
-		void SetPosition(const glm::vec3& pos) { m_localPosition = pos; SetPositionDirty(); };
-		void SetLocalPosition(const glm::vec3& pos) { m_localPosition = pos; SetPositionDirty(); };
+		void SetPosition(float x, float y);
+		void SetLocalPosition(float x, float y);
+		void SetPosition(const glm::vec2& pos) { m_localPosition = pos; SetPositionDirty(); };
+		void SetLocalPosition(const glm::vec2& pos) { m_localPosition = pos; SetPositionDirty(); };
 
 		void SetPositionDirty();
 
@@ -29,8 +29,8 @@ namespace dae
 
 		void UpdateWorldPosition();
 
-		glm::vec3 m_worldPosition{0,0,0};
-		glm::vec3 m_localPosition{0,0,0};
+		glm::vec2 m_worldPosition{0,0};
+		glm::vec2 m_localPosition{0,0};
 
 		//Dirty flag
 		bool m_isPositionDirty{true};

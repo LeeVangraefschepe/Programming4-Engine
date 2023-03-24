@@ -37,8 +37,8 @@ namespace dae
 		SDL_Color m_color{255,255,255};
 
 		//Other components
-		std::weak_ptr<Transform> m_transform;
-		std::weak_ptr<SpriteRenderer> m_spriteRenderer;
+		Transform* m_transform;
+		SpriteRenderer* m_spriteRenderer;
 
 		//Dirty flag
 		bool m_needsUpdate{ true };

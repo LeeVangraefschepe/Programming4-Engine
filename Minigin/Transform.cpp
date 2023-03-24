@@ -1,19 +1,17 @@
 #include "Transform.h"
 #include "GameObject.h"
 
-void dae::Transform::SetPosition(const float x, const float y, const float z)
+void dae::Transform::SetPosition(const float x, const float y)
 {
 	m_localPosition.x = x;
 	m_localPosition.y = y;
-	m_localPosition.z = z;
 	SetPositionDirty();
 }
 
-void dae::Transform::SetLocalPosition(float x, float y, float z)
+void dae::Transform::SetLocalPosition(float x, float y)
 {
 	m_localPosition.x = x;
 	m_localPosition.y = y;
-	m_localPosition.z = z;
 	SetPositionDirty();
 }
 
@@ -23,21 +21,21 @@ void dae::Transform::SetPositionDirty()
 	for (const auto child : children)
 	{
 		auto transfrom = child.lock()->GetComponent<Transform>();
-		if (transfrom.expired())
+		if (transfrom == nullptr)
 		{
 			continue;
 		}
-		transfrom.lock()->SetPositionDirty();
+		transfrom->SetPositionDirty();
 	}
 	m_isPositionDirty = true;
 }
 
-const glm::vec3& dae::Transform::GetLocalPosition() const
+const glm::vec2& dae::Transform::GetLocalPosition() const
 {
 	return m_localPosition;
 }
 
-const glm::vec3& dae::Transform::GetWorldPosition()
+const glm::vec2& dae::Transform::GetWorldPosition()
 {
 	if (m_isPositionDirty)
 	{
@@ -54,7 +52,7 @@ void dae::Transform::UpdateWorldPosition()
 	}
 	else
 	{
-		const auto tranformParent = GetGameObject()->GetParent().lock()->GetComponent<Transform>().lock();
+		const auto tranformParent = GetGameObject()->GetParent().lock()->GetComponent<Transform>();
 		const auto worldposParent = tranformParent->GetWorldPosition();
 		m_worldPosition = worldposParent + m_localPosition;
 	}

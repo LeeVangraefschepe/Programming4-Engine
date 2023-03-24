@@ -22,18 +22,18 @@ void dae::GameObject::Update()
 	{
 		for (auto it = m_pDestroyComponents.begin(); it != m_pDestroyComponents.end(); ++it)
 		{
-			EraseComponent(it->lock());
+			EraseComponent(*it);
 		}
 		m_pDestroyComponents.clear();
 	}
-	for (const auto p : m_pComponents)
+	for (const auto& p : m_pComponents)
 	{
 		p->Update();
 	}
 }
 void dae::GameObject::Render() const
 {
-	for (const auto p : m_pComponents)
+	for (const auto& p : m_pComponents)
 	{
 		p->Render();
 	}
@@ -52,11 +52,11 @@ void dae::GameObject::SetParent(std::weak_ptr<GameObject> parent, bool keepWorld
 	}
 	m_pParent = parent;
 	const auto wTransform = GetComponent<Transform>();
-	if (wTransform.expired())
+	if (wTransform == nullptr)
 	{
 		return;
 	}
-	const auto transform = wTransform.lock();
+	const auto transform = wTransform;
 	if (m_pParent.expired())
 	{
 		transform->SetLocalPosition(transform->GetWorldPosition());
@@ -66,7 +66,7 @@ void dae::GameObject::SetParent(std::weak_ptr<GameObject> parent, bool keepWorld
 		m_pParent.lock()->AddChild(weak_from_this());
 		if (keepWorldPosition)
 		{
-			transform->SetLocalPosition(transform->GetLocalPosition() - m_pParent.lock()->GetComponent<Transform>().lock()->GetWorldPosition());
+			transform->SetLocalPosition(transform->GetLocalPosition() - m_pParent.lock()->GetComponent<Transform>()->GetWorldPosition());
 		}
 		transform->SetPositionDirty();
 	}
@@ -102,11 +102,11 @@ bool dae::GameObject::HasChild(std::shared_ptr<GameObject> child) const
 	}
 	return false;
 }
-void dae::GameObject::EraseComponent(const std::shared_ptr<BaseComponent> component)
+void dae::GameObject::EraseComponent(const BaseComponent* component)
 {
 	for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
 	{
-		if (component == *it)
+		if (component == it->get())
 		{
 			m_pComponents.erase(it);
 			break;

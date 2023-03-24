@@ -12,7 +12,7 @@ dae::TextRenderer::TextRenderer(GameObject* pGameObject, const std::string& text
 	SetText(text);
 	m_transform = GetGameObject()->GetComponent<Transform>();
 	m_spriteRenderer = GetGameObject()->GetComponent<SpriteRenderer>();
-	if (m_spriteRenderer.expired())
+	if (m_spriteRenderer == nullptr)
 	{
 		m_spriteRenderer = GetGameObject()->AddComponent<SpriteRenderer>(m_textTexture);
 	}
@@ -22,8 +22,7 @@ void dae::TextRenderer::Update()
 	if (m_needsUpdate)
 	{
 		UpdateTexture();
-		const auto spriteRenderer = m_spriteRenderer.lock();
-		spriteRenderer->SetSprite(m_textTexture);
+		m_spriteRenderer->SetSprite(m_textTexture);
 		m_needsUpdate = false;
 	}
 	

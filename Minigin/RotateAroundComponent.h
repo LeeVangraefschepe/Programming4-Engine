@@ -14,8 +14,8 @@ namespace dae
 		~RotateAroundComponent() override = default;
 		void Update() override;
 	private:
-		std::weak_ptr<Transform> m_pTransform;
-		std::weak_ptr<Transform> m_pParentTransform;
+		Transform* m_pTransform;
+		Transform* m_pParentTransform;
 		float m_radius;
 		float m_rotation{};
 		float m_speed;
