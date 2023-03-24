@@ -2,6 +2,8 @@
 #include <backends/imgui_impl_sdl2.h>
 #include "InputManager.h"
 
+#include <iostream>
+
 bool dae::InputManager::ProcessInput()
 {
 	//Keyboard handling & application
@@ -105,13 +107,39 @@ bool dae::InputManager::ReadEvents()
 	}
 	return true;
 }
-
 void dae::InputManager::ClearEvents()
 {
 	m_keysDown.clear();
 	m_keysUp.clear();
 }
+void dae::InputManager::RemoveCommands(const GameObject* pGameObject)
+{
+	auto consoleIt = m_consoleCommands.begin();
+	while (consoleIt != m_consoleCommands.end())
+	{
+		if (consoleIt->second && consoleIt->second->GetActor() == pGameObject)
+		{
+			consoleIt = m_consoleCommands.erase(consoleIt);
+		}
+		else
+		{
+			++consoleIt;
+		}
+	}
 
+	auto keyboardIt = m_keyboardCommands.begin();
+	while (keyboardIt != m_keyboardCommands.end())
+	{
+		if (keyboardIt->second.second->GetActor() == pGameObject)
+		{
+			keyboardIt = m_keyboardCommands.erase(keyboardIt);
+		}
+		else
+		{
+			++keyboardIt;
+		}
+	}
+}
 int dae::InputManager::FindController(int id)
 {
 	const int size = static_cast<int>(m_controllers.size());

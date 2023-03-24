@@ -105,4 +105,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		const auto sleepTimeMs = frameTimeMs - std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - currentTime).count();
 		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(sleepTimeMs)));
 	}
+
+	sceneManager.RemoveAllScenes();
 }

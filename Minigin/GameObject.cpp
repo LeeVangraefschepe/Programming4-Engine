@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
-
 #include <algorithm>
-
+#include "InputManager.h"
 #include "ResourceManager.h"
 
 dae::GameObject::GameObject()
@@ -11,6 +10,7 @@ dae::GameObject::GameObject()
 }
 dae::GameObject::~GameObject()
 {
+	InputManager::GetInstance().RemoveCommands(this);
 	for (auto child : m_pChildren)
 	{
 		child.lock()->SetParent(std::weak_ptr<GameObject>{}, true);

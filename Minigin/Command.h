@@ -7,12 +7,12 @@ namespace dae
 	class Command
 	{
 		GameObject* m_actor;
-	protected:
-		GameObject* GetActor() const { return m_actor; }
 	public:
 		explicit Command(GameObject* actor) : m_actor(actor){}
 		virtual ~Command() = default;
 		virtual void Execute() = 0;
+
+		GameObject* GetActor() const { return m_actor; }
 
 		Command(const Command& other) = delete;
 		Command(Command&& other) = delete;

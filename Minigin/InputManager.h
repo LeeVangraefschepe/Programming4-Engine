@@ -22,6 +22,7 @@ namespace dae
 		};
 
 		bool ProcessInput();
+		void RemoveCommands(const GameObject* pGameObject);
 
 		template <class T>
 		T* BindCommand(int id, Controller::ControllerButton button, InputType inputType, GameObject* pGameObject)
@@ -45,7 +46,7 @@ namespace dae
 		}
 
 		template <class T>
-		T* BindCommand(Uint32 key, InputType inputType, GameObject* pGameObject)
+		T* BindCommand(unsigned key, InputType inputType, GameObject* pGameObject)
 		{
 			//Check if class is right & input type is correctly
 			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
@@ -66,7 +67,7 @@ namespace dae
 			return rawPointer;
 		}
 		template <class T>
-		T* BindCommand(Uint32 left, Uint32 up, Uint32 right, Uint32 down, InputType inputType, GameObject* pGameObject)
+		T* BindCommand(unsigned left, unsigned up, unsigned right, unsigned down, InputType inputType, GameObject* pGameObject)
 		{
 			//Check if class is right & input type is correctly
 			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
@@ -106,13 +107,13 @@ namespace dae
 		std::vector<std::unique_ptr<Controller>> m_controllers{};
 #pragma endregion
 #pragma region KeyboardData
-		using KeyboardBinding = std::pair<std::vector<Uint32>, std::unique_ptr<Command>>;
+		using KeyboardBinding = std::pair<std::vector<unsigned>, std::unique_ptr<Command>>;
 		using KeyboardCommandsMap = std::multimap<InputType, KeyboardBinding>;
 
 		KeyboardCommandsMap m_keyboardCommands{};
-		std::set<Uint32> m_keysDown{};
-		std::set<Uint32> m_keysUp{};
-		std::set<Uint32> m_keysPressed{};
+		std::set<unsigned> m_keysDown{};
+		std::set<unsigned> m_keysUp{};
+		std::set<unsigned> m_keysPressed{};
 #pragma endregion
 	};
 }
