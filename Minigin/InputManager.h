@@ -31,6 +31,12 @@ namespace dae
 			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
 			FindController(id);
 
+			//Check if Command is Axis usable
+			if (inputType == InputType::Axis && std::is_base_of<AxisCommand, T>() == false)
+			{
+				return nullptr;
+			}
+
 			//Create the command and key
 			auto command = std::make_unique<T>(pGameObject);
 			ControllerKey key{ id, inputType, button };
@@ -70,7 +76,7 @@ namespace dae
 		T* BindCommand(unsigned left, unsigned up, unsigned right, unsigned down, InputType inputType, GameObject* pGameObject)
 		{
 			//Check if class is right & input type is correctly
-			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
+			static_assert(std::is_base_of<AxisCommand, T>(), "T needs to be derived from command");
 			assert(InputType::Axis == inputType && "Can not bind Button with multiple values");
 			if (InputType::Axis != inputType)
 			{
