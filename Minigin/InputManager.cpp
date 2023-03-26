@@ -54,17 +54,31 @@ bool dae::InputManager::ProcessInput()
 		switch (command.first.inputType)
 		{
 		case InputType::OnButtonDown:
-			canExecute = m_controllers[command.first.id]->IsDown(command.first.button);
+			canExecute = m_controllers[command.first.id]->IsDown(command.first.buttons[0]);
 			break;
 		case InputType::OnButtonUp:
-			canExecute = m_controllers[command.first.id]->IsUp(command.first.button);
+			canExecute = m_controllers[command.first.id]->IsUp(command.first.buttons[0]);
 			break;
 		case InputType::OnButton:
-			canExecute = m_controllers[command.first.id]->IsPressed(command.first.button);
+			canExecute = m_controllers[command.first.id]->IsPressed(command.first.buttons[0]);
 			break;
 		case InputType::Axis:
 			AxisCommand* axis = static_cast<AxisCommand*>(command.second.get());
-			axis->SetInput(m_controllers[command.first.id]->GetAxis(command.first.button));
+			if (command.first.multipleButtons)
+			{
+				glm::vec2 input{};
+				int index{ -1 };
+				input.x -= static_cast<float>(m_controllers[command.first.id]->IsPressed(command.first.buttons[++index]));
+				input.y += static_cast<float>(m_controllers[command.first.id]->IsPressed(command.first.buttons[++index]));
+				input.x += static_cast<float>(m_controllers[command.first.id]->IsPressed(command.first.buttons[++index]));
+				input.y -= static_cast<float>(m_controllers[command.first.id]->IsPressed(command.first.buttons[++index]));
+				axis->SetInput(input);
+			}
+			else
+			{
+				axis->SetInput(m_controllers[command.first.id]->GetAxis(command.first.buttons[0]));
+			}
+			
 			canExecute = true;
 			break;
 		}

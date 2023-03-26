@@ -39,7 +39,7 @@ namespace dae
 
 			//Create the command and key
 			auto command = std::make_unique<T>(pGameObject);
-			ControllerKey key{ id, inputType, button };
+			ControllerKey key{ id, inputType, std::vector{button} };
 
 			//Cache the raw pointer for return
 			T* rawPointer = command.get();
@@ -50,7 +50,6 @@ namespace dae
 			//Return raw pointer pointing towards the command
 			return rawPointer;
 		}
-
 		template <class T>
 		T* BindCommand(unsigned key, InputType inputType, GameObject* pGameObject)
 		{
@@ -68,6 +67,32 @@ namespace dae
 
 			//Add to multimap with one key
 			m_keyboardCommands.emplace(inputType, KeyboardBinding{ std::vector{key}, std::move(command) });
+
+			//Return raw pointer pointing towards the command
+			return rawPointer;
+		}
+		template <class T>
+		T* BindCommand(int id, Controller::ControllerButton left, Controller::ControllerButton up, Controller::ControllerButton right, Controller::ControllerButton bottom, InputType inputType, GameObject* pGameObject)
+		{
+			//Check if class is right & get or create the controller
+			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
+			FindController(id);
+
+			//Check if Command is Axis usable
+			if (inputType == InputType::Axis && std::is_base_of<AxisCommand, T>() == false)
+			{
+				return nullptr;
+			}
+
+			//Create the command and key
+			auto command = std::make_unique<T>(pGameObject);
+			ControllerKey key{ id, inputType, std::vector{left, up, right, bottom}, true };
+
+			//Cache the raw pointer for return
+			T* rawPointer = command.get();
+
+			//Add to multimap
+			m_consoleCommands.emplace(key, std::move(command));
 
 			//Return raw pointer pointing towards the command
 			return rawPointer;
@@ -103,7 +128,8 @@ namespace dae
 		{
 			int id;
 			InputType inputType;
-			Controller::ControllerButton button;
+			std::vector<Controller::ControllerButton> buttons;
+			bool multipleButtons{false};
 		public:
 			bool operator<(const ControllerKey& other) const { return other.id < id; }
 		};
