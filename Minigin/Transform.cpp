@@ -20,7 +20,7 @@ void dae::Transform::SetPositionDirty()
 	const auto children = GetGameObject()->GetChildren();
 	for (const auto child : children)
 	{
-		auto transfrom = child.lock()->GetComponent<Transform>();
+		auto transfrom = child->GetComponent<Transform>();
 		if (transfrom == nullptr)
 		{
 			continue;
@@ -46,13 +46,13 @@ const glm::vec2& dae::Transform::GetWorldPosition()
 
 void dae::Transform::UpdateWorldPosition()
 {
-	if (GetGameObject()->GetParent().expired())
+	if (GetGameObject()->GetParent() == nullptr)
 	{
 		m_worldPosition = m_localPosition;
 	}
 	else
 	{
-		const auto tranformParent = GetGameObject()->GetParent().lock()->GetComponent<Transform>();
+		const auto tranformParent = GetGameObject()->GetParent()->GetComponent<Transform>();
 		const auto worldposParent = tranformParent->GetWorldPosition();
 		m_worldPosition = worldposParent + m_localPosition;
 	}

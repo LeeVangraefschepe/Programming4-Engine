@@ -12,7 +12,7 @@ namespace dae
 {
 	class Texture2D;
 
-	class GameObject final : public std::enable_shared_from_this<GameObject>
+	class GameObject final
 	{
 	public:
 		explicit GameObject();
@@ -22,13 +22,21 @@ namespace dae
 		void Render() const;
 
 #pragma region Parenting
-		void SetParent(std::weak_ptr<GameObject> parent, bool keepWorldPosition);
-		std::weak_ptr<GameObject> GetParent() const { return m_pParent; }
-		void AddChild(std::weak_ptr<GameObject> child);
+		void SetParent(GameObject* parent, bool keepWorldPosition);
+		GameObject* GetParent() const { return m_pParent; }
 		
 		
-		const std::vector<std::weak_ptr<GameObject>>& GetChildren() { return  m_pChildren; }
-		bool HasChild(std::shared_ptr<GameObject> child) const;
+		std::vector<GameObject*> GetChildren() const
+		{
+			std::vector<GameObject*> rawPointers;
+			for (const auto& child : m_pChildren)
+			{
+				rawPointers.push_back(child.get());
+			}
+			return rawPointers;
+		}
+
+		bool HasChild(GameObject* child) const;
 #pragma endregion
 
 #pragma region ComponentTemplate
@@ -112,11 +120,10 @@ namespace dae
 
 	private:
 		void EraseComponent(const BaseComponent* component);
-		bool IsValidParent(std::weak_ptr<GameObject> parent);
-		void RemoveChild(std::weak_ptr<GameObject> child);
+		bool IsValidParent(GameObject* parent) const;
 
-		std::weak_ptr<GameObject> m_pParent{};
-		std::vector<std::weak_ptr<GameObject>> m_pChildren{};
+		GameObject* m_pParent{};
+		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponents{};
 		std::vector<BaseComponent*> m_pDestroyComponents{};
 	};
