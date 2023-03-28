@@ -49,6 +49,13 @@ public:
 			(left ? currentState.Gamepad.sThumbLY : currentState.Gamepad.sThumbRY)
 		};
 	}
+	unsigned char GetTrigger(bool left) const
+	{
+		return
+		{
+			left ? currentState.Gamepad.bLeftTrigger : currentState.Gamepad.bRightTrigger
+		};
+	}
 };
 
 float Controller::ClampAxisValue(float value) const
@@ -73,6 +80,22 @@ float Controller::ClampAxisValue(float value) const
 	return value / maxValue;
 }
 
+float Controller::ClampTrigger(unsigned char value) const
+{
+	constexpr char deadZoneValue{ static_cast<char>(0.1f * static_cast<float>(MAXCHAR)) };
+	constexpr char maxValue{ static_cast<char>(0.9f * static_cast<float>(MAXCHAR)) };
+
+	if (value <= deadZoneValue)
+	{
+		return 0.f;
+	}
+	if (value >= maxValue)
+	{
+		return 1.f;
+	}
+	return static_cast<float>(value) / static_cast<float>(maxValue);
+}
+
 void dae::Controller::Update()
 {
 	m_pImpl->Update();
@@ -95,18 +118,26 @@ bool dae::Controller::IsPressed(ControllerButton button) const
 
 glm::vec2 dae::Controller::GetAxis(ControllerButton button) const
 {
-	auto input = m_pImpl->GetAxis(button == ControllerButton::LeftThumb);
+	//TODO: Look into warning
+	glm::vec2 input = m_pImpl->GetAxis(static_cast<int>(button) & static_cast<int>(ControllerButton::LeftThumb));
 	input.x = ClampAxisValue(input.x);
 	input.y = ClampAxisValue(input.y);
 	return input;
 }
 
-dae::Controller::Controller(int controllerIndex) : m_pImpl{ new ControllerImpl{controllerIndex} }
+float Controller::GetTrigger(ControllerButton button) const
+{
+	//TODO: Look into warning
+	const unsigned char input = m_pImpl->GetTrigger(static_cast<int>(button) & static_cast<int>(ControllerButton::LeftShoulder));
+	return ClampTrigger(input);
+}
+
+dae::Controller::Controller(int controllerIndex) : m_pImpl{ std::make_unique<ControllerImpl>(controllerIndex) }
 {
 	
 }
 
 Controller::~Controller()
 {
-	delete m_pImpl;
+
 }

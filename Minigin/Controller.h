@@ -7,8 +7,9 @@ namespace dae
 	class Controller
 	{
 		class ControllerImpl;
-		ControllerImpl* m_pImpl;
+		std::unique_ptr<ControllerImpl> m_pImpl;
 		float ClampAxisValue(float value) const;
+		float ClampTrigger(unsigned char value) const;
 	public:
 		enum class ControllerButton
 		{
@@ -34,6 +35,7 @@ namespace dae
 		bool IsUp(ControllerButton button) const;
 		bool IsPressed(ControllerButton button) const;
 		glm::vec2 GetAxis(ControllerButton button) const;
+		float GetTrigger(ControllerButton button) const;
 
 		explicit Controller(int controllerIndex);
 		~Controller();

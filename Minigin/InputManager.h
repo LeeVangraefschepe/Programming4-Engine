@@ -79,7 +79,7 @@ namespace dae
 			FindController(id);
 
 			//Check if Command is Axis usable
-			if (inputType == InputType::Axis && std::is_base_of<AxisCommand, T>() == false)
+			if (inputType != InputType::Axis || std::is_base_of<AxisCommand, T>() == false)
 			{
 				return nullptr;
 			}
