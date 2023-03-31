@@ -10,7 +10,7 @@ dae::GameObject::GameObject()
 }
 dae::GameObject::~GameObject()
 {
-	InputManager::GetInstance().RemoveCommands(this);
+	
 }
 void dae::GameObject::Update()
 {

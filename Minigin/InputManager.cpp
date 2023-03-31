@@ -130,12 +130,12 @@ void dae::InputManager::ClearEvents()
 	m_keysDown.clear();
 	m_keysUp.clear();
 }
-void dae::InputManager::RemoveCommands(const GameObject* pGameObject)
+void dae::InputManager::RemoveCommand(const Command* command)
 {
 	auto consoleIt = m_consoleCommands.begin();
 	while (consoleIt != m_consoleCommands.end())
 	{
-		if (consoleIt->second && consoleIt->second->GetActor() == pGameObject)
+		if (consoleIt->second && consoleIt->second.get() == command)
 		{
 			consoleIt = m_consoleCommands.erase(consoleIt);
 		}
@@ -144,11 +144,11 @@ void dae::InputManager::RemoveCommands(const GameObject* pGameObject)
 			++consoleIt;
 		}
 	}
-
+	
 	auto keyboardIt = m_keyboardCommands.begin();
 	while (keyboardIt != m_keyboardCommands.end())
 	{
-		if (keyboardIt->second.second->GetActor() == pGameObject)
+		if (keyboardIt->second.second && keyboardIt->second.second.get() == command)
 		{
 			keyboardIt = m_keyboardCommands.erase(keyboardIt);
 		}

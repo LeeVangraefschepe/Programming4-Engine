@@ -6,13 +6,10 @@ namespace dae
 	class GameObject;
 	class Command
 	{
-		GameObject* m_actor;
 	public:
-		explicit Command(GameObject* actor) : m_actor(actor){}
+		explicit Command() = default;
 		virtual ~Command() = default;
 		virtual void Execute() = 0;
-
-		GameObject* GetActor() const { return m_actor; }
 
 		Command(const Command& other) = delete;
 		Command(Command&& other) = delete;
@@ -25,7 +22,7 @@ namespace dae
 	protected:
 		glm::vec2& GetInput() { return m_input; }
 	public:
-		explicit AxisCommand(GameObject* actor) : Command(actor){}
+		explicit AxisCommand() = default;
 		virtual ~AxisCommand() override = default;
 		virtual void Execute() override = 0;
 		void SetInput(const glm::vec2& input) { m_input = input; }

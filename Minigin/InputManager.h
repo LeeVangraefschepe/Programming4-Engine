@@ -22,10 +22,11 @@ namespace dae
 		};
 
 		bool ProcessInput();
-		void RemoveCommands(const GameObject* pGameObject);
+		void RemoveCommand(const Command* command);
 
+#pragma region Controller
 		template <class T>
-		T* BindCommand(int id, Controller::ControllerButton button, InputType inputType, GameObject* pGameObject)
+		T* BindCommand(T* rawCommand, int id, Controller::ControllerButton button, InputType inputType)
 		{
 			//Check if class is right & get or create the controller
 			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
@@ -37,42 +38,18 @@ namespace dae
 				return nullptr;
 			}
 
-			//Create the command and key
-			auto command = std::make_unique<T>(pGameObject);
 			ControllerKey key{ id, inputType, std::vector{button} };
-
-			//Cache the raw pointer for return
-			T* rawPointer = command.get();
+			auto command = std::unique_ptr<T>(rawCommand);
 
 			//Add to multimap
 			m_consoleCommands.emplace(key, std::move(command));
 
 			//Return raw pointer pointing towards the command
-			return rawPointer;
+			return rawCommand;
 		}
+
 		template <class T>
-		T* BindCommand(unsigned key, InputType inputType, GameObject* pGameObject)
-		{
-			//Check if class is right & input type is correctly
-			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
-			assert(InputType::Axis != inputType && "Can not bind Axis with one value");
-			if (InputType::Axis == inputType)
-			{
-				return nullptr;
-			}
-
-			//Create & cache the raw pointer for return
-			auto command = std::make_unique<T>(pGameObject);
-			T* rawPointer = command.get();
-
-			//Add to multimap with one key
-			m_keyboardCommands.emplace(inputType, KeyboardBinding{ std::vector{key}, std::move(command) });
-
-			//Return raw pointer pointing towards the command
-			return rawPointer;
-		}
-		template <class T>
-		T* BindCommand(int id, Controller::ControllerButton left, Controller::ControllerButton up, Controller::ControllerButton right, Controller::ControllerButton bottom, InputType inputType, GameObject* pGameObject)
+		T* BindCommand(T* rawCommand, int id, Controller::ControllerButton left, Controller::ControllerButton up, Controller::ControllerButton right, Controller::ControllerButton bottom, InputType inputType)
 		{
 			//Check if class is right & get or create the controller
 			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
@@ -85,20 +62,43 @@ namespace dae
 			}
 
 			//Create the command and key
-			auto command = std::make_unique<T>(pGameObject);
+			auto command = std::unique_ptr<T>(rawCommand);
 			ControllerKey key{ id, inputType, std::vector{left, up, right, bottom}, true };
-
-			//Cache the raw pointer for return
-			T* rawPointer = command.get();
 
 			//Add to multimap
 			m_consoleCommands.emplace(key, std::move(command));
 
 			//Return raw pointer pointing towards the command
-			return rawPointer;
+			return rawCommand;
 		}
+#pragma endregion
+#pragma region Keyboard
 		template <class T>
-		T* BindCommand(unsigned left, unsigned up, unsigned right, unsigned down, InputType inputType, GameObject* pGameObject)
+		T* BindCommand(T* rawCommand, unsigned key, InputType inputType)
+		{
+			//Check if class is right & input type is correctly
+			static_assert(std::is_base_of<Command, T>(), "T needs to be derived from command");
+			assert(InputType::Axis != inputType && "Can not bind Axis with one value");
+			if (InputType::Axis == inputType)
+			{
+				return nullptr;
+			}
+
+			//Create & cache the raw pointer for return
+			auto command = std::unique_ptr<T>(rawCommand);
+
+			//Add to multimap with one key
+			m_keyboardCommands.emplace(inputType, KeyboardBinding{ std::vector{key}, std::move(command) });
+
+			//Return raw pointer pointing towards the command
+			return rawCommand;
+		}
+#pragma endregion 
+		
+		
+		
+		template <class T>
+		T* BindCommand(T* rawCommand, unsigned left, unsigned up, unsigned right, unsigned down, InputType inputType)
 		{
 			//Check if class is right & input type is correctly
 			static_assert(std::is_base_of<AxisCommand, T>(), "T needs to be derived from command");
@@ -109,14 +109,13 @@ namespace dae
 			}
 
 			//Create & cache the raw pointer for return
-			auto command = std::make_unique<T>(pGameObject);
-			T* rawPointer = command.get();
+			auto command = std::unique_ptr<T>(rawCommand);
 
 			//Add to multimap with four keys
 			m_keyboardCommands.emplace(inputType, KeyboardBinding{ std::vector{left,up,right,down} ,std::move(command) });
 
 			//Return raw pointer pointing towards the command
-			return rawPointer;
+			return rawCommand;
 		}
 
 	private:
