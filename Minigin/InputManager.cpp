@@ -109,6 +109,10 @@ bool dae::InputManager::ReadEvents()
 			m_keysUp.insert(e.key.keysym.sym);
 			m_keysPressed.erase(e.key.keysym.sym);
 		}
+		if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+		{
+			m_keysPressed.clear();
+		}
 
 		//Quit loop condition
 		if (e.type == SDL_QUIT)
