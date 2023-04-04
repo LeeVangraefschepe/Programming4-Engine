@@ -6,6 +6,9 @@
 #include <SDL_ttf.h>
 #include <chrono>
 #include "Minigin.h"
+
+#include <iostream>
+
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -88,9 +91,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	bool doContinue = true;
 	auto end = std::chrono::high_resolution_clock::now();
-	constexpr float desiredFPS{144.f};
+	constexpr float desiredFPS{14400.f};
 	constexpr float frameTimeMs{1000/desiredFPS};
-
 
 	while (doContinue)
 	{
