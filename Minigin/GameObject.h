@@ -1,17 +1,13 @@
 #pragma once
 #include <memory>
 #include <vector>
-
-#include "Transform.h"
+#include "Subject.h"
 #include "BaseComponent.h"
-#include "SpriteRenderer.h"
-#include <string>
-#include <iostream>
 
 namespace dae
 {
-	class Texture2D;
-
+	class BaseComponent;
+	
 	class GameObject final
 	{
 	public:
@@ -20,6 +16,21 @@ namespace dae
 
 		void Update();
 		void Render() const;
+
+#pragma region Observable
+		void AddObservableObject(Observer* observer) const
+		{
+			m_notifyObject->AddObserver(observer);
+		}
+		void RemoveObserver(Observer* observer) const
+		{
+			m_notifyObject->RemoveObserver(observer);
+		}
+		const Subject* GetSubject() const
+		{
+			return m_notifyObject.get();
+		}
+#pragma endregion 
 
 #pragma region Parenting
 		void SetParent(GameObject* parent, bool keepWorldPosition);
@@ -119,10 +130,12 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		void EraseComponent(const BaseComponent* component);
 		bool IsValidParent(GameObject* parent) const;
-
 		GameObject* m_pParent{};
+
+		std::unique_ptr<Subject> m_notifyObject = std::make_unique<Subject>();
+
+		void EraseComponent(const BaseComponent* component);
 		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponents{};
 		std::vector<BaseComponent*> m_pDestroyComponents{};

@@ -9,6 +9,7 @@
 
 #include <iostream>
 
+#include "EventQueue.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -88,6 +89,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& event = EventQueue::GetInstance();
 
 	bool doContinue = true;
 	auto end = std::chrono::high_resolution_clock::now();
@@ -103,6 +105,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 		//Core game loop
 		doContinue = input.ProcessInput();
+		event.NotifyListeners();
 		sceneManager.Update();
 		renderer.Render();
 		const auto sleepTimeMs = frameTimeMs - std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - currentTime).count();

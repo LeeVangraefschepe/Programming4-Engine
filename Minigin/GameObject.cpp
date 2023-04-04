@@ -1,8 +1,7 @@
 #pragma once
-#include "GameObject.h"
 #include <algorithm>
-#include "InputManager.h"
-#include "ResourceManager.h"
+#include "GameObject.h"
+#include "Transform.h"
 
 dae::GameObject::GameObject()
 {

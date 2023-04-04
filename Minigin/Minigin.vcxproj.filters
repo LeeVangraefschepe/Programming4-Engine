@@ -46,6 +46,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="EventSystem">
+      <UniqueIdentifier>{ecd45a0b-bff7-4342-8aeb-751d5c892d1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -141,6 +144,24 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="EventQueue.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicAchievements.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -223,6 +244,18 @@
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>EventSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicAchievements.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>EventSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

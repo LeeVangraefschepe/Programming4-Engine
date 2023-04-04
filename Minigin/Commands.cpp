@@ -1,5 +1,6 @@
 #include "Commands.h"
-#include <iostream>
+#include "Transform.h"
+#include "HealthComponent.h"
 #include "Time.h"
 
 void dae::MoveCommand::Execute()
@@ -11,4 +12,9 @@ void dae::MoveCommand::Execute()
 	auto pos = m_pTransform->GetLocalPosition();
 	pos += input;
 	m_pTransform->SetLocalPosition(pos);
+}
+
+void dae::DebugDamage::Execute()
+{
+	m_pHealthComponent->Damage(m_damage);
 }
