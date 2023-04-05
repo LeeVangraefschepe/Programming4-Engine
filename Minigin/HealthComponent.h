@@ -17,7 +17,7 @@ namespace dae
 		 * \return If the health is under zero it returns zero. 
 		 */
 		bool Damage(float amount);
-		bool Died() const;
+		bool Died();
 	private:
 		float m_currentHealth{1.f};
 		float m_maxHealth{1.f};

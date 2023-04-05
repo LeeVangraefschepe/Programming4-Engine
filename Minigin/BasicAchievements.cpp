@@ -11,11 +11,10 @@ void dae::BasicAchievements::OnNotify(const Event& event, GameObject*)
 		return;
 	}
 	std::cout << "Event triggerd: " << event.GetName() << "\n";
-	if (event == Event{"DIED"})
+	if (event == Event{"PlayerDied"})
 	{
 		std::cout << "Died achievement unlocked\n";
-
-		std::thread t{ &BasicAchievements::UnlockAchievement, this, "ACH_WIN_ONE_GAME" };
+		std::thread t{ [this]() { UnlockAchievement("ACH_WIN_ONE_GAME"); } };
 		t.detach();
 	}
 }

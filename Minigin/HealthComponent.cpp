@@ -40,12 +40,13 @@ bool dae::HealthComponent::Damage(float amount)
 	}
 	return false;
 }
-bool dae::HealthComponent::Died() const
+bool dae::HealthComponent::Died()
 {
 	if (m_currentHealth <= 0.f)
 	{
-		EventQueue::GetInstance().SendMessage(Event{ "DIED" });
-		GetGameObject()->GetSubject()->Notify(Event{ "DIED" }, GetGameObject());
+		EventQueue::GetInstance().SendMessage(Event{ "PlayerDied" });
+		GetGameObject()->GetSubject()->Notify(Event{ "PlayerDied" }, GetGameObject());
+		ResetHealth();
 		return true;
 	}
 	return false;
