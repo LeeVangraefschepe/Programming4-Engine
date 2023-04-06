@@ -25,7 +25,8 @@ void dae::SpriteRenderer::Render()
 			return;
 		}
 		const auto& pos = m_transform->GetWorldPosition();
-		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y);
+		const auto angle = m_transform->GetRotation();
+		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y, angle);
 	}
 }
 
