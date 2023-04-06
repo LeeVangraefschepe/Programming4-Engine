@@ -15,11 +15,6 @@ void dae::Transform::SetLocalPosition(float x, float y)
 	SetPositionDirty();
 }
 
-void dae::Transform::SetRotation(float rotation)
-{
-	m_rotation = rotation;
-}
-
 void dae::Transform::SetPositionDirty()
 {
 	const auto children = GetGameObject()->GetChildren();
@@ -47,11 +42,6 @@ const glm::vec2& dae::Transform::GetWorldPosition()
 		UpdateWorldPosition();
 	}
 	return m_worldPosition;
-}
-
-float dae::Transform::GetRotation() const
-{
-	return m_rotation;
 }
 
 void dae::Transform::UpdateWorldPosition()

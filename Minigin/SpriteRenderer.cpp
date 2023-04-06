@@ -25,8 +25,7 @@ void dae::SpriteRenderer::Render()
 			return;
 		}
 		const auto& pos = m_transform->GetWorldPosition();
-		const auto angle = m_transform->GetRotation();
-		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y, angle);
+		Renderer::GetInstance().RenderTexture(*m_pSprite, pos.x, pos.y, m_rotation);
 	}
 }
 
@@ -35,7 +34,17 @@ void dae::SpriteRenderer::SetSprite(const std::shared_ptr<Texture2D>& pSprite)
 	m_pSprite = pSprite;
 }
 
+void dae::SpriteRenderer::SetRotation(float angle)
+{
+	m_rotation = angle;
+}
+
 const glm::vec2& dae::SpriteRenderer::GetDimensions() const
 {
 	return m_size;
+}
+
+float dae::SpriteRenderer::GetRotation() const
+{
+	return m_rotation;
 }

@@ -14,7 +14,10 @@ namespace dae
 
 		void Render() override;
 		void SetSprite(const std::shared_ptr<Texture2D>& pSprite);
+		void SetRotation(float angle);
+
 		const glm::vec2& GetDimensions() const;
+		float GetRotation() const;
 
 		SpriteRenderer(const SpriteRenderer& other) = delete;
 		SpriteRenderer(SpriteRenderer&& other) = delete;
@@ -23,6 +26,7 @@ namespace dae
 	private:
 		Transform* m_transform{};
 		glm::vec2 m_size{};
+		float m_rotation{};
 		std::shared_ptr<Texture2D> m_pSprite;
 	};
 }
