@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-void dae::EventQueue::AddListener(const Event& e, const Listener& listener)
+void dae::EventQueue::AddListener(const Event& e, Observer<void>* observer)
 {
 	auto& observers{ m_Observers[e] };
-	observers.push_back(listener);
+	observers.push_back(observer);
 }
 void dae::EventQueue::SendMessage(const Event& e)
 {
@@ -28,7 +28,7 @@ void dae::EventQueue::NotifyListeners()
 		auto& observers{ m_Observers[e] };
 		for (const auto& observer : observers)
 		{
-			observer();
+			observer->OnNotify(e, nullptr);
 		}
 	}
 }

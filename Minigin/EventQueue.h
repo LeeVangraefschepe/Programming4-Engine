@@ -3,18 +3,17 @@
 #include <unordered_map>
 #include "Singleton.h"
 #include "Event.h"
+#include "Observer.h"
 
 namespace dae
 {
 	class EventQueue final : public Singleton<EventQueue>
 	{
-		using Listener = std::function<void()>;
-
 	public:
 		explicit EventQueue() = default;
 		~EventQueue() override = default;
 
-		void AddListener(const Event& e, const Listener& listener);
+		void AddListener(const Event& e, Observer<void>* observer);
 
 		void SendMessage(const Event& e);
 		void NotifyListeners();
@@ -31,6 +30,6 @@ namespace dae
 		unsigned int m_EventBufferStart{};
 		unsigned int m_NrEventsQueued{};
 
-		std::unordered_map<Event, std::vector<Listener>> m_Observers;
+		std::unordered_map<Event, std::vector<Observer<void>*>> m_Observers{};
 	};
 }

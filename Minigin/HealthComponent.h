@@ -1,9 +1,10 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Observer.h"
 
 namespace dae
 {
-	class HealthComponent final : public dae::BaseComponent
+	class HealthComponent final : public dae::BaseComponent, public Observer<void>
 	{
 	public:
 		explicit HealthComponent(GameObject* pGameObject, float maxHealth);
@@ -18,6 +19,8 @@ namespace dae
 		 */
 		bool Damage(float amount);
 		bool Died();
+		void OnNotify(const Event& event, void* entity) override;
+
 	private:
 		float m_currentHealth{1.f};
 		float m_maxHealth{1.f};

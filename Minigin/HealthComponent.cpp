@@ -1,10 +1,14 @@
 #include "HealthComponent.h"
+
+#include <iostream>
+
 #include "EventQueue.h"
 #include "GameObject.h"
 
 dae::HealthComponent::HealthComponent(GameObject* pGameObject, float maxHealth) : BaseComponent(pGameObject)
 {
 	SetMaxHealth(maxHealth, true);
+	EventQueue::GetInstance().AddListener(Event{ "PlayerDied" }, this);
 }
 void dae::HealthComponent::SetHealth(float health)
 {
@@ -31,6 +35,7 @@ void dae::HealthComponent::Heal(float amount)
 		m_currentHealth = m_maxHealth;
 	}
 }
+
 bool dae::HealthComponent::Damage(float amount)
 {
 	m_currentHealth -= amount;
@@ -45,9 +50,14 @@ bool dae::HealthComponent::Died()
 	if (m_currentHealth <= 0.f)
 	{
 		EventQueue::GetInstance().SendMessage(Event{ "PlayerDied"});
-		GetGameObject()->GetSubject()->Notify(Event{ "PlayerDied"}, GetGameObject());
+		//GetGameObject()->GetSubject()->Notify(Event{ "PlayerDied"}, GetGameObject());
 		ResetHealth();
 		return true;
 	}
 	return false;
+}
+
+void dae::HealthComponent::OnNotify(const Event&, void*)
+{
+	std::cout << "EVENT RECEIVED\n";
 }
