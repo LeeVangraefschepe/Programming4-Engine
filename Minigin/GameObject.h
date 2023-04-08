@@ -18,15 +18,15 @@ namespace dae
 		void Render() const;
 
 #pragma region Observable
-		void AddObservableObject(Observer* observer) const
+		void AddObservableObject(Observer<GameObject>* observer) const
 		{
 			m_notifyObject->AddObserver(observer);
 		}
-		void RemoveObserver(Observer* observer) const
+		void RemoveObserver(Observer<GameObject>* observer) const
 		{
 			m_notifyObject->RemoveObserver(observer);
 		}
-		const Subject* GetSubject() const
+		const Subject<GameObject>* GetSubject() const
 		{
 			return m_notifyObject.get();
 		}
@@ -133,7 +133,7 @@ namespace dae
 		bool IsValidParent(GameObject* parent) const;
 		GameObject* m_pParent{};
 
-		std::unique_ptr<Subject> m_notifyObject = std::make_unique<Subject>();
+		std::unique_ptr<Subject<GameObject>> m_notifyObject = std::make_unique<Subject<GameObject>>();
 
 		void EraseComponent(const BaseComponent* component);
 		std::vector<std::unique_ptr<GameObject>> m_pChildren{};

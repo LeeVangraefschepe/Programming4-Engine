@@ -3,7 +3,8 @@
 
 namespace dae
 {
-    class Event
+    class GameObject;
+    class Event final
     {
     public:
         Event() = default;

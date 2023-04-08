@@ -6,10 +6,12 @@
 
 namespace dae
 {
-	class BasicAchievements : public Observer, public Singleton<BasicAchievements>
+	class GameEvent;
+
+	class BasicAchievements : public Observer<GameObject>, public Singleton<BasicAchievements>
 	{
 	public:
-		virtual void OnNotify(const Event& event, GameObject* entity) override;
+		virtual void OnNotify(const Event& event, GameObject*) override;
 		static void ClearAchievements();
 	private:
 		static void UnlockAchievement(const std::string& name);

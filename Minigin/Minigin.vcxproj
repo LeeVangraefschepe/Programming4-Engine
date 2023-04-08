@@ -341,7 +341,6 @@ xcopy "$(SolutionDir)steam_appid.txt" "$(OutputPath)" /Y</Command>
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Transform.cpp" />
