@@ -216,10 +216,10 @@ xcopy "$(SolutionDir)steam_appid.txt" "$(OutputPath)" /Y</Command>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BasicAchievements.h" />
+    <ClInclude Include="BasicEvents.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="Event.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPS.h" />

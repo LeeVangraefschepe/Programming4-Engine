@@ -1,7 +1,6 @@
 #pragma once
 namespace dae
 {
-	class Event;
 	class GameObject;
 
 	template <typename T>
@@ -9,6 +8,6 @@ namespace dae
 	{
 	public:
 		virtual ~Observer() = default;
-		virtual void OnNotify(const Event& event, T* entity) = 0;
+		virtual void OnNotify(unsigned int eventId, T* entity) = 0;
 	};
 }

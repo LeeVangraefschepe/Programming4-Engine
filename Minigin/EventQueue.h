@@ -2,7 +2,6 @@
 #include <functional>
 #include <unordered_map>
 #include "Singleton.h"
-#include "Event.h"
 #include "Observer.h"
 
 namespace dae
@@ -13,9 +12,9 @@ namespace dae
 		explicit EventQueue() = default;
 		~EventQueue() override = default;
 
-		void AddListener(const Event& e, Observer<void>* observer);
+		void AddListener(unsigned int eventId, Observer<void>* observer);
 
-		void SendMessage(const Event& e);
+		void SendMessage(unsigned int eventId);
 		void NotifyListeners();
 
 		EventQueue(const EventQueue&) = delete;
@@ -23,13 +22,13 @@ namespace dae
 		EventQueue& operator= (const EventQueue&) = delete;
 		EventQueue& operator= (const EventQueue&&) = delete;
 	private:
-		bool PollEvent(Event& e);
+		bool PollEvent(unsigned int& eventId);
 
 		constexpr static unsigned int m_EventBufferSize{ 10 };
-		Event m_EventQueue[m_EventBufferSize]{};
+		unsigned int m_EventQueue[m_EventBufferSize]{};
 		unsigned int m_EventBufferStart{};
 		unsigned int m_NrEventsQueued{};
 
-		std::unordered_map<Event, std::vector<Observer<void>*>> m_Observers{};
+		std::unordered_map<unsigned int, std::vector<Observer<void>*>> m_Observers{};
 	};
 }

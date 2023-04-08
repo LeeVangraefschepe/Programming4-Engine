@@ -19,7 +19,7 @@ namespace dae
 		 */
 		bool Damage(float amount);
 		bool Died();
-		void OnNotify(const Event& event, void* entity) override;
+		void OnNotify(unsigned int eventId, void* entity) override;
 
 	private:
 		float m_currentHealth{1.f};

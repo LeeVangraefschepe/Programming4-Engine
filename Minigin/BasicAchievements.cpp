@@ -1,21 +1,22 @@
 #include "BasicAchievements.h"
-#include "Event.h"
 #include <iostream>
 #include <isteamuserstats.h>
 #include <thread>
+#include "BasicEvents.h"
 
-void dae::BasicAchievements::OnNotify(const Event& event, GameObject*)
+void dae::BasicAchievements::OnNotify(unsigned int eventId, GameObject*)
 {
-	if (event.IsValid() == false)
+	std::cout << "Event triggerd: " << eventId << "\n";
+	switch (auto event = static_cast<BasicEvents>(eventId))
 	{
-		return;
-	}
-	std::cout << "Event triggerd: " << event.GetName() << "\n";
-	if (event == Event{"PlayerDied"})
-	{
+	case BasicEvents::PlayerDied:
+		{
 		std::cout << "Died achievement unlocked\n";
 		std::thread t{ [this]() { UnlockAchievement("ACH_WIN_ONE_GAME"); } };
 		t.detach();
+		}
+		break;
+	default: break;
 	}
 }
 void dae::BasicAchievements::ClearAchievements()

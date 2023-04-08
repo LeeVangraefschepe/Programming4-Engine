@@ -4,7 +4,6 @@
 
 namespace dae
 {
-	class Event;
 	class GameObject;
 
 	template <typename T>
@@ -31,13 +30,13 @@ namespace dae
 				}
 			}
 		}
-		void Notify(const Event& event, T* entity) const
+		void Notify(unsigned int eventId, T* entity) const
 		{
 			for (const auto observer : m_pObservers)
 			{
 				if (observer)
 				{
-					observer->OnNotify(event, entity);
+					observer->OnNotify(eventId, entity);
 				}
 			}
 		}

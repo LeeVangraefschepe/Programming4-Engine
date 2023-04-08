@@ -147,9 +147,6 @@
     <ClInclude Include="Observer.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>EventSystem</Filter>
-    </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Components\Data</Filter>
     </ClInclude>
@@ -161,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicEvents.h">
+      <Filter>Other\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
