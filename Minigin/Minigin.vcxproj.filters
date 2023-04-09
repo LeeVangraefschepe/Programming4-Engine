@@ -11,20 +11,11 @@
     <Filter Include="Components\Update">
       <UniqueIdentifier>{acca6c8e-eeee-49d6-b8d3-62b994baec00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Render">
-      <UniqueIdentifier>{e993da21-d26a-4fc4-ba81-49453e250286}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Data">
-      <UniqueIdentifier>{b2c9f583-c5c8-4c76-ba1f-50f3f6ff03a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Imgui">
       <UniqueIdentifier>{7e15a99c-96da-448d-8dfa-7f2e9c498156}</UniqueIdentifier>
     </Filter>
     <Filter Include="Imgui\Library">
       <UniqueIdentifier>{a79d0251-af0c-468f-b3aa-3b0cc9c08689}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\ImGUI">
-      <UniqueIdentifier>{4ff8d14b-2257-4106-96ea-26505335d7cf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Commands">
       <UniqueIdentifier>{9f421067-ce67-4c7f-aa63-7d882de0429f}</UniqueIdentifier>
@@ -48,6 +39,15 @@
     </Filter>
     <Filter Include="EventSystem">
       <UniqueIdentifier>{ecd45a0b-bff7-4342-8aeb-751d5c892d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Exercises">
+      <UniqueIdentifier>{4ff8d14b-2257-4106-96ea-26505335d7cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Core">
+      <UniqueIdentifier>{b2c9f583-c5c8-4c76-ba1f-50f3f6ff03a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Game">
+      <UniqueIdentifier>{e993da21-d26a-4fc4-ba81-49453e250286}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,20 +75,8 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="FPS.h">
-      <Filter>Components\Update</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteRenderer.h">
-      <Filter>Components\Render</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Components\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRenderer.h">
-      <Filter>Components\Update</Filter>
-    </ClInclude>
-    <ClInclude Include="RotateAroundComponent.h">
-      <Filter>Components\Update</Filter>
+      <Filter>Components\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
       <Filter>Imgui\Library</Filter>
@@ -118,10 +106,10 @@
       <Filter>Imgui\Library</Filter>
     </ClInclude>
     <ClInclude Include="TrashCacheInt.h">
-      <Filter>Components\ImGUI</Filter>
+      <Filter>Components\Exercises</Filter>
     </ClInclude>
     <ClInclude Include="TrashCacheGameObject.h">
-      <Filter>Components\ImGUI</Filter>
+      <Filter>Components\Exercises</Filter>
     </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Commands</Filter>
@@ -148,19 +136,34 @@
       <Filter>EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
-      <Filter>Components\Data</Filter>
+      <Filter>Components\Core</Filter>
     </ClInclude>
     <ClInclude Include="EventQueue.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="BasicAchievements.h">
-      <Filter>Other\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Components\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateAroundComponent.h">
+      <Filter>Components\Exercises</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
+      <Filter>Components\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicAchievements.h">
+      <Filter>EventSystem</Filter>
+    </ClInclude>
     <ClInclude Include="BasicEvents.h">
-      <Filter>Other\Header Files</Filter>
+      <Filter>EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Components\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,20 +185,8 @@
     <ClCompile Include="Minigin.cpp">
       <Filter>Other\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FPS.cpp">
-      <Filter>Components\Update</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
-      <Filter>Components\Render</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Components\Data</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRenderer.cpp">
-      <Filter>Components\Update</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateAroundComponent.cpp">
-      <Filter>Components\Update</Filter>
+      <Filter>Components\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
       <Filter>Imgui\Library</Filter>
@@ -222,10 +213,10 @@
       <Filter>Imgui\Library</Filter>
     </ClCompile>
     <ClCompile Include="TrashCacheInt.cpp">
-      <Filter>Components\ImGUI</Filter>
+      <Filter>Components\Exercises</Filter>
     </ClCompile>
     <ClCompile Include="TrashCacheGameObject.cpp">
-      <Filter>Components\ImGUI</Filter>
+      <Filter>Components\Exercises</Filter>
     </ClCompile>
     <ClCompile Include="Commands.cpp">
       <Filter>Commands</Filter>
@@ -246,13 +237,28 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components\Data</Filter>
+      <Filter>Components\Core</Filter>
     </ClCompile>
     <ClCompile Include="EventQueue.cpp">
       <Filter>EventSystem</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Components\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS.cpp">
+      <Filter>Components\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateAroundComponent.cpp">
+      <Filter>Components\Exercises</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Components\Core</Filter>
+    </ClCompile>
     <ClCompile Include="BasicAchievements.cpp">
-      <Filter>Other\Source Files</Filter>
+      <Filter>EventSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Components\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

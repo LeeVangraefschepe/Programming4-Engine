@@ -5,7 +5,8 @@
 namespace dae
 {
 	class Transform;
-	class HealthComponent;
+	class PlayerComponent;
+
 	class MoveCommand final : public AxisCommand
 	{
 	public:
@@ -21,11 +22,11 @@ namespace dae
 	class DebugDamage final : public Command
 	{
 	public:
-		DebugDamage(dae::HealthComponent* health, float damage = 1.f) : m_pHealthComponent(health), m_damage(damage){}
+		DebugDamage(PlayerComponent* health, float damage = 1.f) : m_pPlayerComponent(health), m_damage(damage){}
 		~DebugDamage() override = default;
 		void Execute() override;
 	private:
-		HealthComponent* m_pHealthComponent;
+		PlayerComponent* m_pPlayerComponent;
 		float m_damage;
 	};
 }

@@ -1,6 +1,6 @@
 #include "Commands.h"
 #include "Transform.h"
-#include "HealthComponent.h"
+#include "PlayerComponent.h"
 #include "Time.h"
 
 void dae::MoveCommand::Execute()
@@ -16,5 +16,5 @@ void dae::MoveCommand::Execute()
 
 void dae::DebugDamage::Execute()
 {
-	m_pHealthComponent->Damage(m_damage);
+	m_pPlayerComponent->Damage(m_damage);
 }
