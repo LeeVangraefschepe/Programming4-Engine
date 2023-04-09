@@ -1,17 +1,16 @@
+#include <glm/detail/func_geometric.inl>
+
 #include "Commands.h"
-#include "Transform.h"
 #include "PlayerComponent.h"
-#include "Time.h"
 
 void dae::MoveCommand::Execute()
 {
-	auto input = GetInput();
-	input.y *= -1.f;
-	input *= Time::GetDeltaTime() * m_Speed;
-
-	auto pos = m_pTransform->GetLocalPosition();
-	pos += input;
-	m_pTransform->SetLocalPosition(pos);
+	const auto& input = GetInput();
+	if (glm::length(input) == 0.0f)
+	{
+		return;
+	}
+	m_pPlayerComponent->SetMovmentInput(input);
 }
 
 void dae::DebugDamage::Execute()

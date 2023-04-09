@@ -1,6 +1,6 @@
 #pragma once
 #include "Command.h"
-#include "GameObject.h"
+#include "PlayerComponent.h"
 
 namespace dae
 {
@@ -10,19 +10,17 @@ namespace dae
 	class MoveCommand final : public AxisCommand
 	{
 	public:
-		MoveCommand(dae::Transform* transform, float speed = 100.f) : m_pTransform(transform), m_Speed(speed) {}
+		MoveCommand(dae::PlayerComponent* pplayer) : m_pPlayerComponent(pplayer){}
 		~MoveCommand() override = default;
-		void SetSpeed(float speed) { m_Speed = speed; }
 		void Execute() override;
 	private:
-		Transform* m_pTransform;
-		float m_Speed;
+		PlayerComponent* m_pPlayerComponent;
 	};
 
 	class DebugDamage final : public Command
 	{
 	public:
-		DebugDamage(PlayerComponent* health, float damage = 1.f) : m_pPlayerComponent(health), m_damage(damage){}
+		DebugDamage(PlayerComponent* pplayer, float damage = 1.f) : m_pPlayerComponent(pplayer), m_damage(damage){}
 		~DebugDamage() override = default;
 		void Execute() override;
 	private:

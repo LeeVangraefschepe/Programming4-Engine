@@ -94,7 +94,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	bool doContinue = true;
 	auto end = std::chrono::high_resolution_clock::now();
-	constexpr float desiredFPS{14400.f};
+	constexpr float desiredFPS{60.f};
 	constexpr float frameTimeMs{1000/desiredFPS};
 
 	while (doContinue)
