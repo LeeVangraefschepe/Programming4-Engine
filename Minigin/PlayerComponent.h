@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/vec2.hpp>
+#include <memory>
 #include "BaseComponent.h"
+#include "Subject.h"
 
 namespace dae
 {
@@ -9,15 +11,16 @@ namespace dae
 	class Transform;
 	class CollisionComponent;
 
-	class PlayerComponent final : public dae::BaseComponent
+	class PlayerComponent final : public BaseComponent
 	{
 	public:
 		explicit PlayerComponent(GameObject* pGameObject);
+		void AddObservableObject(Observer<PlayerComponent>* observer) const;
 
 		void Update() override;
 
-		void Damage(float value) const;
-
+		void Damage(float value);
+		
 		void SetMovmentInput(glm::vec2 input);
 		void FireInput();
 
@@ -27,6 +30,7 @@ namespace dae
 		SpriteRenderer* m_pSpriteRenderer;
 		CollisionComponent* m_pCollision;
 
+		std::unique_ptr<Subject<PlayerComponent>> m_subject = std::make_unique<Subject<PlayerComponent>>();
 		GameObject* m_pRootObject;
 
 		int m_direction{};

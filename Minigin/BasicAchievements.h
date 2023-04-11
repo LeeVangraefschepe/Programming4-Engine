@@ -5,11 +5,12 @@
 
 namespace dae
 {
-	class GameObject;
-	class BasicAchievements : public Observer<GameObject>, public Singleton<BasicAchievements>
+	class PlayerComponent;
+	class BasicAchievements : public Observer<PlayerComponent>, public Singleton<BasicAchievements>
 	{
 	public:
-		virtual void OnNotify(unsigned int eventId, GameObject*) override;
+		BasicAchievements();
+		virtual void OnNotify(unsigned int eventId, PlayerComponent*) override;
 		static void ClearAchievements();
 	private:
 		static void UnlockAchievement(const std::string& name);

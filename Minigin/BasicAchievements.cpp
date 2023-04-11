@@ -4,7 +4,12 @@
 #include <thread>
 #include "BasicEvents.h"
 
-void dae::BasicAchievements::OnNotify(unsigned int eventId, GameObject*)
+dae::BasicAchievements::BasicAchievements()
+{
+
+}
+
+void dae::BasicAchievements::OnNotify(unsigned int eventId, PlayerComponent*)
 {
 	std::cout << "Event triggerd: " << eventId << "\n";
 	switch (auto event = static_cast<BasicEvents>(eventId))

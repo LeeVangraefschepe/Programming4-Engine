@@ -29,14 +29,18 @@ void dae::PlayerComponent::Update()
 {
 }
 
-void dae::PlayerComponent::Damage(float value) const
+void dae::PlayerComponent::Damage(float value)
 {
-	GetGameObject()->GetSubject()->Notify(static_cast<unsigned int>(BasicEvents::PlayerDamaged), GetGameObject());
+	m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDamaged), this);
 	if (m_pHealthComponent->Damage(value))
 	{
-		GetGameObject()->GetSubject()->Notify(static_cast<unsigned int>(BasicEvents::PlayerDied), GetGameObject());
+		m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDied), this);
 		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
 	}
+}
+void dae::PlayerComponent::AddObservableObject(Observer<PlayerComponent>* observer) const
+{
+	m_subject->AddObserver(observer);
 }
 void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 {
