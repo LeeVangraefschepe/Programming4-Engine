@@ -10,6 +10,7 @@
 #include "HealthComponent.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include "ScoreComponent.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Time.h"
@@ -17,6 +18,7 @@
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
 	pGameObject->GetComponent<HealthComponent>()->AddObservableObject(this);
+	pGameObject->GetComponent<ScoreComponent>()->AddObservableObject(this);
 
 	m_pTransform = pGameObject->GetComponent<Transform>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
@@ -73,7 +75,6 @@ void dae::PlayerComponent::FireInput()
 	const auto size = bullet->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
 	bullet->AddComponent<CollisionComponent>()->SetSize(size.x, size.y);
 	bullet->AddComponent<BulletComponent>(GetGameObject(), DIRECTIONS[m_direction], 300.f, 1.f);
-
 }
 
 void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
@@ -84,4 +85,8 @@ void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
 		m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDied), this);
 		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
 	}
+}
+void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent* entity)
+{
+	std::cout << "Score changed: " << entity->GetScore() << "\n";
 }

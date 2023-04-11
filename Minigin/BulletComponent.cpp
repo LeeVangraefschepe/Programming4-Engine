@@ -4,11 +4,12 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "HealthComponent.h"
+#include "ScoreComponent.h"
 #include "Time.h"
 
-dae::BulletComponent::BulletComponent(GameObject* pGameObject, GameObject* pIgnore, const glm::vec2& direcion, float speed, float damage) :
+dae::BulletComponent::BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direcion, float speed, float damage) :
 BaseComponent(pGameObject),
-m_pIgnore(pIgnore),
+m_pCreator(pCreator),
 m_direction(direcion),
 m_speed(speed),
 m_damage(damage)
@@ -19,15 +20,19 @@ m_damage(damage)
 
 void dae::BulletComponent::Update()
 {
-	auto other = m_pCollision->IsColliding();
-	if (other && other != m_pIgnore)
+	if (const auto other = m_pCollision->IsColliding(); other && other != m_pCreator)
 	{
-		auto otherHealth = other->GetComponent<HealthComponent>();
-		if (otherHealth)
+		if (const auto otherHealth = other->GetComponent<HealthComponent>())
 		{
-			otherHealth->Damage(1.f);
+			const auto scoreCreator = m_pCreator->GetComponent<ScoreComponent>();
+			const bool kill = otherHealth->Damage(m_damage);
+			if (scoreCreator)
+			{
+				scoreCreator->AddScore(100 + (kill * 500));
+			}
 		}
 		GetGameObject()->SetParent(nullptr, false);
+
 		return;
 	}
 

@@ -7,11 +7,12 @@
 namespace dae
 {
 	class HealthComponent;
+	class ScoreComponent;
 	class SpriteRenderer;
 	class Transform;
 	class CollisionComponent;
 
-	class PlayerComponent final : public BaseComponent, public Observer<HealthComponent>
+	class PlayerComponent final : public BaseComponent, public Observer<HealthComponent>, public Observer<ScoreComponent>
 	{
 	public:
 		explicit PlayerComponent(GameObject* pGameObject);
@@ -20,6 +21,7 @@ namespace dae
 		void SetMovmentInput(glm::vec2 input);
 		void FireInput();
 		void OnNotify(unsigned eventId, HealthComponent* entity) override;
+		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
 
 	private:
 		Transform* m_pTransform;
