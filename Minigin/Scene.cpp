@@ -4,14 +4,16 @@ using namespace dae;
 
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) : m_name(name)
+{
+	m_rootObject = std::make_unique<GameObject>();
+}
 
 Scene::~Scene() = default;
 
 void Scene::Add(GameObject* object)
 {
-	auto child = std::unique_ptr<GameObject>(object);
-	m_objects.emplace_back(std::move(child));
+	object->SetParent(m_rootObject.get(), false);
 }
 
 void Scene::Remove(GameObject* object)
@@ -21,38 +23,27 @@ void Scene::Remove(GameObject* object)
 
 void Scene::RemoveAll()
 {
-	m_objects.clear();
+	m_rootObject.reset();
+	m_rootObject = nullptr;
+}
+
+GameObject* Scene::GetRootObject()
+{
+	return m_rootObject.get();
 }
 
 void Scene::Update()
 {
-	if (!m_destroyObjects.empty())
+	for (const auto destroyObject : m_destroyObjects)
 	{
-		m_objects.erase(
-			std::remove_if(
-				m_objects.begin(),
-				m_objects.end(),
-				[&](const std::unique_ptr<GameObject>& obj) {
-					return std::find(m_destroyObjects.begin(), m_destroyObjects.end(), obj.get()) != m_destroyObjects.end();
-				}
-			),
-			m_objects.end()
-					);
-
-		m_destroyObjects.clear();
+		destroyObject->SetParent(nullptr, false);
 	}
 
-	for(const auto& object : m_objects)
-	{
-		object->Update();
-	}
+	m_rootObject->Update();
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
-	{
-		object->Render();
-	}
+	m_rootObject->Render();
 }
 

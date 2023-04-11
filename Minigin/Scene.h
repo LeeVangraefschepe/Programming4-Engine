@@ -12,6 +12,8 @@ namespace dae
 		void Remove(GameObject* object);
 		void RemoveAll();
 
+		GameObject* GetRootObject();
+
 		void Update();
 		void Render() const;
 
@@ -25,7 +27,8 @@ namespace dae
 		explicit Scene(const std::string& name);
 
 		std::string m_name;
-		std::vector<std::unique_ptr<GameObject>> m_objects{};
+
+		std::unique_ptr<GameObject> m_rootObject;
 		std::vector<GameObject*> m_destroyObjects{};
 
 		static unsigned int m_idCounter; 
