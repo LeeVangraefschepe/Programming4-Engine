@@ -40,6 +40,7 @@ namespace dae
 		std::vector<GameObject*> GetChildren() const
 		{
 			std::vector<GameObject*> rawPointers;
+			rawPointers.reserve(m_pChildren.size());
 			for (const auto& child : m_pChildren)
 			{
 				rawPointers.push_back(child.get());
