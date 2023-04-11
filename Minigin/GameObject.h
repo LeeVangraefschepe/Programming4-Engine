@@ -137,7 +137,9 @@ namespace dae
 		std::unique_ptr<Subject<GameObject>> m_notifyObject = std::make_unique<Subject<GameObject>>();
 
 		void EraseComponent(const BaseComponent* component);
+		void EraseChild(const GameObject* gameobject);
 		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
+		std::vector<GameObject*> m_pDeletedChildren{};
 		std::vector<std::unique_ptr<BaseComponent>> m_pComponents{};
 		std::vector<BaseComponent*> m_pDestroyComponents{};
 	};

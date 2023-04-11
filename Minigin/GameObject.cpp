@@ -9,18 +9,28 @@ dae::GameObject::GameObject()
 }
 dae::GameObject::~GameObject()
 {
-	
+	int i{};
+	++i;
 }
 void dae::GameObject::Update()
 {
 	if (m_pDestroyComponents.empty() == false)
 	{
-		for (auto it = m_pDestroyComponents.begin(); it != m_pDestroyComponents.end(); ++it)
+		for (const auto& destroyComponent : m_pDestroyComponents)
 		{
-			EraseComponent(*it);
+			EraseComponent(destroyComponent);
 		}
 		m_pDestroyComponents.clear();
 	}
+	if (m_pDeletedChildren.empty() == false)
+	{
+		for (const auto& deletedChild : m_pDeletedChildren)
+		{
+			EraseChild(deletedChild);
+		}
+		m_pDeletedChildren.clear();
+	}
+
 	for (const auto& p : m_pComponents)
 	{
 		p->Update();
@@ -65,8 +75,12 @@ void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 		for (auto it = m_pParent->m_pChildren.begin(); it != m_pParent->m_pChildren.end(); ++it)
 			if (it->get() == this)
 			{
+				if (parent == nullptr)
+				{
+					m_pParent->m_pDeletedChildren.push_back(this);
+					return;
+				}
 				child = std::move(*it);
-				m_pParent->m_pChildren.erase(it);
 				break;
 			}
 		
@@ -109,6 +123,19 @@ void dae::GameObject::EraseComponent(const BaseComponent* component)
 		}
 	}
 }
+
+void dae::GameObject::EraseChild(const GameObject* gameobject)
+{
+	for (auto it = m_pChildren.begin(); it != m_pChildren.end(); ++it)
+	{
+		if (gameobject == it->get())
+		{
+			m_pChildren.erase(it);
+			break;
+		}
+	}
+}
+
 bool dae::GameObject::IsValidParent(GameObject* parent) const
 {
 	//Nullptr is valid
