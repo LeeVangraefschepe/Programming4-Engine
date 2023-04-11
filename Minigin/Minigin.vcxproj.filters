@@ -165,6 +165,12 @@
     <ClInclude Include="PlayerComponent.h">
       <Filter>Components\Game</Filter>
     </ClInclude>
+    <ClInclude Include="BulletComponent.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -258,6 +264,12 @@
       <Filter>EventSystem</Filter>
     </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Components\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletComponent.cpp">
+      <Filter>Components\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components\Game</Filter>
     </ClCompile>
   </ItemGroup>

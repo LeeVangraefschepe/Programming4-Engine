@@ -1,6 +1,10 @@
 #include "PlayerComponent.h"
+
+#include <iostream>
+
 #include "GameObject.h"
 #include "BasicEvents.h"
+#include "CollisionComponent.h"
 #include "EventQueue.h"
 
 #include "HealthComponent.h"
@@ -13,7 +17,17 @@ dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(p
 	m_pTransform = pGameObject->GetComponent<Transform>();
 	m_pHealthComponent = pGameObject->GetComponent<HealthComponent>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
+	m_pCollision = pGameObject->GetComponent<CollisionComponent>();
 }
+
+void dae::PlayerComponent::Update()
+{
+	if (m_pCollision->IsColliding())
+	{
+		std::cout << "Collision working!\n";
+	}
+}
+
 void dae::PlayerComponent::Damage(float value) const
 {
 	GetGameObject()->GetSubject()->Notify(static_cast<unsigned int>(BasicEvents::PlayerDamaged), GetGameObject());
@@ -57,4 +71,9 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 	auto pos = m_pTransform->GetLocalPosition();
 	pos += input;
 	m_pTransform->SetLocalPosition(pos);
+}
+
+void dae::PlayerComponent::FireInput()
+{
+	std::cout << "Fire bullet\n";
 }

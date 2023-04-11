@@ -217,6 +217,8 @@ xcopy "$(SolutionDir)steam_appid.txt" "$(OutputPath)" /Y</Command>
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BasicAchievements.h" />
     <ClInclude Include="BasicEvents.h" />
+    <ClInclude Include="BulletComponent.h" />
+    <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Controller.h" />
@@ -326,6 +328,8 @@ xcopy "$(SolutionDir)steam_appid.txt" "$(OutputPath)" /Y</Command>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
     </ClCompile>
     <ClCompile Include="BasicAchievements.cpp" />
+    <ClCompile Include="BulletComponent.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="EventQueue.cpp" />
