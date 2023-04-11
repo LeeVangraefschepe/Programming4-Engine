@@ -6,7 +6,7 @@ namespace dae
 {
 	class Scene final
 	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
+		friend Scene* SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(GameObject* object);
 		void Remove(GameObject* object);
