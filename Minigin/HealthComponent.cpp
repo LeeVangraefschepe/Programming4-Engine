@@ -31,11 +31,18 @@ void dae::HealthComponent::Heal(float amount)
 	}
 }
 
+void dae::HealthComponent::AddObservableObject(Observer<HealthComponent>* observer) const
+{
+	m_subject->AddObserver(observer);
+}
+
 bool dae::HealthComponent::Damage(float amount)
 {
 	m_currentHealth -= amount;
+	m_subject->Notify(Events::damage, this);
 	if (Died())
 	{
+		m_subject->Notify(Events::died, this);
 		return true;
 	}
 	return false;

@@ -1,5 +1,5 @@
 #pragma once
-enum class BasicEvents : unsigned int
+enum class BasicEvents
 {
 	PlayerDied = 0,
 	PlayerDamaged,

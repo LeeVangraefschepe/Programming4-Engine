@@ -7,7 +7,6 @@
 #include "BulletComponent.h"
 #include "CollisionComponent.h"
 #include "EventQueue.h"
-
 #include "HealthComponent.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
@@ -17,26 +16,13 @@
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
+	pGameObject->GetComponent<HealthComponent>()->AddObservableObject(this);
+
 	m_pTransform = pGameObject->GetComponent<Transform>();
-	m_pHealthComponent = pGameObject->GetComponent<HealthComponent>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
 	m_pCollision = pGameObject->GetComponent<CollisionComponent>();
 
 	m_pRootObject = SceneManager::GetInstance().GetActiveScene()->GetRootObject();
-}
-
-void dae::PlayerComponent::Update()
-{
-}
-
-void dae::PlayerComponent::Damage(float value)
-{
-	m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDamaged), this);
-	if (m_pHealthComponent->Damage(value))
-	{
-		m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDied), this);
-		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
-	}
 }
 void dae::PlayerComponent::AddObservableObject(Observer<PlayerComponent>* observer) const
 {
@@ -81,11 +67,21 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 void dae::PlayerComponent::FireInput()
 {
 	std::cout << "Fire bullet\n";
-	auto bullet = new GameObject{};
+	const auto bullet = new GameObject{};
 	bullet->SetParent(m_pRootObject, false);
 	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition());
-	auto size = bullet->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
+	const auto size = bullet->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
 	bullet->AddComponent<CollisionComponent>()->SetSize(size.x, size.y);
-	bullet->AddComponent<BulletComponent>(GetGameObject(), DIRECTIONS[m_direction], 300.f);
+	bullet->AddComponent<BulletComponent>(GetGameObject(), DIRECTIONS[m_direction], 300.f, 1.f);
 
+}
+
+void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
+{
+	m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDamaged), this);
+	if (eventId == HealthComponent::Events::died)
+	{
+		m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDied), this);
+		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
+	}
 }

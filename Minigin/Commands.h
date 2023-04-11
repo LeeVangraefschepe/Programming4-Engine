@@ -27,17 +27,4 @@ namespace dae
 		PlayerComponent* m_pPlayerComponent;
 
 	};
-
-	class DebugDamage final : public Command
-	{
-	public:
-		DebugDamage(PlayerComponent* pplayer, float damage = 1.f) : m_pPlayerComponent(pplayer), m_damage(damage){}
-		~DebugDamage() override = default;
-		void Execute() override;
-	private:
-		PlayerComponent* m_pPlayerComponent;
-		float m_damage;
-	};
-
-	
 }

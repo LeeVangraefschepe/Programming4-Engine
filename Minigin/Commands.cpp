@@ -17,8 +17,3 @@ void dae::FireCommand::Execute()
 {
 	m_pPlayerComponent->FireInput();
 }
-
-void dae::DebugDamage::Execute()
-{
-	m_pPlayerComponent->Damage(m_damage);
-}

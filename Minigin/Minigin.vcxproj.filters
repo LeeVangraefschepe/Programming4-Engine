@@ -49,6 +49,9 @@
     <Filter Include="Components\Game">
       <UniqueIdentifier>{e993da21-d26a-4fc4-ba81-49453e250286}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Game\Player">
+      <UniqueIdentifier>{6cef0639-8a3d-4d30-bf55-cd1fcb5cca57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -156,20 +159,23 @@
     <ClInclude Include="TextRenderer.h">
       <Filter>Components\Core</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletComponent.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionComponent.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
     <ClInclude Include="BasicAchievements.h">
       <Filter>Components\Game</Filter>
     </ClInclude>
     <ClInclude Include="BasicEvents.h">
       <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletComponent.h">
+      <Filter>Components\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Components\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Components\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Other\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,17 +266,20 @@
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Components\Core</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
+    <ClCompile Include="BasicAchievements.cpp">
       <Filter>Components\Game</Filter>
     </ClCompile>
     <ClCompile Include="BulletComponent.cpp">
-      <Filter>Components\Game</Filter>
+      <Filter>Components\Game\Player</Filter>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
-      <Filter>Components\Game</Filter>
+      <Filter>Components\Game\Player</Filter>
     </ClCompile>
-    <ClCompile Include="BasicAchievements.cpp">
-      <Filter>Components\Game</Filter>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Components\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Other\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

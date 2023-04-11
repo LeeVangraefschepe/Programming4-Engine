@@ -11,22 +11,18 @@ namespace dae
 	class Transform;
 	class CollisionComponent;
 
-	class PlayerComponent final : public BaseComponent
+	class PlayerComponent final : public BaseComponent, public Observer<HealthComponent>
 	{
 	public:
 		explicit PlayerComponent(GameObject* pGameObject);
 		void AddObservableObject(Observer<PlayerComponent>* observer) const;
-
-		void Update() override;
-
-		void Damage(float value);
 		
 		void SetMovmentInput(glm::vec2 input);
 		void FireInput();
+		void OnNotify(unsigned eventId, HealthComponent* entity) override;
 
 	private:
 		Transform* m_pTransform;
-		HealthComponent* m_pHealthComponent;
 		SpriteRenderer* m_pSpriteRenderer;
 		CollisionComponent* m_pCollision;
 
