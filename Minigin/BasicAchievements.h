@@ -5,6 +5,7 @@
 
 namespace dae
 {
+	class GameObject;
 	class BasicAchievements : public Observer<GameObject>, public Singleton<BasicAchievements>
 	{
 	public:
