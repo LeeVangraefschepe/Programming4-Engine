@@ -9,7 +9,9 @@ Scene::Scene(const std::string& name) : m_name(name)
 	m_rootObject = std::make_unique<GameObject>();
 }
 
-Scene::~Scene() = default;
+Scene::~Scene()
+{
+}
 
 void Scene::Add(GameObject* object)
 {

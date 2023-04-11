@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include "Singleton.h"
+#include "Scene.h"
 
 namespace dae
 {
@@ -10,9 +11,6 @@ namespace dae
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		Scene* CreateScene(const std::string& name);
-		void DeleteScene(Scene* scene);
-
 		void SetActiveScene(Scene* scene);
 		Scene* GetActiveScene();
 
@@ -27,8 +25,7 @@ namespace dae
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 
-		std::vector<std::shared_ptr<Scene>> m_scenes;
-		Scene* m_activeScene;
+		std::unique_ptr<Scene> m_activeScene;
 
 		int m_screenWidth{};
 		int m_screenHeight{};

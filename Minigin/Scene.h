@@ -6,8 +6,10 @@ namespace dae
 {
 	class Scene final
 	{
-		friend Scene* SceneManager::CreateScene(const std::string& name);
 	public:
+		explicit Scene(const std::string& name);
+		~Scene();
+
 		void Add(GameObject* object);
 		void Remove(GameObject* object);
 		void RemoveAll();
@@ -17,14 +19,20 @@ namespace dae
 		void Update();
 		void Render() const;
 
-		~Scene();
 		Scene(const Scene& other) = delete;
-		Scene(Scene&& other) = delete;
+
+		Scene(Scene&& other) noexcept
+			: m_name(std::move(other.m_name))
+			, m_rootObject(std::move(other.m_rootObject))
+			, m_destroyObjects(std::move(other.m_destroyObjects))
+		{
+		}
+
+
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
 	private: 
-		explicit Scene(const std::string& name);
 
 		std::string m_name;
 
