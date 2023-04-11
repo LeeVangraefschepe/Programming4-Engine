@@ -1,8 +1,6 @@
 #pragma once
 namespace dae
 {
-	class GameObject;
-
 	template <typename T>
 	class Observer
 	{

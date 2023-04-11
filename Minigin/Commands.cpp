@@ -13,6 +13,11 @@ void dae::MoveCommand::Execute()
 	m_pPlayerComponent->SetMovmentInput(input);
 }
 
+void dae::FireCommand::Execute()
+{
+	m_pPlayerComponent->FireInput();
+}
+
 void dae::DebugDamage::Execute()
 {
 	m_pPlayerComponent->Damage(m_damage);

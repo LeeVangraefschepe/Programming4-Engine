@@ -17,6 +17,17 @@ namespace dae
 		PlayerComponent* m_pPlayerComponent;
 	};
 
+	class FireCommand : public Command
+	{
+	public:
+		FireCommand(PlayerComponent* pplayer) : m_pPlayerComponent(pplayer){}
+		~FireCommand() override = default;
+		void Execute() override;
+	private:
+		PlayerComponent* m_pPlayerComponent;
+
+	};
+
 	class DebugDamage final : public Command
 	{
 	public:
@@ -27,4 +38,6 @@ namespace dae
 		PlayerComponent* m_pPlayerComponent;
 		float m_damage;
 	};
+
+	
 }
