@@ -27,6 +27,15 @@ namespace dae
 		SpriteRenderer* m_pSpriteRenderer;
 		CollisionComponent* m_pCollision;
 
+		GameObject* m_pRootObject;
+
 		int m_direction{};
+		static const inline glm::vec2 DIRECTIONS[] =
+		{
+			glm::vec2(-1.0f, 0.0f), // left
+			glm::vec2(0.0f, 1.0f), // top
+			glm::vec2(1.0f, 0.0f), // right
+			glm::vec2(0.0f, -1.0f) // bottom
+		};
 	};
 }

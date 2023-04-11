@@ -4,10 +4,13 @@
 
 #include "GameObject.h"
 #include "BasicEvents.h"
+#include "BulletComponent.h"
 #include "CollisionComponent.h"
 #include "EventQueue.h"
 
 #include "HealthComponent.h"
+#include "ResourceManager.h"
+#include "SceneManager.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Time.h"
@@ -18,14 +21,12 @@ dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(p
 	m_pHealthComponent = pGameObject->GetComponent<HealthComponent>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
 	m_pCollision = pGameObject->GetComponent<CollisionComponent>();
+
+	m_pRootObject = SceneManager::GetInstance().GetActiveScene()->GetRootObject();
 }
 
 void dae::PlayerComponent::Update()
 {
-	if (m_pCollision->IsColliding())
-	{
-		std::cout << "Collision working!\n";
-	}
 }
 
 void dae::PlayerComponent::Damage(float value) const
@@ -76,4 +77,11 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 void dae::PlayerComponent::FireInput()
 {
 	std::cout << "Fire bullet\n";
+	auto bullet = new GameObject{};
+	bullet->SetParent(m_pRootObject, false);
+	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition());
+	auto size = bullet->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
+	bullet->AddComponent<CollisionComponent>()->SetSize(size.x, size.y);
+	bullet->AddComponent<BulletComponent>(GetGameObject(), DIRECTIONS[m_direction], 300.f);
+
 }
