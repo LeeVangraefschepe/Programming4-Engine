@@ -14,7 +14,7 @@ dae::ScoreDisplayComponent::ScoreDisplayComponent(GameObject* pGameObject, const
 		m_pTextRenderer = GetGameObject()->AddComponent<TextRenderer>("", ResourceManager::GetInstance().LoadFont("Lingua.otf", 24));
 	}
 	m_pTextRenderer->SetColor(255, 255, 255);
-	entity->AddObservableObject(this);
+	entity->GetSubject()->AddObserver(this);
 	SetDisplayScore(entity->GetScore());
 }
 

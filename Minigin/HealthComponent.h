@@ -23,7 +23,6 @@ namespace dae
 		void ResetHealth();
 		void Heal(float amount);
 
-		void AddObservableObject(Observer<HealthComponent>* observer) const;
 
 		/**
 		 * \return If the health is under zero it returns zero. 
@@ -31,6 +30,7 @@ namespace dae
 		bool Damage(float amount);
 		bool Died();
 
+		Subject<HealthComponent>* GetSubject() const;
 		float GetHealth() const;
 		float GetMaxHealth() const;
 

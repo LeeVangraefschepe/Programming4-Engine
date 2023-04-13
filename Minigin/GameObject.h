@@ -18,15 +18,7 @@ namespace dae
 		void Render() const;
 
 #pragma region Observable
-		void AddObservableObject(Observer<GameObject>* observer) const
-		{
-			m_notifyObject->AddObserver(observer);
-		}
-		void RemoveObserver(Observer<GameObject>* observer) const
-		{
-			m_notifyObject->RemoveObserver(observer);
-		}
-		const Subject<GameObject>* GetSubject() const
+		Subject<GameObject>* GetSubject() const
 		{
 			return m_notifyObject.get();
 		}

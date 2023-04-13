@@ -19,8 +19,8 @@ dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(p
 {
 	m_pData->healthComponent = pGameObject->GetComponent<HealthComponent>();
 	m_pData->scoreComponent = pGameObject->GetComponent<ScoreComponent>();
-	m_pData->healthComponent->AddObservableObject(this);
-	m_pData->scoreComponent->AddObservableObject(this);
+	m_pData->healthComponent->GetSubject()->AddObserver(this);
+	m_pData->scoreComponent->GetSubject()->AddObserver(this);
 
 	m_pTransform = pGameObject->GetComponent<Transform>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
@@ -86,6 +86,7 @@ void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
 	{
 		m_subject->Notify(Events::died, this);
 		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
+		GetGameObject()->SetParent(nullptr, false);
 	}
 }
 void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent*)

@@ -9,7 +9,7 @@ namespace dae
 	{
 	public:
 		explicit ScoreComponent(GameObject* pGameObject);
-		void AddObservableObject(Observer<ScoreComponent>* observer) const;
+		Subject<ScoreComponent>* GetSubject() const { return m_subject.get(); }
 
 		int GetScore() const;
 
