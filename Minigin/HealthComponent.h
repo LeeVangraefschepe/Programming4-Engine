@@ -31,6 +31,9 @@ namespace dae
 		bool Damage(float amount);
 		bool Died();
 
+		float GetHealth() const;
+		float GetMaxHealth() const;
+
 	private:
 		float m_currentHealth{1.f};
 		float m_maxHealth{1.f};

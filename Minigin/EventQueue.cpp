@@ -23,7 +23,6 @@ void dae::EventQueue::NotifyListeners()
 	unsigned int eventId{};
 	while (PollEvent(eventId))
 	{
-		std::cout << "Event fired: " << eventId << "\n";
 		auto& observers{ m_Observers[eventId] };
 		for (const auto& observer : observers)
 		{

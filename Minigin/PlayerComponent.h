@@ -15,6 +15,19 @@ namespace dae
 	class PlayerComponent final : public BaseComponent, public Observer<HealthComponent>, public Observer<ScoreComponent>
 	{
 	public:
+		enum Events
+		{
+			damage = 0,
+			score,
+			died
+		};
+
+		struct PlayerData
+		{
+			HealthComponent* healthComponent{nullptr};
+			ScoreComponent* scoreComponent{nullptr};
+		};
+
 		explicit PlayerComponent(GameObject* pGameObject);
 		void AddObservableObject(Observer<PlayerComponent>* observer) const;
 		
@@ -23,6 +36,8 @@ namespace dae
 		void OnNotify(unsigned eventId, HealthComponent* entity) override;
 		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
 
+		PlayerData* GetData() const;
+
 	private:
 		Transform* m_pTransform;
 		SpriteRenderer* m_pSpriteRenderer;
@@ -30,6 +45,8 @@ namespace dae
 
 		std::unique_ptr<Subject<PlayerComponent>> m_subject = std::make_unique<Subject<PlayerComponent>>();
 		GameObject* m_pRootObject;
+
+		std::unique_ptr<PlayerData> m_pData = std::make_unique<PlayerData>();
 
 		int m_direction{};
 		static const inline glm::vec2 DIRECTIONS[] =

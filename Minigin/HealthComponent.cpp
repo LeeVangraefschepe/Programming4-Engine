@@ -56,3 +56,13 @@ bool dae::HealthComponent::Died()
 	}
 	return false;
 }
+
+float dae::HealthComponent::GetHealth() const
+{
+	return m_currentHealth;
+}
+
+float dae::HealthComponent::GetMaxHealth() const
+{
+	return m_maxHealth;
+}

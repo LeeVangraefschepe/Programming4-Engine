@@ -17,8 +17,10 @@
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
-	pGameObject->GetComponent<HealthComponent>()->AddObservableObject(this);
-	pGameObject->GetComponent<ScoreComponent>()->AddObservableObject(this);
+	m_pData->healthComponent = pGameObject->GetComponent<HealthComponent>();
+	m_pData->scoreComponent = pGameObject->GetComponent<ScoreComponent>();
+	m_pData->healthComponent->AddObservableObject(this);
+	m_pData->scoreComponent->AddObservableObject(this);
 
 	m_pTransform = pGameObject->GetComponent<Transform>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
@@ -79,14 +81,20 @@ void dae::PlayerComponent::FireInput()
 
 void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
 {
-	m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDamaged), this);
+	m_subject->Notify(Events::damage, this);
 	if (eventId == HealthComponent::Events::died)
 	{
-		m_subject->Notify(static_cast<unsigned int>(BasicEvents::PlayerDied), this);
+		m_subject->Notify(Events::died, this);
 		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
 	}
 }
-void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent* entity)
+void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent*)
 {
-	std::cout << "Score changed: " << entity->GetScore() << "\n";
+	m_subject->Notify(Events::score, this);
+	EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerScore));
+}
+
+dae::PlayerComponent::PlayerData* dae::PlayerComponent::GetData() const
+{
+	return m_pData.get();
 }

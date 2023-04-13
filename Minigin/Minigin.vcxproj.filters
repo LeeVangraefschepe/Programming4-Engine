@@ -49,7 +49,7 @@
     <Filter Include="Components\Game">
       <UniqueIdentifier>{e993da21-d26a-4fc4-ba81-49453e250286}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Game\Player">
+    <Filter Include="Components\Game\Enitiy">
       <UniqueIdentifier>{6cef0639-8a3d-4d30-bf55-cd1fcb5cca57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -166,16 +166,22 @@
       <Filter>Components\Game</Filter>
     </ClInclude>
     <ClInclude Include="BulletComponent.h">
-      <Filter>Components\Game\Player</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
     </ClInclude>
     <ClInclude Include="CollisionComponent.h">
-      <Filter>Components\Game\Player</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
     </ClInclude>
     <ClInclude Include="PlayerComponent.h">
-      <Filter>Components\Game\Player</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthDisplayComponent.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDisplayComponent.h">
+      <Filter>Components\Game</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
-      <Filter>Other\Header Files</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -270,16 +276,22 @@
       <Filter>Components\Game</Filter>
     </ClCompile>
     <ClCompile Include="BulletComponent.cpp">
-      <Filter>Components\Game\Player</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
-      <Filter>Components\Game\Player</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
     </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components\Game\Player</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthDisplayComponent.cpp">
+      <Filter>Components\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplayComponent.cpp">
+      <Filter>Components\Game</Filter>
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Other\Source Files</Filter>
+      <Filter>Components\Game\Enitiy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
