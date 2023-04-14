@@ -86,7 +86,7 @@ void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
 	{
 		m_subject->Notify(Events::died, this);
 		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
-		GetGameObject()->SetParent(nullptr, false);
+		GetGameObject()->Destroy();
 	}
 }
 void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent*)

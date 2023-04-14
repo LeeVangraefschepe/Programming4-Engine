@@ -46,7 +46,6 @@ bool dae::HealthComponent::Died()
 {
 	if (m_currentHealth <= 0.f)
 	{
-		ResetHealth();
 		return true;
 	}
 	return false;

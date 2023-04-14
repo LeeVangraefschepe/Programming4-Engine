@@ -15,6 +15,16 @@ namespace dae
 			m_pObservers = std::vector<Observer<T>*>{};
 			m_pObservers.reserve(maxObservers);
 		}
+		~Subject()
+		{
+			for (const auto observer : m_pObservers)
+			{
+				if (observer)
+				{
+					observer->OnDestroy();
+				}
+			}
+		}
 		void AddObserver(Observer<T>* observer)
 		{
 			m_pObservers.emplace_back(observer);

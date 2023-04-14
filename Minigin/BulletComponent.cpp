@@ -31,7 +31,7 @@ void dae::BulletComponent::Update()
 				scoreCreator->AddScore(100 + (kill * 500));
 			}
 		}
-		GetGameObject()->SetParent(nullptr, false);
+		GetGameObject()->Destroy();
 
 		return;
 	}

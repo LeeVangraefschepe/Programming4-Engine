@@ -120,8 +120,10 @@ namespace dae
 
 	private:
 		void ClearEvents();
+		void EraseCommand(const Command* command);
 		int FindController(int);
 		bool ReadEvents();
+		std::vector<const Command*> m_removedCommands{};
 #pragma region ControllerData
 		struct ControllerKey
 		{

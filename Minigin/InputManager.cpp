@@ -6,6 +6,16 @@
 
 bool dae::InputManager::ProcessInput()
 {
+	//Erased commands handling
+	if (!m_removedCommands.empty())
+	{
+		for (const auto& command : m_removedCommands)
+		{
+			EraseCommand(command);
+		}
+		m_removedCommands.clear();
+	}
+
 	//Keyboard handling & application
 	if (!ReadEvents()) { return false; }
 
@@ -130,7 +140,7 @@ void dae::InputManager::ClearEvents()
 	m_keysDown.clear();
 	m_keysUp.clear();
 }
-void dae::InputManager::RemoveCommand(const Command* command)
+void dae::InputManager::EraseCommand(const Command* command)
 {
 	auto consoleIt = m_consoleCommands.begin();
 	while (consoleIt != m_consoleCommands.end())
@@ -144,7 +154,7 @@ void dae::InputManager::RemoveCommand(const Command* command)
 			++consoleIt;
 		}
 	}
-	
+
 	auto keyboardIt = m_keyboardCommands.begin();
 	while (keyboardIt != m_keyboardCommands.end())
 	{
@@ -157,6 +167,10 @@ void dae::InputManager::RemoveCommand(const Command* command)
 			++keyboardIt;
 		}
 	}
+}
+void dae::InputManager::RemoveCommand(const Command* command)
+{
+	m_removedCommands.push_back(command);
 }
 int dae::InputManager::FindController(int id)
 {

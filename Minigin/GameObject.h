@@ -16,6 +16,7 @@ namespace dae
 
 		void Update();
 		void Render() const;
+		void Destroy();
 
 #pragma region Observable
 		Subject<GameObject>* GetSubject() const
@@ -123,6 +124,9 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
+		std::vector<std::unique_ptr<BaseComponent>> m_pComponents{};
+
 		bool IsValidParent(GameObject* parent) const;
 		GameObject* m_pParent{};
 
@@ -130,9 +134,7 @@ namespace dae
 
 		void EraseComponent(const BaseComponent* component);
 		void EraseChild(const GameObject* gameobject);
-		std::vector<std::unique_ptr<GameObject>> m_pChildren{};
 		std::vector<GameObject*> m_pDeletedChildren{};
-		std::vector<std::unique_ptr<BaseComponent>> m_pComponents{};
 		std::vector<BaseComponent*> m_pDestroyComponents{};
 	};
 }

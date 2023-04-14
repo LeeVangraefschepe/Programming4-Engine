@@ -51,6 +51,22 @@ void dae::GameObject::Render() const
 		child->Render();
 	}
 }
+
+void dae::GameObject::Destroy()
+{
+	if (m_pParent)
+	{
+		for (const auto& deletedChilds = m_pParent->m_pDeletedChildren; const auto deletedChild : deletedChilds)
+		{
+			if (deletedChild == this)
+			{
+				return;
+			}
+		}
+		m_pParent->m_pDeletedChildren.push_back(this);
+	}
+}
+
 void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
 	if (!IsValidParent(parent)){return;}
@@ -77,7 +93,7 @@ void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 			{
 				if (parent == nullptr)
 				{
-					m_pParent->m_pDeletedChildren.push_back(this);
+					Destroy();
 					return;
 				}
 				child = std::move(*it);

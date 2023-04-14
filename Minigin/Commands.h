@@ -7,22 +7,25 @@ namespace dae
 	class Transform;
 	class PlayerComponent;
 
-	class MoveCommand final : public AxisCommand
+	template<typename T>
+	class Observer;
+
+	class MoveCommand final : public AxisCommand, public Observer<PlayerComponent>
 	{
 	public:
-		MoveCommand(dae::PlayerComponent* pplayer) : m_pPlayerComponent(pplayer){}
-		~MoveCommand() override = default;
+		MoveCommand(PlayerComponent* pplayer) : m_pPlayerComponent(pplayer) { m_pPlayerComponent->AddObservableObject(this); }
 		void Execute() override;
+		void OnDestroy() override;
 	private:
 		PlayerComponent* m_pPlayerComponent;
 	};
 
-	class FireCommand : public Command
+	class FireCommand : public Command, public Observer<PlayerComponent>
 	{
 	public:
-		FireCommand(PlayerComponent* pplayer) : m_pPlayerComponent(pplayer){}
-		~FireCommand() override = default;
+		FireCommand(PlayerComponent* pplayer) : m_pPlayerComponent(pplayer){ m_pPlayerComponent->AddObservableObject(this); }
 		void Execute() override;
+		void OnDestroy() override;
 	private:
 		PlayerComponent* m_pPlayerComponent;
 

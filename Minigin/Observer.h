@@ -6,6 +6,7 @@ namespace dae
 	{
 	public:
 		virtual ~Observer() = default;
-		virtual void OnNotify(unsigned int eventId, T* entity) = 0;
+		virtual void OnNotify(unsigned int, T*){}
+		virtual void OnDestroy(){}
 	};
 }
