@@ -23,6 +23,11 @@ void dae::ScoreDisplayComponent::OnNotify(unsigned, ScoreComponent* entity)
 	SetDisplayScore(entity->GetScore());
 }
 
+void dae::ScoreDisplayComponent::OnDestroy()
+{
+	GetGameObject()->Destroy();
+}
+
 void dae::ScoreDisplayComponent::SetDisplayScore(int amount) const
 {
 	std::stringstream ss{};

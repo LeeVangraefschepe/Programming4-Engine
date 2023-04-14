@@ -24,7 +24,6 @@ namespace dae
 		Scene(Scene&& other) noexcept
 			: m_name(std::move(other.m_name))
 			, m_rootObject(std::move(other.m_rootObject))
-			, m_destroyObjects(std::move(other.m_destroyObjects))
 		{
 		}
 
@@ -36,8 +35,7 @@ namespace dae
 
 		std::string m_name;
 
-		std::unique_ptr<GameObject> m_rootObject;
-		std::vector<GameObject*> m_destroyObjects{};
+		std::unique_ptr<GameObject> m_rootObject = std::make_unique<GameObject>();
 
 		static unsigned int m_idCounter; 
 	};

@@ -12,7 +12,7 @@ namespace dae
 	public:
 		explicit ScoreDisplayComponent(GameObject* pGameObject, const ScoreComponent* entity);
 		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
-
+		void OnDestroy() override;
 	private:
 		void SetDisplayScore(int amount) const;
 		TextRenderer* m_pTextRenderer;

@@ -1,4 +1,3 @@
-#pragma once
 #include <algorithm>
 #include "GameObject.h"
 #include "Transform.h"
@@ -9,24 +8,25 @@ dae::GameObject::GameObject()
 }
 dae::GameObject::~GameObject()
 {
-	int i{};
-	++i;
+	m_pChildren.clear();
+	m_pDeletedChildren.clear();
 }
 void dae::GameObject::Update()
 {
+	
 	if (m_pDestroyComponents.empty() == false)
 	{
-		for (const auto& destroyComponent : m_pDestroyComponents)
+		for (int i{}; i < static_cast<int>(m_pDestroyComponents.size()); ++i)
 		{
-			EraseComponent(destroyComponent);
+			EraseComponent(m_pDestroyComponents[i]);
 		}
 		m_pDestroyComponents.clear();
 	}
 	if (m_pDeletedChildren.empty() == false)
 	{
-		for (const auto& deletedChild : m_pDeletedChildren)
+		for (int i{}; i < static_cast<int>(m_pDeletedChildren.size()); ++i)
 		{
-			EraseChild(deletedChild);
+			EraseChild(m_pDeletedChildren[i]);
 		}
 		m_pDeletedChildren.clear();
 	}
@@ -56,14 +56,14 @@ void dae::GameObject::Destroy()
 {
 	if (m_pParent)
 	{
-		for (const auto& deletedChilds = m_pParent->m_pDeletedChildren; const auto deletedChild : deletedChilds)
+		for (const auto& deletedChilds = m_pParent->m_pDeletedChildren; auto deletedChild : deletedChilds)
 		{
 			if (deletedChild == this)
 			{
 				return;
 			}
 		}
-		m_pParent->m_pDeletedChildren.push_back(this);
+ 		m_pParent->m_pDeletedChildren.push_back(this);
 	}
 }
 
@@ -116,6 +116,7 @@ bool dae::GameObject::HasChild(GameObject* child) const
 {
 	for (const auto& element : m_pChildren)
 	{
+		if (!element){continue;}
 		const auto rawElement = element.get();
 		if (rawElement == child)
 		{
@@ -147,7 +148,7 @@ void dae::GameObject::EraseChild(const GameObject* gameobject)
 		if (gameobject == it->get())
 		{
 			m_pChildren.erase(it);
-			break;
+			return;
 		}
 	}
 }

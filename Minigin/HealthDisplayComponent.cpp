@@ -23,6 +23,11 @@ void dae::HealthDisplayComponent::OnNotify(unsigned, HealthComponent* entity)
 	SetDisplayHealth(entity->GetHealth());
 }
 
+void dae::HealthDisplayComponent::OnDestroy()
+{
+	GetGameObject()->Destroy();
+}
+
 void dae::HealthDisplayComponent::SetDisplayHealth(float amount) const
 {
 	std::stringstream ss{};

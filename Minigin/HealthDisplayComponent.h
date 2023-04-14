@@ -12,6 +12,7 @@ namespace dae
 	public:
 		explicit HealthDisplayComponent(GameObject* pGameObject, const HealthComponent* entity);
 		void OnNotify(unsigned eventId, HealthComponent* entity) override;
+		void OnDestroy() override;
 	private:
 		void SetDisplayHealth(float amount) const;
 		TextRenderer* m_pTextRenderer;

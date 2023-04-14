@@ -6,7 +6,6 @@ unsigned int Scene::m_idCounter = 0;
 
 Scene::Scene(const std::string& name) : m_name(name)
 {
-	m_rootObject = std::make_unique<GameObject>();
 }
 
 Scene::~Scene()
@@ -15,12 +14,12 @@ Scene::~Scene()
 
 void Scene::Add(GameObject* object)
 {
-	object->SetParent(m_rootObject.get(), false);
+	object->SetParent(GetRootObject(), false);
 }
 
 void Scene::Remove(GameObject* object)
 {
-	m_destroyObjects.push_back(object);
+	object->Destroy();
 }
 
 void Scene::RemoveAll()
@@ -36,11 +35,6 @@ GameObject* Scene::GetRootObject()
 
 void Scene::Update()
 {
-	for (const auto destroyObject : m_destroyObjects)
-	{
-		destroyObject->SetParent(nullptr, false);
-	}
-
 	m_rootObject->Update();
 }
 
@@ -48,4 +42,3 @@ void Scene::Render() const
 {
 	m_rootObject->Render();
 }
-
