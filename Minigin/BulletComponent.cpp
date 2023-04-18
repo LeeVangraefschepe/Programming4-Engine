@@ -20,6 +20,14 @@ m_damage(damage)
 
 void dae::BulletComponent::Update()
 {
+	const float deltaTime = Time::GetDeltaTime();
+	m_timeAlive += deltaTime;
+	if (m_maxTimeAlive <= m_timeAlive)
+	{
+		GetGameObject()->Destroy();
+		return;
+	}
+
 	if (const auto other = m_pCollision->IsColliding(); other && other != m_pCreator)
 	{
 		if (const auto otherHealth = other->GetComponent<HealthComponent>())
@@ -37,6 +45,6 @@ void dae::BulletComponent::Update()
 	}
 
 	auto pos = m_pTransform->GetLocalPosition();
-	pos += m_direction * Time::GetDeltaTime() * m_speed;
+	pos += m_direction * deltaTime * m_speed;
 	m_pTransform->SetLocalPosition(pos);
 }

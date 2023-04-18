@@ -183,6 +183,9 @@
     <ClInclude Include="ScoreComponent.h">
       <Filter>Components\Game\Enitiy</Filter>
     </ClInclude>
+    <ClInclude Include="TutorialComponent.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -292,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Components\Game\Enitiy</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialComponent.cpp">
+      <Filter>Components\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

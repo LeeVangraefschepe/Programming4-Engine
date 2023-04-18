@@ -248,6 +248,7 @@ xcopy "$(SolutionDir)steam_appid.txt" "$(OutputPath)" /Y</Command>
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TrashCacheGameObject.h" />
     <ClInclude Include="TrashCacheInt.h" />
+    <ClInclude Include="TutorialComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\backends\imgui_impl_opengl2.cpp">
@@ -358,6 +359,7 @@ xcopy "$(SolutionDir)steam_appid.txt" "$(OutputPath)" /Y</Command>
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TrashCacheGameObject.cpp" />
     <ClCompile Include="TrashCacheInt.cpp" />
+    <ClCompile Include="TutorialComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Component.cd" />

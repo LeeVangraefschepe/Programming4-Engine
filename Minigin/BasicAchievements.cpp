@@ -18,7 +18,7 @@ void dae::BasicAchievements::OnNotify(unsigned int eventId, PlayerComponent* eni
 		{
 			if (enity->GetData()->scoreComponent->GetScore() >= 500)
 			{
-				std::thread t{ [this]() { UnlockAchievement("ACH_WIN_ONE_GAME"); } };
+				std::thread t{ [this]() { UnlockAchievement(win); } };
 				t.detach();
 			}
 		}
@@ -28,10 +28,15 @@ void dae::BasicAchievements::OnNotify(unsigned int eventId, PlayerComponent* eni
 }
 void dae::BasicAchievements::ClearAchievements()
 {
-	SteamUserStats()->ClearAchievement("ACH_WIN_ONE_GAME");
+	SteamUserStats()->ClearAchievement(m_achievementIds[win]);
 }
-void dae::BasicAchievements::UnlockAchievement(const std::string& name)
+void dae::BasicAchievements::UnlockAchievement(Achievements achievement)
 {
-	SteamUserStats()->SetAchievement(name.c_str());
+	if (m_achievementUnlocked[achievement])
+	{
+		return;
+	}
+	m_achievementUnlocked[achievement] = true;
+	SteamUserStats()->SetAchievement(m_achievementIds[achievement]);
 	SteamUserStats()->StoreStats();
 }
