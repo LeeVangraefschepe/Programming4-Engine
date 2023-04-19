@@ -18,13 +18,6 @@ namespace dae
 		void Render() const;
 		void Destroy();
 
-#pragma region Observable
-		Subject<GameObject>* GetSubject() const
-		{
-			return m_notifyObject.get();
-		}
-#pragma endregion 
-
 #pragma region Parenting
 		void SetParent(GameObject* parent, bool keepWorldPosition);
 		GameObject* GetParent() const { return m_pParent; }
@@ -129,8 +122,6 @@ namespace dae
 
 		bool IsValidParent(GameObject* parent) const;
 		GameObject* m_pParent{};
-
-		std::unique_ptr<Subject<GameObject>> m_notifyObject = std::make_unique<Subject<GameObject>>();
 
 		void EraseComponent(const BaseComponent* component);
 		void EraseChild(const GameObject* gameobject);
