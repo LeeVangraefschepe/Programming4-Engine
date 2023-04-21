@@ -10,11 +10,15 @@ namespace dae
 	class ScoreDisplayComponent : public BaseComponent, public Observer<ScoreComponent>
 	{
 	public:
-		explicit ScoreDisplayComponent(GameObject* pGameObject, const ScoreComponent* entity);
+		explicit ScoreDisplayComponent(GameObject* pGameObject, ScoreComponent* entity);
+		~ScoreDisplayComponent() override;
 		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
 		void OnDestroy() override;
 	private:
 		void SetDisplayScore(int amount) const;
 		TextRenderer* m_pTextRenderer;
+
+		ScoreComponent* m_pScoreComponent;
+		bool m_isDestroyed{};
 	};
 }

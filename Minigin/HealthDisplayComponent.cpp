@@ -6,7 +6,7 @@
 #include "ResourceManager.h"
 #include "TextRenderer.h"
 
-dae::HealthDisplayComponent::HealthDisplayComponent(GameObject* pGameObject, const HealthComponent* entity) : BaseComponent(pGameObject)
+dae::HealthDisplayComponent::HealthDisplayComponent(GameObject* pGameObject, HealthComponent* entity) : BaseComponent(pGameObject), m_pHealthComponent(entity)
 {
 	m_pTextRenderer = GetGameObject()->GetComponent<TextRenderer>();
 	if (!m_pTextRenderer)
@@ -18,6 +18,14 @@ dae::HealthDisplayComponent::HealthDisplayComponent(GameObject* pGameObject, con
 	SetDisplayHealth(entity->GetHealth());
 }
 
+dae::HealthDisplayComponent::~HealthDisplayComponent()
+{
+	if (m_isDestroyed == false)
+	{
+		m_pHealthComponent->GetSubject()->RemoveObserver(this);
+	}
+}
+
 void dae::HealthDisplayComponent::OnNotify(unsigned, HealthComponent* entity)
 {
 	SetDisplayHealth(entity->GetHealth());
@@ -26,6 +34,7 @@ void dae::HealthDisplayComponent::OnNotify(unsigned, HealthComponent* entity)
 void dae::HealthDisplayComponent::OnDestroy()
 {
 	GetGameObject()->Destroy();
+	m_isDestroyed = true;
 }
 
 void dae::HealthDisplayComponent::SetDisplayHealth(float amount) const

@@ -6,7 +6,7 @@
 #include "TextRenderer.h"
 #include "ScoreComponent.h"
 
-dae::ScoreDisplayComponent::ScoreDisplayComponent(GameObject* pGameObject, const ScoreComponent* entity) : BaseComponent(pGameObject)
+dae::ScoreDisplayComponent::ScoreDisplayComponent(GameObject* pGameObject, ScoreComponent* entity) : BaseComponent(pGameObject), m_pScoreComponent(entity)
 {
 	m_pTextRenderer = GetGameObject()->GetComponent<TextRenderer>();
 	if (!m_pTextRenderer)
@@ -18,6 +18,14 @@ dae::ScoreDisplayComponent::ScoreDisplayComponent(GameObject* pGameObject, const
 	SetDisplayScore(entity->GetScore());
 }
 
+dae::ScoreDisplayComponent::~ScoreDisplayComponent()
+{
+	if (m_isDestroyed == false)
+	{
+		m_pScoreComponent->GetSubject()->RemoveObserver(this);
+	}
+}
+
 void dae::ScoreDisplayComponent::OnNotify(unsigned, ScoreComponent* entity)
 {
 	SetDisplayScore(entity->GetScore());
@@ -26,6 +34,7 @@ void dae::ScoreDisplayComponent::OnNotify(unsigned, ScoreComponent* entity)
 void dae::ScoreDisplayComponent::OnDestroy()
 {
 	GetGameObject()->Destroy();
+	m_isDestroyed = true;
 }
 
 void dae::ScoreDisplayComponent::SetDisplayScore(int amount) const
