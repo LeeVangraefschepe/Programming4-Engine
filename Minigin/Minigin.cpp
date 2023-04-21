@@ -8,7 +8,6 @@
 #include "Minigin.h"
 
 #include <iostream>
-#include <steam_api_common.h>
 
 #include "EventQueue.h"
 #include "InputManager.h"
@@ -103,8 +102,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		const auto currentTime = std::chrono::high_resolution_clock::now();
 		Time::SetDeltaTime(std::chrono::duration<float>(currentTime - end).count());
 		end = currentTime;
-
-		SteamAPI_RunCallbacks();
 
 		//Core game loop
 		doContinue = input.ProcessInput();

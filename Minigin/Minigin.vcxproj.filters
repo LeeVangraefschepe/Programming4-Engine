@@ -159,9 +159,6 @@
     <ClInclude Include="TextRenderer.h">
       <Filter>Components\Core</Filter>
     </ClInclude>
-    <ClInclude Include="BasicAchievements.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
     <ClInclude Include="BasicEvents.h">
       <Filter>Components\Game</Filter>
     </ClInclude>
@@ -274,9 +271,6 @@
     </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Components\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicAchievements.cpp">
-      <Filter>Components\Game</Filter>
     </ClCompile>
     <ClCompile Include="BulletComponent.cpp">
       <Filter>Components\Game\Enitiy</Filter>
