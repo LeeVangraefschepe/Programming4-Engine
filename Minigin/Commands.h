@@ -15,6 +15,7 @@ namespace dae
 	public:
 		MoveCommand(PlayerComponent* pplayer) : m_pPlayerComponent(pplayer) { m_pPlayerComponent->AddObservableObject(this); }
 		void Execute() override;
+		void OnNotify(unsigned, PlayerComponent*) override{}
 		void OnDestroy() override;
 	private:
 		PlayerComponent* m_pPlayerComponent;
@@ -25,6 +26,7 @@ namespace dae
 	public:
 		FireCommand(PlayerComponent* pplayer) : m_pPlayerComponent(pplayer){ m_pPlayerComponent->AddObservableObject(this); }
 		void Execute() override;
+		void OnNotify(unsigned, PlayerComponent*) override {}
 		void OnDestroy() override;
 	private:
 		PlayerComponent* m_pPlayerComponent;
