@@ -5,7 +5,7 @@
 #include "Transform.h"
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
-#include "Time.h"
+#include "Timer.h"
 
 dae::BulletComponent::BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direcion, float speed, float damage) :
 BaseComponent(pGameObject),

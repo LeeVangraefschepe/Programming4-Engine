@@ -13,7 +13,7 @@
 #include "ScoreComponent.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
-#include "Time.h"
+#include "Timer.h"
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {

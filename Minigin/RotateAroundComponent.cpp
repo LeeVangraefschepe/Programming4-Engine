@@ -1,7 +1,7 @@
 #pragma once
 #include "RotateAroundComponent.h"
 #include "GameObject.h"
-#include "Time.h"
+#include "Timer.h"
 
 dae::RotateAroundComponent::RotateAroundComponent(GameObject* pGameObject, float radius, float speed) : m_radius(radius), m_speed(speed), BaseComponent(pGameObject)
 {

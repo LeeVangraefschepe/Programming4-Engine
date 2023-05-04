@@ -46,12 +46,6 @@
     <Filter Include="Components\Core">
       <UniqueIdentifier>{b2c9f583-c5c8-4c76-ba1f-50f3f6ff03a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Game">
-      <UniqueIdentifier>{e993da21-d26a-4fc4-ba81-49453e250286}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Game\Enitiy">
-      <UniqueIdentifier>{6cef0639-8a3d-4d30-bf55-cd1fcb5cca57}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -72,7 +66,7 @@
     <ClInclude Include="Minigin.h">
       <Filter>Other\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="Timer.h">
       <Filter>Other\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
@@ -117,9 +111,6 @@
     <ClInclude Include="Command.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Input</Filter>
     </ClInclude>
@@ -150,38 +141,11 @@
     <ClInclude Include="SpriteRenderer.h">
       <Filter>Components\Core</Filter>
     </ClInclude>
-    <ClInclude Include="FPS.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
     <ClInclude Include="RotateAroundComponent.h">
       <Filter>Components\Exercises</Filter>
     </ClInclude>
     <ClInclude Include="TextRenderer.h">
       <Filter>Components\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicEvents.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletComponent.h">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionComponent.h">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthDisplayComponent.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplayComponent.h">
-      <Filter>Components\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClInclude>
-    <ClInclude Include="TutorialComponent.h">
-      <Filter>Components\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,35 +227,11 @@
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Components\Core</Filter>
     </ClCompile>
-    <ClCompile Include="FPS.cpp">
-      <Filter>Components\Game</Filter>
-    </ClCompile>
     <ClCompile Include="RotateAroundComponent.cpp">
       <Filter>Components\Exercises</Filter>
     </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Components\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletComponent.cpp">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionComponent.cpp">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthDisplayComponent.cpp">
-      <Filter>Components\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplayComponent.cpp">
-      <Filter>Components\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Components\Game\Enitiy</Filter>
-    </ClCompile>
-    <ClCompile Include="TutorialComponent.cpp">
-      <Filter>Components\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

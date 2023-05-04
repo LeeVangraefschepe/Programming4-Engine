@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "TextRenderer.h"
-#include "Time.h"
+#include "Timer.h"
 
 using namespace dae;
 
