@@ -46,6 +46,9 @@
     <Filter Include="Components\Core">
       <UniqueIdentifier>{b2c9f583-c5c8-4c76-ba1f-50f3f6ff03a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AudioSystem">
+      <UniqueIdentifier>{fdacfa58-2f95-4af5-ac11-70dad516ccad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">

@@ -8,11 +8,13 @@ dae::Scene* dae::SceneManager::GetActiveScene()
 
 void dae::SceneManager::Update()
 {
+	if (!m_activeScene) {return;}
 	m_activeScene->Update();
 }
 
 void dae::SceneManager::Render()
 {
+	if (!m_activeScene) { return; }
 	m_activeScene->Render();
 }
 

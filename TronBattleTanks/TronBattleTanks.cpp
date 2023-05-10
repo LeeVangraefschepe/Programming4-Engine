@@ -111,7 +111,7 @@ void Demo()
 	const auto p0Fire = new dae::FireCommand{ p0Component };
 	input.BindCommand<dae::FireCommand>(p0Fire, 0, dae::Controller::ControllerButton::ButtonA, dae::InputManager::InputType::OnButtonDown);
 	const auto p1Fire = new dae::FireCommand{ p1Component };
-	input.BindCommand<dae::FireCommand>(p1Fire, SDLK_SPACE, dae::InputManager::InputType::OnButtonDown);
+	input.BindCommand<dae::FireCommand>(p1Fire, SDLK_SPACE, dae::InputManager::InputType::OnButtonDown); 
 }
 
 int main(int, char* [])
