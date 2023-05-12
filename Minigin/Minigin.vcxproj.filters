@@ -150,6 +150,15 @@
     <ClInclude Include="TextRenderer.h">
       <Filter>Components\Core</Filter>
     </ClInclude>
+    <ClInclude Include="AudioSystem.h">
+      <Filter>AudioSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSystemSDL2.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -235,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Components\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSystemSDL2.cpp">
+      <Filter>Other\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

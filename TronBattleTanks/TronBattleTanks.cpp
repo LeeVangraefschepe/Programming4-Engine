@@ -27,12 +27,19 @@
 #include "ScoreComponent.h"
 #include "HealthDisplayComponent.h"
 #include "ScoreDisplayComponent.h"
+#include "ServiceLocator.h"
 #include "TutorialComponent.h"
+#include "AudioSystemSDL2.h"
 
 void Demo()
 {
 	auto& sceneManager = dae::SceneManager::GetInstance();
 	auto& input = dae::InputManager::GetInstance();
+
+	dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemSDL2>());
+	dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "Fart.mp3");
+	dae::ServiceLocator::GetAudioSystem()->Play(69, 1.f);
+
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	const float screenWidth = static_cast<float>(sceneManager.GetWidth());
 	const float screenHeight = static_cast<float>(sceneManager.GetHeight());
@@ -44,6 +51,7 @@ void Demo()
 	background->AddComponent<dae::SpriteRenderer>(dae::ResourceManager::GetInstance().LoadTexture("backgroundHD.png"));
 	scene->Add(background);
 
+	
 	const auto tutorialComponent = new dae::GameObject{};
 	tutorialComponent->AddComponent<dae::TutorialComponent>();
 	scene->Add(tutorialComponent);
@@ -111,7 +119,7 @@ void Demo()
 	const auto p0Fire = new dae::FireCommand{ p0Component };
 	input.BindCommand<dae::FireCommand>(p0Fire, 0, dae::Controller::ControllerButton::ButtonA, dae::InputManager::InputType::OnButtonDown);
 	const auto p1Fire = new dae::FireCommand{ p1Component };
-	input.BindCommand<dae::FireCommand>(p1Fire, SDLK_SPACE, dae::InputManager::InputType::OnButtonDown); 
+	input.BindCommand<dae::FireCommand>(p1Fire, SDLK_SPACE, dae::InputManager::InputType::OnButtonDown);
 }
 
 int main(int, char* [])
