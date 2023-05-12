@@ -20,7 +20,7 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 	protected:
-		GameObject* GetGameObject() const { return m_pGameObject; }
+		virtual GameObject* GetGameObject() const { return m_pGameObject; }
 	private:
 		GameObject* m_pGameObject;
 	};

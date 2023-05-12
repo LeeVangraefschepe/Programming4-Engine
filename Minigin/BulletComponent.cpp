@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "HealthComponent.h"
+#include "PhysicsManager.h"
 #include "ScoreComponent.h"
 #include "Timer.h"
 
@@ -14,8 +15,8 @@ m_direction(direcion),
 m_speed(speed),
 m_damage(damage)
 {
-	m_pTransform = GetGameObject()->GetComponent<Transform>();
-	m_pCollision = GetGameObject()->GetComponent<CollisionComponent>();
+	m_pTransform = BaseComponent::GetGameObject()->GetComponent<Transform>();
+	m_pCollision = BaseComponent::GetGameObject()->GetComponent<CollisionComponent>();
 }
 
 void dae::BulletComponent::Update()
@@ -28,7 +29,8 @@ void dae::BulletComponent::Update()
 		return;
 	}
 
-	if (const auto other = m_pCollision->IsColliding(); other && other != m_pCreator)
+	const auto& physics = PhysicsManager::GetInstance();
+	if (const auto other = physics.CheckCollision(m_pCollision); other && other != m_pCreator)
 	{
 		if (const auto otherHealth = other->GetComponent<HealthComponent>())
 		{

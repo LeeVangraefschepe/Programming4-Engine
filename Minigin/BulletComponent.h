@@ -19,7 +19,7 @@ namespace dae
 		glm::vec2 m_direction;
 		float m_speed;
 		float m_damage;
-		float m_timeAlive;
+		float m_timeAlive{};
 		float m_maxTimeAlive = 5.f;
 	};
 }

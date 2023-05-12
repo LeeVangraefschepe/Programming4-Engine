@@ -49,6 +49,9 @@
     <Filter Include="AudioSystem">
       <UniqueIdentifier>{fdacfa58-2f95-4af5-ac11-70dad516ccad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{a95dc507-42df-4500-9155-4ef82cdcf2e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -159,6 +162,12 @@
     <ClInclude Include="AudioSystemSDL2.h">
       <Filter>Other\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -244,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="AudioSystemSDL2.cpp">
       <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

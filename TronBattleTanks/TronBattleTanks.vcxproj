@@ -211,7 +211,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h" />
     <ClCompile Include="..\Minigin\BulletComponent.cpp" />
-    <ClCompile Include="..\Minigin\CollisionComponent.cpp" />
     <ClCompile Include="..\Minigin\FPS.cpp" />
     <ClCompile Include="..\Minigin\HealthDisplayComponent.cpp" />
     <ClCompile Include="..\Minigin\PlayerComponent.cpp" />
@@ -221,7 +220,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="TronBattleTanks.cpp" />
     <ClInclude Include="..\Minigin\BasicEvents.h" />
     <ClInclude Include="..\Minigin\BulletComponent.h" />
-    <ClInclude Include="..\Minigin\CollisionComponent.h" />
     <ClInclude Include="..\Minigin\Commands.h" />
     <ClInclude Include="..\Minigin\FPS.h" />
     <ClInclude Include="..\Minigin\HealthDisplayComponent.h" />
