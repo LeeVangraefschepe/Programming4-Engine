@@ -233,9 +233,6 @@
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Components\Core</Filter>
     </ClCompile>
-    <ClCompile Include="EventQueue.cpp">
-      <Filter>EventSystem</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Components\Core</Filter>
     </ClCompile>

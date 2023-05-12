@@ -85,14 +85,12 @@ void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
 	if (eventId == HealthComponent::Events::died)
 	{
 		m_subject->Notify(Events::died, this);
-		EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerDied));
 		GetGameObject()->Destroy();
 	}
 }
 void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent*)
 {
 	m_subject->Notify(Events::score, this);
-	EventQueue::GetInstance().SendMessage(static_cast<unsigned int>(BasicEvents::PlayerScore));
 }
 
 dae::PlayerComponent::PlayerData* dae::PlayerComponent::GetData() const
