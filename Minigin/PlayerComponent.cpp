@@ -8,12 +8,14 @@
 #include "CollisionComponent.h"
 #include "EventQueue.h"
 #include "HealthComponent.h"
+#include "PhysicsManager.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "ScoreComponent.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Timer.h"
+#include "..\TronBattleTanks\CellComponent.h"
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
@@ -65,7 +67,23 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 
 	auto pos = m_pTransform->GetLocalPosition();
 	pos += input;
+
+	if (const auto other = PhysicsManager::GetInstance().CheckCollision(m_pCollision); other)
+	{
+		if (other->HasComponent<CellComponent>())
+		{
+			const auto wallPos = other->GetComponent<Transform>()->GetWorldPosition();
+			pos = m_pTransform->GetLocalPosition();
+			auto direction = pos - wallPos;
+			direction = glm::normalize(direction);
+			pos += direction;
+		}
+	}
+
 	m_pTransform->SetLocalPosition(pos);
+
+
+
 }
 
 void dae::PlayerComponent::FireInput()

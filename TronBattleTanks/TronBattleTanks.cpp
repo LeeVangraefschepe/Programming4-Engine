@@ -30,17 +30,18 @@
 #include "ServiceLocator.h"
 #include "TutorialComponent.h"
 #include "AudioSystemSDL2.h"
+#include "GridComponent.h"
 
 void Demo()
 {
 	auto& sceneManager = dae::SceneManager::GetInstance();
 	auto& input = dae::InputManager::GetInstance();
 
-	dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemSDL2>());
-	dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "Fart.mp3");
-	dae::ServiceLocator::GetAudioSystem()->LoadSound(420, "AH.wav");
-	dae::ServiceLocator::GetAudioSystem()->Play(69, 1.f);
-	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.f);
+	//dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemSDL2>());
+	//dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "Fart.mp3");
+	//dae::ServiceLocator::GetAudioSystem()->LoadSound(420, "AH.wav");
+	//dae::ServiceLocator::GetAudioSystem()->Play(69, 1.f);
+	//dae::ServiceLocator::GetAudioSystem()->Play(420, 1.f);
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	const float screenWidth = static_cast<float>(sceneManager.GetWidth());
@@ -53,7 +54,6 @@ void Demo()
 	background->AddComponent<dae::SpriteRenderer>(dae::ResourceManager::GetInstance().LoadTexture("backgroundHD.png"));
 	scene->Add(background);
 
-	
 	const auto tutorialComponent = new dae::GameObject{};
 	tutorialComponent->AddComponent<dae::TutorialComponent>();
 	scene->Add(tutorialComponent);
@@ -70,6 +70,10 @@ void Demo()
 	textObj->GetComponent<dae::Transform>()->SetPosition(screenWidth / 2.f - imageSize.x / 2.f, 20);
 	scene->Add(textObj);
 
+	const auto grid = new dae::GameObject{};
+	grid->AddComponent<dae::GridComponent>(glm::vec2{ 12,12 })->LoadGrid("Level/LevelLayout1.csv");
+	scene->Add(grid);
+
 	const auto fpsObj = new dae::GameObject();
 	fpsObj->AddComponent<dae::FPS>();
 	fpsObj->GetComponent<dae::Transform>()->SetPosition(10, 10);
@@ -79,7 +83,7 @@ void Demo()
 	const auto p0Health = player0->AddComponent<dae::HealthComponent>(3.f);
 	const auto p0Score = player0->AddComponent<dae::ScoreComponent>();
 	imageSize = player0->AddComponent<dae::SpriteRenderer>(dae::ResourceManager::GetInstance().LoadTexture("RedTank.png"))->GetDimensions();
-	player0->GetComponent<dae::Transform>()->SetLocalPosition(50.f, screenHeight / 2.f - imageSize.y / 2.f);
+	player0->GetComponent<dae::Transform>()->SetLocalPosition(20.f, screenHeight / 2.f - imageSize.y / 2.f);
 	player0->AddComponent<dae::CollisionComponent>()->SetSize(imageSize.x, imageSize.y);
 	const auto p0Component = player0->AddComponent<dae::PlayerComponent>();
 	scene->Add(player0);
