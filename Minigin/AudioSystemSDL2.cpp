@@ -4,6 +4,8 @@
 #include <iostream>
 #include <ranges>
 #include <sstream>
+#include <thread>
+#include <stop_token>
 
 #include "ResourceManager.h"
 
@@ -17,16 +19,19 @@ dae::AudioSystemSDL2::AudioSystemSDL2()
 	{
 		printf("Error opening audio device: %s\n", Mix_GetError());
 	}
-	m_thread = std::jthread{ &AudioSystemSDL2::Run, this };
-	m_thread.detach();
+	m_thread = std::jthread{ &AudioSystemSDL2::Run, this, m_Stop.get_token() };
 }
 
 dae::AudioSystemSDL2::~AudioSystemSDL2()
 {
+	m_Stop.request_stop();
+	m_ConditionVariable.notify_one();
 	for (const auto val : m_sounds | std::views::values)
 	{
 		Mix_FreeChunk(val);
 	}
+	Mix_CloseAudio();
+	Mix_Quit();
 }
 
 void dae::AudioSystemSDL2::LoadSound(const SoundId id, const std::string& path)
@@ -65,17 +70,20 @@ void dae::AudioSystemSDL2::ResumeAll()
 	m_ConditionVariable.notify_one();
 }
 
-void dae::AudioSystemSDL2::Run()
+void dae::AudioSystemSDL2::Run(const std::stop_token& stopToken)
 {
 	std::unique_lock lock{m_Mutex};
-	m_ConditionVariable.wait(lock, [this]() { return !m_Queue.IsEmpty(); });
 
-	while (!m_Queue.IsEmpty())
+	while (!stopToken.stop_requested())
 	{
-		auto event = m_Queue.Dequeue();
-		switch (event.action)
+		m_ConditionVariable.wait(lock);
+		
+		while (!m_Queue.IsEmpty() && !stopToken.stop_requested())
 		{
-		case play:
+			auto event = m_Queue.Dequeue();
+			switch (event.action)
+			{
+			case play:
 			{
 				if (!m_sounds.contains(event.id))
 				{
@@ -89,21 +97,22 @@ void dae::AudioSystemSDL2::Run()
 				std::cout << "Play sound " << event.id << "\n";
 			}
 			break;
-		case stop:
+			case stop:
 			{
 				Mix_HaltChannel(-1);
 			}
 			break;
-		case pause:
+			case pause:
 			{
 				Mix_Pause(-1);
 			}
 			break;
-		case resume:
+			case resume:
 			{
 				Mix_Resume(-1);
 			}
 			break;
+			}
 		}
 	}
 }

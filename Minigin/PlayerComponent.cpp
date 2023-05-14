@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "ScoreComponent.h"
+#include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Timer.h"
@@ -88,6 +89,7 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 
 void dae::PlayerComponent::FireInput()
 {
+	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.f);
 	std::cout << "Fire bullet\n";
 	const auto bullet = new GameObject{};
 	bullet->SetParent(m_pRootObject, false);
