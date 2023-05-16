@@ -37,7 +37,7 @@ void Demo()
 	auto& sceneManager = dae::SceneManager::GetInstance();
 	auto& input = dae::InputManager::GetInstance();
 
-	dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemSDL2>());
+	dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemLogger>(std::move(std::make_unique<dae::AudioSystemSDL2>())));
 	dae::ServiceLocator::GetAudioSystem()->LoadSound(420, "Fart.mp3");
 	dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "AH.wav");
 	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.2f);
