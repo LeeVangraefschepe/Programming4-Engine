@@ -20,13 +20,12 @@ namespace dae
 		void PauseAll() override;
 		void ResumeAll() override;
 	private:
-		void Run(const std::stop_token& stopToken);
+		void Run();
 
 		std::unordered_map<SoundId, Mix_Chunk*> m_sounds{};
 		EventQueue<Event> m_Queue;
 
 		std::jthread m_thread;
-		std::stop_source m_Stop{};
 		std::mutex m_Mutex;
 		std::condition_variable m_ConditionVariable;
 	};

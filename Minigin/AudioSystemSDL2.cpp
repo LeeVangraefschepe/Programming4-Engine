@@ -18,12 +18,12 @@ dae::AudioSystemSDL2::AudioSystemSDL2()
 	{
 		printf("Error opening audio device: %s\n", Mix_GetError());
 	}
-	m_thread = std::jthread{ &AudioSystemSDL2::Run, this, m_Stop.get_token() };
+	m_thread = std::jthread{ &AudioSystemSDL2::Run, this };
 }
 
 dae::AudioSystemSDL2::~AudioSystemSDL2()
 {
-	m_Stop.request_stop();
+	m_thread.request_stop();
 	m_ConditionVariable.notify_one();
 	for (const auto val : m_sounds | std::views::values)
 	{
@@ -65,8 +65,9 @@ void dae::AudioSystemSDL2::ResumeAll()
 	m_ConditionVariable.notify_one();
 }
 
-void dae::AudioSystemSDL2::Run(const std::stop_token& stopToken)
+void dae::AudioSystemSDL2::Run()
 {
+	const std::stop_token& stopToken{ m_thread.get_stop_token() };
 	std::unique_lock lock{m_Mutex};
 
 	while (!stopToken.stop_requested())
