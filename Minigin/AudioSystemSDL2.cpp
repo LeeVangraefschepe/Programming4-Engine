@@ -1,7 +1,6 @@
 #include "AudioSystemSDL2.h"
 #include "SDL.h"
 #include "SDL_mixer.h"
-#include <iostream>
 #include <ranges>
 #include <sstream>
 #include <thread>
@@ -38,18 +37,14 @@ void dae::AudioSystemSDL2::LoadSound(const SoundId id, const std::string& path)
 {
 	std::stringstream ss{};
 	ss << ResourceManager::GetInstance().GetPath() << path;
-	auto sound = Mix_LoadWAV(ss.str().c_str());
-	if (!sound)
-	{
-		printf("Error loading sound: %s\n", Mix_GetError());
-		return;
-	}
-
-	m_sounds.emplace(std::pair{id, sound});
+	m_Queue.Enqueue(Event{ load, id, ss.str() });
+	m_ConditionVariable.notify_one();
 }
-void dae::AudioSystemSDL2::Play(const SoundId id, const float)
+void dae::AudioSystemSDL2::Play(const SoundId id, const float volume)
 {
-	m_Queue.Enqueue(Event{ play, id });
+	auto event = Event{ play, id };
+	event.volume = volume;
+	m_Queue.Enqueue(event);
 	m_ConditionVariable.notify_one();
 }
 void dae::AudioSystemSDL2::StopAll()
@@ -76,25 +71,41 @@ void dae::AudioSystemSDL2::Run(const std::stop_token& stopToken)
 
 	while (!stopToken.stop_requested())
 	{
-		m_ConditionVariable.wait(lock);
+		if (m_Queue.IsEmpty())
+		{
+			m_ConditionVariable.wait(lock);
+		}
 		
 		while (!m_Queue.IsEmpty() && !stopToken.stop_requested())
 		{
 			auto event = m_Queue.Dequeue();
 			switch (event.action)
 			{
+			case load:
+			{
+				auto sound = Mix_LoadWAV(event.path.c_str());
+				if (!sound)
+				{
+					printf("Error loading sound: %s\n", Mix_GetError());
+					return;
+				}
+				m_sounds.emplace(std::pair{ event.id, sound });
+			}
+			break;
 			case play:
 			{
 				if (!m_sounds.contains(event.id))
 				{
+					printf("Sound id not found: %d\n", event.id);
 					return;
 				}
 				const auto sound = m_sounds.at(event.id);
-				if (const int channel = Mix_PlayChannel(-1, sound, 0); channel == -1)
+				int channel{};
+				if (channel = Mix_PlayChannel(-1, sound, 0); channel == -1)
 				{
 					printf("Error playing sound: %s\n", Mix_GetError());
 				}
-				std::cout << "Play sound " << event.id << "\n";
+				Mix_Volume(channel, static_cast<int>((MIX_MAX_VOLUME * event.volume)));
 			}
 			break;
 			case stop:

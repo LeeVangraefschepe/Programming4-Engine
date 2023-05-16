@@ -21,6 +21,7 @@ namespace dae
 		void ResumeAll() override;
 	private:
 		void Run(const std::stop_token& stopToken);
+
 		std::unordered_map<SoundId, Mix_Chunk*> m_sounds{};
 		EventQueue<Event> m_Queue;
 

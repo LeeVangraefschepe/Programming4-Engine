@@ -38,10 +38,10 @@ void Demo()
 	auto& input = dae::InputManager::GetInstance();
 
 	dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemSDL2>());
-	dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "Fart.mp3");
-	dae::ServiceLocator::GetAudioSystem()->LoadSound(420, "AH.wav");
-	dae::ServiceLocator::GetAudioSystem()->Play(69, 1.f);
-	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.f);
+	dae::ServiceLocator::GetAudioSystem()->LoadSound(420, "Fart.mp3");
+	dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "AH.wav");
+	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.2f);
+	dae::ServiceLocator::GetAudioSystem()->Play(69, 0.1f);
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	const float screenWidth = static_cast<float>(sceneManager.GetWidth());

@@ -15,6 +15,7 @@ namespace dae
 	protected:
 		enum Action
 		{
+			load,
 			play,
 			pause,
 			resume,
@@ -24,6 +25,8 @@ namespace dae
 		{
 			Action action;
 			SoundId id{};
+			std::string path{};
+			float volume{};
 		};
 	};
 
