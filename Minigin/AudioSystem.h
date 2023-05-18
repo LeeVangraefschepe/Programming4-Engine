@@ -13,22 +13,6 @@ namespace dae
 		virtual void StopAll() = 0;
 		virtual void PauseAll() = 0;
 		virtual void ResumeAll() = 0;
-	protected:
-		enum Action
-		{
-			load,
-			play,
-			pause,
-			resume,
-			stop,
-		};
-		struct Event
-		{
-			Action action;
-			SoundId id{};
-			std::string path{};
-			float volume{};
-		};
 	};
 
 	class DefaultAudioSystem final : public AudioSystem

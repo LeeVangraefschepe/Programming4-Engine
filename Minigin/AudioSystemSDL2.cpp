@@ -68,63 +68,63 @@ void dae::AudioSystemSDL2::ResumeAll()
 void dae::AudioSystemSDL2::Run()
 {
 	const std::stop_token& stopToken{ m_thread.get_stop_token() };
-	std::unique_lock lock{m_Mutex};
 
 	while (!stopToken.stop_requested())
 	{
-		if (m_Queue.IsEmpty())
+		std::unique_lock lock{ m_Mutex };
+		m_ConditionVariable.wait(lock, [&]() {return !m_Queue.IsEmpty() || stopToken.stop_requested(); });
+		if (stopToken.stop_requested())
 		{
-			m_ConditionVariable.wait(lock);
+			break;
 		}
-		
-		while (!m_Queue.IsEmpty() && !stopToken.stop_requested())
+
+		auto event = m_Queue.Dequeue();
+		lock.unlock();
+
+		switch (event.action)
 		{
-			auto event = m_Queue.Dequeue();
-			switch (event.action)
+		case load:
+		{
+			auto sound = Mix_LoadWAV(event.path.c_str());
+			if (!sound)
 			{
-			case load:
+				printf("Error loading sound: %s\n", Mix_GetError());
+				return;
+			}
+			m_sounds.emplace(std::pair{ event.id, sound });
+		}
+		break;
+		case play:
+		{
+			if (!m_sounds.contains(event.id))
 			{
-				auto sound = Mix_LoadWAV(event.path.c_str());
-				if (!sound)
-				{
-					printf("Error loading sound: %s\n", Mix_GetError());
-					return;
-				}
-				m_sounds.emplace(std::pair{ event.id, sound });
+				printf("Sound id not found: %d\n", event.id);
+				return;
 			}
-			break;
-			case play:
+			const auto sound = m_sounds.at(event.id);
+			int channel{};
+			if (channel = Mix_PlayChannel(-1, sound, 0); channel == -1)
 			{
-				if (!m_sounds.contains(event.id))
-				{
-					printf("Sound id not found: %d\n", event.id);
-					return;
-				}
-				const auto sound = m_sounds.at(event.id);
-				int channel{};
-				if (channel = Mix_PlayChannel(-1, sound, 0); channel == -1)
-				{
-					printf("Error playing sound: %s\n", Mix_GetError());
-				}
-				Mix_Volume(channel, static_cast<int>((MIX_MAX_VOLUME * event.volume)));
+				printf("Error playing sound: %s\n", Mix_GetError());
 			}
-			break;
-			case stop:
-			{
-				Mix_HaltChannel(-1);
-			}
-			break;
-			case pause:
-			{
-				Mix_Pause(-1);
-			}
-			break;
-			case resume:
-			{
-				Mix_Resume(-1);
-			}
-			break;
-			}
+			Mix_Volume(channel, static_cast<int>((MIX_MAX_VOLUME * event.volume)));
+		}
+		break;
+		case stop:
+		{
+			Mix_HaltChannel(-1);
+		}
+		break;
+		case pause:
+		{
+			Mix_Pause(-1);
+		}
+		break;
+		case resume:
+		{
+			Mix_Resume(-1);
+		}
+		break;
 		}
 	}
 }

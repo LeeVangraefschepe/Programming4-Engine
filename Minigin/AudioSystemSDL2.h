@@ -20,6 +20,22 @@ namespace dae
 		void PauseAll() override;
 		void ResumeAll() override;
 	private:
+		enum Action
+		{
+			load,
+			play,
+			pause,
+			resume,
+			stop,
+		};
+		struct Event
+		{
+			Action action;
+			SoundId id{};
+			std::string path{};
+			float volume{};
+		};
+
 		void Run();
 
 		std::unordered_map<SoundId, Mix_Chunk*> m_sounds{};
