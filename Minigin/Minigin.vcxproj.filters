@@ -135,9 +135,6 @@
     <ClInclude Include="Observer.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Components\Core</Filter>
-    </ClInclude>
     <ClInclude Include="EventQueue.h">
       <Filter>EventSystem</Filter>
     </ClInclude>
@@ -221,9 +218,6 @@
     <ClCompile Include="TrashCacheGameObject.cpp">
       <Filter>Components\Exercises</Filter>
     </ClCompile>
-    <ClCompile Include="Commands.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -238,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components\Core</Filter>
     </ClCompile>
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Components\Core</Filter>
