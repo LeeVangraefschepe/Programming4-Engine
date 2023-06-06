@@ -8,10 +8,10 @@
 #include "ScoreComponent.h"
 #include "Timer.h"
 
-dae::BulletComponent::BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direcion, float speed, float damage) :
+dae::BulletComponent::BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direction, float speed, float damage) :
 BaseComponent(pGameObject),
 m_pCreator(pCreator),
-m_direction(direcion),
+m_direction(direction),
 m_speed(speed),
 m_damage(damage)
 {

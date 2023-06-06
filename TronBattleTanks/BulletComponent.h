@@ -9,7 +9,7 @@ namespace dae
 	class BulletComponent final : public BaseComponent
 	{
 	public:
-		explicit BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direcion, float speed, float damage);
+		explicit BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direction, float speed, float damage);
 
 		void Update() override;
 	private:

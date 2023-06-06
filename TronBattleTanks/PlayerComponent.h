@@ -39,22 +39,18 @@ namespace dae
 		PlayerData* GetData() const;
 
 	private:
+		void HandleRotation() const;
+		void HandleMovement(glm::vec2 input) const;
+
 		Transform* m_pTransform;
 		SpriteRenderer* m_pSpriteRenderer;
 		CollisionComponent* m_pCollision;
+
+		glm::vec2 m_direction{};
 
 		std::unique_ptr<Subject<PlayerComponent>> m_subject = std::make_unique<Subject<PlayerComponent>>();
 		GameObject* m_pRootObject;
 
 		std::unique_ptr<PlayerData> m_pData = std::make_unique<PlayerData>();
-
-		int m_direction{};
-		static const inline glm::vec2 DIRECTIONS[] =
-		{
-			glm::vec2(-1.0f, 0.0f), // left
-			glm::vec2(0.0f, 1.0f), // top
-			glm::vec2(1.0f, 0.0f), // right
-			glm::vec2(0.0f, -1.0f) // bottom
-		};
 	};
 }

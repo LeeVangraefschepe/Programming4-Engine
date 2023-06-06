@@ -59,20 +59,25 @@ void dae::GridComponent::GenerateGrid(const std::vector<std::vector<int>>& data)
 		for (int width{}; width < widthSize; ++width)
 		{
 			const auto& id = dataWidth[width];
-			if (id != 0) {continue;}
+			if (id == 5)
+			{
+				
+			}
+			else if (id == 0)
+			{
+				const auto cellObj = new GameObject{};
+				cellObj->SetParent(baseObject, false);
 
-			const auto cellObj = new GameObject{};
-			cellObj->SetParent(baseObject, false);
+				cellObj->AddComponent<SpriteRenderer>(cellImage);
 
-			cellObj->AddComponent<SpriteRenderer>(cellImage);
+				const auto cellTransform = cellObj->GetComponent<Transform>();
+				cellTransform->SetLocalPosition(static_cast<float>(width) * m_CellSize.x, static_cast<float>(height) * m_CellSize.y);
 
-			const auto cellTransform = cellObj->GetComponent<Transform>();
-			cellTransform->SetLocalPosition(static_cast<float>(width) * m_CellSize.x, static_cast<float>(height) * m_CellSize.y);
+				cellObj->AddComponent<CollisionComponent>()->SetSize(m_CellSize.x, m_CellSize.y);
 
-			cellObj->AddComponent<CollisionComponent>()->SetSize(m_CellSize.x, m_CellSize.y);
-
-			const auto cell = cellObj->AddComponent<CellComponent>();
-			m_Cells[height][width] = cell;
+				const auto cell = cellObj->AddComponent<CellComponent>();
+				m_Cells[height][width] = cell;
+			}
 		}
 	}
 }

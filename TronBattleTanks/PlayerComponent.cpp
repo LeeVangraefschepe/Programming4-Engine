@@ -37,54 +37,14 @@ void dae::PlayerComponent::AddObservableObject(Observer<PlayerComponent>* observ
 }
 void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 {
-	//Update player UI
-	if (abs(input.x) >= abs(input.y))
-	{
-		if (input.x >= 0)
-		{
-			m_direction = 2; // right
-		}
-		else
-		{
-			m_direction = 0; // left
-		}
-	}
-	else
-	{
-		if (input.y >= 0)
-		{
-			m_direction = 1; // top
-		}
-		else
-		{
-			m_direction = 3; // bottom
-		}
-	}
-	m_pSpriteRenderer->SetRotation(static_cast<float>(m_direction) * 90.f);
-
-	//Move the player
+	//Inverse Y direction
 	input.y *= -1.f;
-	input *= Time::GetDeltaTime() * 100.f;
 
-	auto pos = m_pTransform->GetLocalPosition();
-	pos += input;
+	//Set direction
+	m_direction = glm::normalize(input);
 
-	if (const auto other = PhysicsManager::GetInstance().CheckCollision(m_pCollision); other)
-	{
-		if (other->HasComponent<CellComponent>())
-		{
-			const auto wallPos = other->GetComponent<Transform>()->GetWorldPosition();
-			pos = m_pTransform->GetLocalPosition();
-			auto direction = pos - wallPos;
-			direction = glm::normalize(direction);
-			pos += direction;
-		}
-	}
-
-	m_pTransform->SetLocalPosition(pos);
-
-
-
+	HandleRotation();
+	HandleMovement(input);
 }
 
 void dae::PlayerComponent::FireInput()
@@ -96,7 +56,7 @@ void dae::PlayerComponent::FireInput()
 	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition());
 	const auto size = bullet->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
 	bullet->AddComponent<CollisionComponent>()->SetSize(size.x, size.y);
-	bullet->AddComponent<BulletComponent>(GetGameObject(), DIRECTIONS[m_direction], 300.f, 1.f);
+	bullet->AddComponent<BulletComponent>(GetGameObject(), m_direction, 300.f, 1.f);
 }
 
 void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)
@@ -116,4 +76,41 @@ void dae::PlayerComponent::OnNotify(unsigned, ScoreComponent*)
 dae::PlayerComponent::PlayerData* dae::PlayerComponent::GetData() const
 {
 	return m_pData.get();
+}
+
+void dae::PlayerComponent::HandleRotation() const
+{
+	//Calculate the rotation angle in radians using atan2
+	float rotation = glm::atan(m_direction.y, m_direction.x);
+	rotation = glm::degrees(rotation);
+
+	//Apply rotation to the sprite renderer
+	m_pSpriteRenderer->SetRotation(rotation);
+}
+
+void dae::PlayerComponent::HandleMovement(glm::vec2 input) const
+{
+	//Apply movement speed
+	constexpr float movementSpeed{ 100.f };
+	input *= Time::GetDeltaTime() * movementSpeed;
+
+	//Get position
+	auto pos = m_pTransform->GetLocalPosition();
+	pos += input;
+
+	//Check wall collision
+	if (const auto other = PhysicsManager::GetInstance().CheckCollision(m_pCollision); other)
+	{
+		if (other->HasComponent<CellComponent>())
+		{
+			const auto wallPos = other->GetComponent<Transform>()->GetWorldPosition();
+			pos = m_pTransform->GetLocalPosition();
+			auto direction = pos - wallPos;
+			direction = glm::normalize(direction);
+			pos += direction;
+		}
+	}
+
+	//Apply position
+	m_pTransform->SetLocalPosition(pos);
 }
