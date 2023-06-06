@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "AudioManager.h"
 #include "GameObject.h"
 #include "BasicEvents.h"
 #include "BulletComponent.h"
@@ -49,7 +50,7 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 
 void dae::PlayerComponent::FireInput()
 {
-	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.f);
+	ServiceLocator::GetAudioSystem()->Play(AudioManager::Sounds::Fire, 1.f);
 	std::cout << "Fire bullet\n";
 	const auto bullet = new GameObject{};
 	bullet->SetParent(m_pRootObject, false);

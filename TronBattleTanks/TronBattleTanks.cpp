@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include "AudioManager.h"
 #include "Commands.h"
 #include "InputManager.h"
 #include "CollisionComponent.h"
@@ -37,11 +38,8 @@ void Demo()
 	auto& sceneManager = dae::SceneManager::GetInstance();
 	auto& input = dae::InputManager::GetInstance();
 
-	dae::ServiceLocator::RegisterAudioSystem(std::make_unique<dae::AudioSystemLogger>(std::move(std::make_unique<dae::AudioSystemSDL2>())));
-	dae::ServiceLocator::GetAudioSystem()->LoadSound(420, "Fart.mp3");
-	dae::ServiceLocator::GetAudioSystem()->LoadSound(69, "AH.wav");
-	dae::ServiceLocator::GetAudioSystem()->Play(420, 1.2f);
-	dae::ServiceLocator::GetAudioSystem()->Play(69, 0.1f);
+	dae::AudioManager::GetInstance().SetService(std::make_unique<dae::AudioSystemSDL2>());
+	dae::ServiceLocator::GetAudioSystem()->Play(dae::AudioManager::Music::MainMenu, 0.1f);
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	const float screenWidth = static_cast<float>(sceneManager.GetWidth());

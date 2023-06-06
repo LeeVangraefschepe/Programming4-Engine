@@ -28,6 +28,9 @@
     <Filter Include="Components\Level">
       <UniqueIdentifier>{6258214a-f954-492f-ab4b-5fe0e46d3028}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Singletons">
+      <UniqueIdentifier>{fea12283-49fe-48b3-b004-76d10083f591}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TronBattleTanks.cpp">
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="HealthDisplayComponent.cpp">
       <Filter>Components\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Singletons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="HealthDisplayComponent.h">
       <Filter>Components\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Singletons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
