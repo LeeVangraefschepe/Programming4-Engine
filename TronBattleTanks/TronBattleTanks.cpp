@@ -128,7 +128,7 @@ void Demo()
 
 int main(int, char* [])
 {
-    dae::Minigin engine("../Data/", 1280, 720);
+    dae::Minigin engine("../Data/", 700, 720);
     engine.Run(Demo);
     return 0;
 }

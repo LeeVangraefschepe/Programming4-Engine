@@ -1,7 +1,6 @@
 #pragma once
 #include <memory>
 #include "AudioSystem.h"
-#include "Singleton.h"
 
 namespace dae
 {
