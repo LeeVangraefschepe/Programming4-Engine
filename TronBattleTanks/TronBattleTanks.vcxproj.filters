@@ -31,6 +31,9 @@
     <Filter Include="Singletons">
       <UniqueIdentifier>{fea12283-49fe-48b3-b004-76d10083f591}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\UI">
+      <UniqueIdentifier>{17416829-b54a-4c23-9e1c-6f6787da557d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TronBattleTanks.cpp">
@@ -43,12 +46,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TutorialComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FPS.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="CellComponent.cpp">
@@ -71,6 +68,18 @@
     </ClCompile>
     <ClCompile Include="AudioManager.cpp">
       <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,12 +122,6 @@
     <ClInclude Include="HealthComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="TutorialComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FPS.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="CellComponent.h">
       <Filter>Components\Level</Filter>
     </ClInclude>
@@ -139,6 +142,18 @@
     </ClInclude>
     <ClInclude Include="AudioManager.h">
       <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
