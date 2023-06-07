@@ -12,6 +12,11 @@ namespace dae
 		explicit BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direction, float speed, float damage);
 
 		void Update() override;
+
+		BulletComponent(const BulletComponent& other) = delete;
+		BulletComponent(BulletComponent&& other) = delete;
+		BulletComponent& operator=(const BulletComponent& other) = delete;
+		BulletComponent& operator=(BulletComponent&& other) = delete;
 	private:
 		GameObject* m_pCreator;
 		CollisionComponent* m_pCollision;

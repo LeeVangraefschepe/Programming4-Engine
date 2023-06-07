@@ -14,6 +14,12 @@ namespace dae
 		~ScoreDisplayComponent() override;
 		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
 		void OnDestroy() override;
+
+		ScoreDisplayComponent(const ScoreDisplayComponent& other) = delete;
+		ScoreDisplayComponent(ScoreDisplayComponent&& other) = delete;
+		ScoreDisplayComponent& operator=(const ScoreDisplayComponent& other) = delete;
+		ScoreDisplayComponent& operator=(ScoreDisplayComponent&& other) = delete;
+
 	private:
 		void SetDisplayScore(int amount) const;
 		TextRenderer* m_pTextRenderer;

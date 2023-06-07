@@ -15,6 +15,11 @@ namespace dae
 
 		void AddScore(int amount);
 		void ResetScore();
+
+		ScoreComponent(const ScoreComponent& other) = delete;
+		ScoreComponent(ScoreComponent&& other) = delete;
+		ScoreComponent& operator=(const ScoreComponent& other) = delete;
+		ScoreComponent& operator=(ScoreComponent&& other) = delete;
 	private:
 		std::unique_ptr<Subject<ScoreComponent>> m_subject = std::make_unique<Subject<ScoreComponent>>();
 		int m_score{};

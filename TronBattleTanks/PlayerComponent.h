@@ -38,6 +38,11 @@ namespace dae
 
 		PlayerData* GetData() const;
 
+		PlayerComponent(const PlayerComponent& other) = delete;
+		PlayerComponent(PlayerComponent&& other) = delete;
+		PlayerComponent& operator=(const PlayerComponent& other) = delete;
+		PlayerComponent& operator=(PlayerComponent&& other) = delete;
+
 	private:
 		void HandleRotation() const;
 		void HandleMovement(glm::vec2 input) const;

@@ -1,4 +1,6 @@
 #pragma once
+#include <functional>
+
 #include "Command.h"
 #include "PlayerComponent.h"
 
@@ -30,6 +32,14 @@ namespace dae
 		void OnDestroy() override;
 	private:
 		PlayerComponent* m_pPlayerComponent;
+	};
 
+	class LambdaCommand : public Command
+	{
+	public:
+		LambdaCommand(const std::function<void()>& function) : m_function(function){}
+		void Execute() override { m_function(); }
+	private:
+		std::function<void()> m_function{};
 	};
 }

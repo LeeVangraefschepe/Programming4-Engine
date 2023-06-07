@@ -34,6 +34,10 @@ namespace dae
 		float GetHealth() const;
 		float GetMaxHealth() const;
 
+		HealthComponent(const HealthComponent& other) = delete;
+		HealthComponent(HealthComponent&& other) = delete;
+		HealthComponent& operator=(const HealthComponent& other) = delete;
+		HealthComponent& operator=(HealthComponent&& other) = delete;
 	private:
 		float m_currentHealth{1.f};
 		float m_maxHealth{1.f};

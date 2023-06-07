@@ -1,6 +1,5 @@
 #pragma once
 #include <glm/vec2.hpp>
-
 #include "BaseComponent.h"
 
 namespace dae
@@ -10,5 +9,10 @@ namespace dae
 	public:
 		CellComponent(GameObject* pGameObject);
 		~CellComponent() override = default;
+
+		CellComponent(const CellComponent& other) = delete;
+		CellComponent(CellComponent&& other) = delete;
+		CellComponent& operator=(const CellComponent& other) = delete;
+		CellComponent& operator=(CellComponent&& other) = delete;
 	};
 }
