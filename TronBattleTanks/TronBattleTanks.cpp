@@ -10,12 +10,12 @@
 #include "AudioManager.h"
 #include "AudioSystemSDL2.h"
 #include "Minigin.h"
-#include "GameScene.h"
+#include "MainMenuScene.h"
 
 int main(int, char* [])
 {
     dae::Minigin engine("../Data/", 700, 720);
     dae::AudioManager::GetInstance().SetService(std::make_unique<dae::AudioSystemSDL2>());
-    engine.Run(dae::GameScene::Load);
+    engine.Run(dae::MainMenuScene::Load);
     return 0;
 }

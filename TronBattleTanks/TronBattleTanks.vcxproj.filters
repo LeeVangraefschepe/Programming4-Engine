@@ -34,6 +34,9 @@
     <Filter Include="Components\UI">
       <UniqueIdentifier>{17416829-b54a-4c23-9e1c-6f6787da557d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{b05c8c78-8c5f-49a6-b32e-701e868406cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TronBattleTanks.cpp">
@@ -75,11 +78,14 @@
     <ClCompile Include="TutorialComponent.cpp">
       <Filter>Components\UI</Filter>
     </ClCompile>
+    <ClCompile Include="GameModeManager.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
     <ClCompile Include="MainMenuScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,11 +155,14 @@
     <ClInclude Include="TutorialComponent.h">
       <Filter>Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuScene.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameModeManager.h">
+      <Filter>Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
-      <Filter>Header Files</Filter>
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "MainMenuScene.h"
 
+#include "GameModeManager.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "SpriteRenderer.h"
@@ -17,4 +18,9 @@ void dae::MainMenuScene::Load()
 	const auto background = new GameObject{};
 	background->AddComponent<SpriteRenderer>(dae::ResourceManager::GetInstance().LoadTexture("backgroundHD.png"));
 	scene->Add(background);
+
+	std::vector<glm::vec2> positions{};
+	const auto gameModeManager = new GameObject{};
+	gameModeManager->AddComponent<GameModeManager>(positions);
+	scene->Add(gameModeManager);
 }
