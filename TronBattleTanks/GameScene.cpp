@@ -20,6 +20,8 @@
 
 #include <SDL_keycode.h>
 
+#include "EnemyController.h"
+
 void dae::GameScene::Load()
 {
 	auto& sceneManager = SceneManager::GetInstance();
@@ -53,10 +55,6 @@ void dae::GameScene::Load()
 	imageSize = textTitle->GetDimensions();
 	textObj->GetComponent<Transform>()->SetPosition(screenWidth / 2.f - imageSize.x / 2.f, 20);
 	scene->Add(textObj);
-
-	const auto grid = new GameObject{};
-	grid->AddComponent<GridComponent>(glm::vec2{ 12, 12 })->LoadGrid("Level/LevelLayout1.csv");
-	scene->Add(grid);
 
 	const auto fpsObj = new GameObject();
 	fpsObj->AddComponent<FPS>();
@@ -110,4 +108,15 @@ void dae::GameScene::Load()
 	input.BindCommand<FireCommand>(p0Fire, 0, Controller::ControllerButton::ButtonA, InputManager::InputType::OnButtonDown);
 	const auto p1Fire = new FireCommand{ p1Component };
 	input.BindCommand<FireCommand>(p1Fire, SDLK_SPACE, InputManager::InputType::OnButtonDown);
+
+	const auto grid = new GameObject{};
+	grid->AddComponent<GridComponent>(glm::vec2{ 12, 12 })->LoadGrid("Level/LevelLayout1.csv");
+	scene->Add(grid);
+
+	const auto enemy = new GameObject();
+	imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
+	enemy->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
+	enemy->AddComponent<CollisionComponent>()->SetSize(imageSize.x, imageSize.y);
+	enemy->AddComponent<EnemyController>();
+	scene->Add(enemy);
 }

@@ -1,7 +1,7 @@
 #pragma once
 namespace dae
 {
-	class GameScene
+	class GameScene final
 	{
 	public:
 		GameScene() = delete;

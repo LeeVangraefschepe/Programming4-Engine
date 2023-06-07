@@ -4,7 +4,6 @@
 
 #include "AudioManager.h"
 #include "GameObject.h"
-#include "BasicEvents.h"
 #include "BulletComponent.h"
 #include "CollisionComponent.h"
 #include "EventQueue.h"
@@ -17,7 +16,7 @@
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Timer.h"
-#include "..\TronBattleTanks\CellComponent.h"
+#include "CellComponent.h"
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {

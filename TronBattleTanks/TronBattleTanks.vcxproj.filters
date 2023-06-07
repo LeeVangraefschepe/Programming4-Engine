@@ -37,6 +37,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{b05c8c78-8c5f-49a6-b32e-701e868406cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Enemy">
+      <UniqueIdentifier>{06421b0c-10fb-40c9-a569-da49630c2731}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TronBattleTanks.cpp">
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyController.cpp">
+      <Filter>Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyVision.cpp">
+      <Filter>Components\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +172,12 @@
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyController.h">
+      <Filter>Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyVision.h">
+      <Filter>Components\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

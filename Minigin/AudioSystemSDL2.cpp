@@ -85,11 +85,21 @@ void dae::AudioSystemSDL2::Run()
 		{
 		case load:
 		{
-			auto sound = Mix_LoadWAV(event.path.c_str());
+			Mix_Chunk* sound{};
+			try
+			{
+				sound = Mix_LoadWAV(event.path.c_str());
+			}
+			catch (...)
+			{
+				printf("Exception loading sound: %s\n", Mix_GetError());
+				continue;
+			}
 			if (!sound)
 			{
 				printf("Error loading sound: %s\n", Mix_GetError());
-				return;
+				continue;
+				
 			}
 			m_sounds.emplace(std::pair{ event.id, sound });
 		}
@@ -99,7 +109,7 @@ void dae::AudioSystemSDL2::Run()
 			if (!m_sounds.contains(event.id))
 			{
 				printf("Sound id not found: %d\n", event.id);
-				return;
+				continue;
 			}
 			const auto sound = m_sounds.at(event.id);
 			int channel{};

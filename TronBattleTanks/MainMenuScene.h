@@ -2,7 +2,7 @@
 
 namespace dae
 {
-	class MainMenuScene
+	class MainMenuScene final
 	{
 	public:
 		MainMenuScene() = delete;

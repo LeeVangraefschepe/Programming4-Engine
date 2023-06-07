@@ -11,6 +11,7 @@
 #include "AudioSystemSDL2.h"
 #include "Minigin.h"
 #include "MainMenuScene.h"
+#include "GameScene.h"
 
 int main(int, char* [])
 {
