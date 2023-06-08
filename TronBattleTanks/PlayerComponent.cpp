@@ -54,8 +54,6 @@ void dae::PlayerComponent::FireInput()
 	const auto bullet = new GameObject{};
 	bullet->SetParent(m_pRootObject, false);
 	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition());
-	const auto size = bullet->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
-	bullet->AddComponent<CollisionComponent>()->SetSize(size.x, size.y);
 	bullet->AddComponent<BulletComponent>(GetGameObject(), m_direction, 300.f, 1.f);
 }
 

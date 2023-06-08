@@ -5,7 +5,9 @@
 #include "Transform.h"
 #include "HealthComponent.h"
 #include "PhysicsManager.h"
+#include "ResourceManager.h"
 #include "ScoreComponent.h"
+#include "SpriteRenderer.h"
 #include "Timer.h"
 
 dae::BulletComponent::BulletComponent(GameObject* pGameObject, GameObject* pCreator, const glm::vec2& direction, float speed, float damage) :
@@ -15,8 +17,11 @@ m_direction(direction),
 m_speed(speed),
 m_damage(damage)
 {
+	const std::vector layers{1};
+	const glm::vec2 size = pGameObject->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
+	m_pCollision = pGameObject->AddComponent<CollisionComponent>(layers);
 	m_pTransform = BaseComponent::GetGameObject()->GetComponent<Transform>();
-	m_pCollision = BaseComponent::GetGameObject()->GetComponent<CollisionComponent>();
+	m_pCollision->SetSize(size.x, size.y);
 }
 
 void dae::BulletComponent::Update()

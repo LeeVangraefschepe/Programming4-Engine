@@ -61,12 +61,14 @@ void dae::GameScene::Load()
 	fpsObj->GetComponent<Transform>()->SetPosition(10, 10);
 	scene->Add(fpsObj);
 
+	const std::vector playerLayers{0, 1, 2};
+
 	const auto player0 = new GameObject();
 	const auto p0Health = player0->AddComponent<HealthComponent>(3.f);
 	const auto p0Score = player0->AddComponent<ScoreComponent>();
 	imageSize = player0->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("RedTank.png"))->GetDimensions();
 	player0->GetComponent<Transform>()->SetLocalPosition(20.f, screenHeight / 2.f - imageSize.y / 2.f);
-	player0->AddComponent<CollisionComponent>()->SetSize(imageSize.x, imageSize.y);
+	player0->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p0Component = player0->AddComponent<PlayerComponent>();
 	scene->Add(player0);
 
@@ -85,7 +87,7 @@ void dae::GameScene::Load()
 	const auto p1Score = player1->AddComponent<ScoreComponent>();
 	imageSize = player1->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
 	player1->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
-	player1->AddComponent<CollisionComponent>()->SetSize(imageSize.x, imageSize.y);
+	player1->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p1Component = player1->AddComponent<PlayerComponent>();
 	scene->Add(player1);
 
@@ -117,7 +119,7 @@ void dae::GameScene::Load()
 	imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
 	enemy->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
 	enemy->AddComponent<HealthComponent>(1.f);
-	enemy->AddComponent<CollisionComponent>()->SetSize(imageSize.x, imageSize.y);
+	enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	enemy->AddComponent<EnemyController>();
 	scene->Add(enemy);
 }

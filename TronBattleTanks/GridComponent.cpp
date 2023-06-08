@@ -46,6 +46,7 @@ void dae::GridComponent::GenerateGrid(const std::vector<std::vector<int>>& data)
 {
 	const auto baseObject = BaseComponent::GetGameObject();
 	const auto cellImage = ResourceManager::GetInstance().LoadTexture("Wall.png");
+	const std::vector layers{0,1};
 
 	const int heightSize = static_cast<int>(data.size());
 	m_Cells.resize(heightSize);
@@ -73,7 +74,7 @@ void dae::GridComponent::GenerateGrid(const std::vector<std::vector<int>>& data)
 				const auto cellTransform = cellObj->GetComponent<Transform>();
 				cellTransform->SetLocalPosition(static_cast<float>(width) * m_CellSize.x, static_cast<float>(height) * m_CellSize.y);
 
-				cellObj->AddComponent<CollisionComponent>()->SetSize(m_CellSize.x, m_CellSize.y);
+				cellObj->AddComponent<CollisionComponent>(layers)->SetSize(m_CellSize.x, m_CellSize.y);
 
 				const auto cell = cellObj->AddComponent<CellComponent>();
 				m_Cells[height][width] = cell;
