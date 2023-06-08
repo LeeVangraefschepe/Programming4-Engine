@@ -24,7 +24,10 @@ namespace dae
 		glm::vec2 m_direction;
 		float m_speed;
 		float m_damage;
+
+		int m_bounces{};
 		float m_timeAlive{};
-		float m_maxTimeAlive = 5.f;
+		const float m_maxTimeAlive = 60.f;
+		const int m_maxBounces = 6;
 	};
 }

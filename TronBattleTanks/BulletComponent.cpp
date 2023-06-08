@@ -1,5 +1,6 @@
 #include "BulletComponent.h"
 
+#include "CellComponent.h"
 #include "CollisionComponent.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -37,6 +38,7 @@ void dae::BulletComponent::Update()
 	auto& physics = PhysicsManager::GetInstance();
 	if (const auto other = physics.CheckCollision(m_pCollision); other && other != m_pCreator)
 	{
+		++m_bounces;
 		if (const auto otherHealth = other->GetComponent<HealthComponent>())
 		{
 			const auto scoreCreator = m_pCreator->GetComponent<ScoreComponent>();
@@ -45,10 +47,20 @@ void dae::BulletComponent::Update()
 			{
 				scoreCreator->AddScore(100 + (kill * 500));
 			}
+			GetGameObject()->Destroy();
 		}
-		GetGameObject()->Destroy();
+
+		m_direction *= -1.f;
+		auto pos = m_pTransform->GetLocalPosition();
+		pos += m_direction * 5.f;
+		m_pTransform->SetLocalPosition(pos);
 
 		return;
+	}
+
+	if (m_bounces >= m_maxBounces)
+	{
+		GetGameObject()->Destroy();
 	}
 
 	auto pos = m_pTransform->GetLocalPosition();
