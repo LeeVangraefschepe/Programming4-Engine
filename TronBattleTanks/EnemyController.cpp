@@ -9,11 +9,15 @@
 #include "EnemyVision.h"
 #include "Transform.h"
 #include "Timer.h"
+#include "HealthComponent.h"
+#include "SpriteRenderer.h"
 
 dae::EnemyController::EnemyController(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
 	m_pCollision = pGameObject->GetComponent<CollisionComponent>();
 	m_pTransform = pGameObject->GetComponent<Transform>();
+	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
+	pGameObject->GetComponent<HealthComponent>()->GetSubject()->AddObserver(this);
 
 	const glm::vec2 size = m_pCollision->GetSize();
 	const auto vision = new GameObject{};
@@ -50,6 +54,7 @@ void dae::EnemyController::HandleMovement()
 			pos += direction;
 
 			m_direction = rand() % 4;
+			HandleRotation();
 		}
 	}
 
@@ -57,10 +62,31 @@ void dae::EnemyController::HandleMovement()
 	m_pTransform->SetLocalPosition(pos);
 }
 
+void dae::EnemyController::HandleRotation() const
+{
+	//Get input
+	const glm::vec2 input = DIRECTIONS[m_direction];
+
+	//Calculate the rotation angle in radians using atan2
+	float rotation = glm::atan(input.y, input.x);
+	rotation = glm::degrees(rotation);
+
+	//Apply rotation to the sprite renderer
+	m_pSpriteRenderer->SetRotation(rotation);
+}
+
 void dae::EnemyController::OnNotify(unsigned id, EnemyVision*)
 {
 	if (static_cast<EnemyVision::Event>(id) == EnemyVision::Fire)
 	{
 		std::cout << "Shoot\n";
+	}
+}
+
+void dae::EnemyController::OnNotify(unsigned id, HealthComponent*)
+{
+	if (static_cast<HealthComponent::Events>(id) == HealthComponent::died)
+	{
+		GetGameObject()->Destroy();
 	}
 }
