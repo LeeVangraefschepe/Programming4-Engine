@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include "Singleton.h"
 #include "CollisionComponent.h"
 
@@ -10,16 +11,13 @@ namespace dae
 	public:
 		void AddCollider(CollisionComponent* collision);
 		void RemoveCollider(const CollisionComponent* collision);
-		GameObject* CheckCollisonClosest(const CollisionComponent* collision, const std::vector<CollisionComponent*>& ignores) const;
-		GameObject* CheckCollisonClosest(const CollisionComponent* collision) const;
-		GameObject* CheckCollision(const CollisionComponent* collision, const std::vector<CollisionComponent*>& ignores) const;
-		GameObject* CheckCollision(const CollisionComponent* collision) const;
+		GameObject* CheckCollisonClosest(const CollisionComponent* collision, const std::vector<CollisionComponent*>& ignores);
+		GameObject* CheckCollisonClosest(const CollisionComponent* collision);
+		GameObject* CheckCollision(const CollisionComponent* collision, const std::vector<CollisionComponent*>& ignores);
+		GameObject* CheckCollision(const CollisionComponent* collision);
 	private:
 		friend class Singleton;
 		PhysicsManager() = default;
-
-		std::vector<CollisionComponent*> m_colliders{};
+		std::map<int, std::vector<CollisionComponent*>> m_layers{};
 	};
-
 }
-

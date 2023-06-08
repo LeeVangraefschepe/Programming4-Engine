@@ -5,6 +5,15 @@
 
 dae::CollisionComponent::CollisionComponent(dae::GameObject* pGameObject) : BaseComponent(pGameObject)
 {
+	//Set default layer
+	m_layers.push_back(0);
+
+	m_transform = GetGameObject()->GetComponent<Transform>();
+	PhysicsManager::GetInstance().AddCollider(this);
+}
+
+dae::CollisionComponent::CollisionComponent(dae::GameObject* pGameObject, std::vector<int> layers) : BaseComponent(pGameObject), m_layers(std::move(layers))
+{
 	m_transform = GetGameObject()->GetComponent<Transform>();
 	PhysicsManager::GetInstance().AddCollider(this);
 }

@@ -116,6 +116,7 @@ void dae::GameScene::Load()
 	const auto enemy = new GameObject();
 	imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
 	enemy->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
+	enemy->AddComponent<HealthComponent>(1.f);
 	enemy->AddComponent<CollisionComponent>()->SetSize(imageSize.x, imageSize.y);
 	enemy->AddComponent<EnemyController>();
 	scene->Add(enemy);

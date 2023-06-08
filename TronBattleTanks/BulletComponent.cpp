@@ -29,7 +29,7 @@ void dae::BulletComponent::Update()
 		return;
 	}
 
-	const auto& physics = PhysicsManager::GetInstance();
+	auto& physics = PhysicsManager::GetInstance();
 	if (const auto other = physics.CheckCollision(m_pCollision); other && other != m_pCreator)
 	{
 		if (const auto otherHealth = other->GetComponent<HealthComponent>())
