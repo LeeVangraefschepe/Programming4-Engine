@@ -96,6 +96,9 @@
     <ClCompile Include="EnemyVision.cpp">
       <Filter>Components\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ShootComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="EnemyVision.h">
       <Filter>Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
 #include "HealthDisplayComponent.h"
 #include "InputManager.h"
 #include "PlayerComponent.h"
+#include "ShootComponent.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "ScoreComponent.h"

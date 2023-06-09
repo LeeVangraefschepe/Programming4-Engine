@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "AudioManager.h"
 #include "GameObject.h"
 #include "BulletComponent.h"
 #include "CollisionComponent.h"
@@ -10,11 +9,11 @@
 #include "PhysicsManager.h"
 #include "SceneManager.h"
 #include "ScoreComponent.h"
-#include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Timer.h"
 #include "CellComponent.h"
+#include "ShootComponent.h"
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
@@ -26,6 +25,7 @@ dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(p
 	m_pTransform = pGameObject->GetComponent<Transform>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
 	m_pCollision = pGameObject->GetComponent<CollisionComponent>();
+	m_pShoot = pGameObject->AddComponent<ShootComponent>(&m_direction, 1.f);
 
 	m_pRootObject = SceneManager::GetInstance().GetActiveScene()->GetRootObject();
 }
@@ -45,15 +45,9 @@ void dae::PlayerComponent::SetMovmentInput(glm::vec2 input)
 	HandleMovement(input);
 }
 
-void dae::PlayerComponent::FireInput()
+void dae::PlayerComponent::FireInput() const
 {
-	ServiceLocator::GetAudioSystem()->Play(AudioManager::Sounds::Fire, 1.f);
-	std::cout << "Fire bullet\n";
-	const auto bullet = new GameObject{};
-	bullet->SetParent(m_pRootObject, false);
-	const glm::vec2 size = m_pCollision->GetSize() / 2.f - 6.f;
-	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition() + size);
-	bullet->AddComponent<BulletComponent>(GetGameObject(), m_direction, 300.f, 1.f);
+	m_pShoot->Shoot();
 }
 
 void dae::PlayerComponent::OnNotify(unsigned eventId, HealthComponent*)

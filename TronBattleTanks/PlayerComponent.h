@@ -6,6 +6,7 @@
 
 namespace dae
 {
+	class ShootComponent;
 	class HealthComponent;
 	class ScoreComponent;
 	class SpriteRenderer;
@@ -32,7 +33,7 @@ namespace dae
 		void AddObservableObject(Observer<PlayerComponent>* observer) const;
 		
 		void SetMovmentInput(glm::vec2 input);
-		void FireInput();
+		void FireInput() const;
 		void OnNotify(unsigned eventId, HealthComponent* entity) override;
 		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
 
@@ -50,6 +51,7 @@ namespace dae
 		Transform* m_pTransform;
 		SpriteRenderer* m_pSpriteRenderer;
 		CollisionComponent* m_pCollision;
+		ShootComponent* m_pShoot;
 
 		glm::vec2 m_direction{};
 
