@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/vec2.hpp>
 #include "BaseComponent.h"
+#include <memory>
+#include "Texture2D.h"
 
 namespace dae
 {
@@ -18,6 +20,7 @@ namespace dae
 		BulletComponent& operator=(const BulletComponent& other) = delete;
 		BulletComponent& operator=(BulletComponent&& other) = delete;
 	private:
+		static inline std::shared_ptr<Texture2D> m_texture{};
 		GameObject* m_pCreator;
 		CollisionComponent* m_pCollision;
 		Transform* m_pTransform;

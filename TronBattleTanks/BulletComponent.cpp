@@ -18,8 +18,9 @@ m_direction(direction),
 m_speed(speed),
 m_damage(damage)
 {
+	if (!m_texture) { m_texture = ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"); }
 	const std::vector layers{1};
-	const glm::vec2 size = pGameObject->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BulletPlayer.png"))->GetDimensions();
+	const glm::vec2 size = pGameObject->AddComponent<SpriteRenderer>(m_texture)->GetDimensions();
 	m_pCollision = pGameObject->AddComponent<CollisionComponent>(layers);
 	m_pTransform = BaseComponent::GetGameObject()->GetComponent<Transform>();
 	m_pCollision->SetSize(size.x, size.y);
@@ -38,24 +39,25 @@ void dae::BulletComponent::Update()
 	auto& physics = PhysicsManager::GetInstance();
 	if (const auto other = physics.CheckCollision(m_pCollision); other && other != m_pCreator)
 	{
-		++m_bounces;
-		if (const auto otherHealth = other->GetComponent<HealthComponent>())
+		if (!other->HasComponent<BulletComponent>())
 		{
-			const auto scoreCreator = m_pCreator->GetComponent<ScoreComponent>();
-			const bool kill = otherHealth->Damage(m_damage);
-			if (scoreCreator)
+			++m_bounces;
+			if (const auto otherHealth = other->GetComponent<HealthComponent>())
 			{
-				scoreCreator->AddScore(100 + (kill * 500));
+				const auto scoreCreator = m_pCreator->GetComponent<ScoreComponent>();
+				const bool kill = otherHealth->Damage(m_damage);
+				if (scoreCreator)
+				{
+					scoreCreator->AddScore(100 + (kill * 500));
+				}
+				GetGameObject()->Destroy();
 			}
-			GetGameObject()->Destroy();
+
+			m_direction *= -1.f;
+			auto pos = m_pTransform->GetLocalPosition();
+			pos += m_direction * 5.f;
+			m_pTransform->SetLocalPosition(pos);
 		}
-
-		m_direction *= -1.f;
-		auto pos = m_pTransform->GetLocalPosition();
-		pos += m_direction * 5.f;
-		m_pTransform->SetLocalPosition(pos);
-
-		return;
 	}
 
 	if (m_bounces >= m_maxBounces)
