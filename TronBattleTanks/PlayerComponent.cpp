@@ -53,7 +53,8 @@ void dae::PlayerComponent::FireInput()
 	std::cout << "Fire bullet\n";
 	const auto bullet = new GameObject{};
 	bullet->SetParent(m_pRootObject, false);
-	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition());
+	const glm::vec2 size = m_pCollision->GetSize() / 2.f - 6.f;
+	bullet->GetComponent<Transform>()->SetLocalPosition(m_pTransform->GetWorldPosition() + size);
 	bullet->AddComponent<BulletComponent>(GetGameObject(), m_direction, 300.f, 1.f);
 }
 
