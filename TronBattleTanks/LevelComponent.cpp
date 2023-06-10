@@ -1,13 +1,11 @@
 #include "LevelComponent.h"
 
-#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <glm/detail/func_geometric.inl>
 
 #include "GameObject.h"
 #include "GridComponent.h"
-#include "ResourceManager.h"
 
 dae::LevelComponent::LevelComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
@@ -20,20 +18,29 @@ void dae::LevelComponent::LoadLevel(int id)
 	ss << "Level/LevelLayout" << id << ".csv";
 	m_pGrid->LoadGrid(ss.str());
 	ReadOutRaw();
-	LoadSpawns();
+	LoadPlayerSpawns();
+	LoadEnemySpawns();
 }
 
 void dae::LevelComponent::SpawnPlayers(std::vector<std::function<void(const glm::vec2& position)>>& players) const
 {
 	const int playerCount = static_cast<int>(players.size());
-	const int randomSpawnId = rand() % m_playerSpawns.size() - (playerCount - 1);
+	const int randomSpawnId = static_cast<int>(rand()) % m_playerSpawns.size() - (playerCount - 1);
 	for (int i{}; i < playerCount; ++i)
 	{
 		players[i](m_playerSpawns[randomSpawnId+i]);
 	}
 }
 
-void dae::LevelComponent::LoadSpawns()
+void dae::LevelComponent::SpawnEnemies(std::function<void(const glm::vec2& position)> enemy) const
+{
+	for (const auto& position : m_enemySpawns)
+	{
+		enemy(position);
+	}
+}
+
+void dae::LevelComponent::LoadPlayerSpawns()
 {
 	const auto& data = m_pGrid->GetRawGrid();
 
@@ -45,8 +52,7 @@ void dae::LevelComponent::LoadSpawns()
 
 		for (int width{}; width < widthSize; ++width)
 		{
-			const auto& id = dataWidth[width];
-			if (id == 5 || id == 6)
+			if (const auto& id = dataWidth[width]; id == 5 || id == 6)
 			{
 				//Check if value isn't already defined nearby
 				bool isDefined{};
@@ -68,6 +74,45 @@ void dae::LevelComponent::LoadSpawns()
 	}
 
 	for (auto& pos : m_playerSpawns)
+	{
+		pos *= m_cellSize;
+	}
+}
+
+void dae::LevelComponent::LoadEnemySpawns()
+{
+	const auto& data = m_pGrid->GetRawGrid();
+
+	const int heightSize = static_cast<int>(data.size());
+	for (int height{}; height < heightSize; ++height)
+	{
+		const auto& dataWidth = data[height];
+		const int widthSize = static_cast<int>(dataWidth.size());
+
+		for (int width{}; width < widthSize; ++width)
+		{
+			if (const auto& id = dataWidth[width]; id == 4)
+			{
+				//Check if value isn't already defined nearby
+				bool isDefined{};
+				for (const auto& v : m_enemySpawns)
+				{
+					if (distance(v, { width,height }) < 3)
+					{
+						isDefined = true;
+						break;
+					}
+				}
+				if (!isDefined)
+				{
+					m_enemySpawns.emplace_back(width, height);
+					std::cout << "Player spawn: " << width << ", " << height << "\n";
+				}
+			}
+		}
+	}
+
+	for (auto& pos : m_enemySpawns)
 	{
 		pos *= m_cellSize;
 	}

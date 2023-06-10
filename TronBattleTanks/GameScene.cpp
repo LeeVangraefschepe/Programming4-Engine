@@ -125,13 +125,19 @@ void dae::GameScene::Load()
 	level->SpawnPlayers(players);
 	scene->Add(grid);
 
-	const auto enemy = new GameObject();
-	imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
-	enemy->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
-	enemy->AddComponent<HealthComponent>(1.f);
-	enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
-	enemy->AddComponent<EnemyController>();
-	scene->Add(enemy);
+	level->SpawnEnemies
+	(
+		[&](const glm::vec2& position)
+		{
+			const auto enemy = new GameObject();
+			imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
+			enemy->GetComponent<Transform>()->SetLocalPosition(position);
+			enemy->AddComponent<HealthComponent>(1.f);
+			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
+			enemy->AddComponent<EnemyController>();
+			scene->Add(enemy);
+		}
+	);
 
 	const auto fpsObj = new GameObject();
 	fpsObj->AddComponent<FPS>();
