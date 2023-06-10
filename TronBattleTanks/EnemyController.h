@@ -10,6 +10,7 @@ namespace dae
 	class CollisionComponent;
 	class EnemyVision;
 	class SpriteRenderer;
+	class ShootComponent;
 
 	class EnemyController : public BaseComponent, Observer<EnemyVision>, Observer<HealthComponent>
 	{
@@ -26,6 +27,7 @@ namespace dae
 		void HandleRotation() const;
 
 		int m_direction{};
+		glm::vec2 m_vectorDirection;
 		static constexpr inline glm::vec2 DIRECTIONS[] =
 		{
 			glm::vec2(-1.0f, 0.0f), // left
@@ -38,6 +40,7 @@ namespace dae
 		void OnNotify(unsigned, HealthComponent*) override;
 
 		Transform* m_pTransform;
+		ShootComponent* m_pShoot;
 		CollisionComponent* m_pCollision;
 		SpriteRenderer* m_pSpriteRenderer;
 	};

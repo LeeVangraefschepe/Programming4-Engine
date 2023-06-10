@@ -11,12 +11,16 @@
 #include "Timer.h"
 #include "HealthComponent.h"
 #include "SpriteRenderer.h"
+#include "ShootComponent.h"
 
 dae::EnemyController::EnemyController(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
+	m_vectorDirection = DIRECTIONS[m_direction];
+
 	m_pCollision = pGameObject->GetComponent<CollisionComponent>();
 	m_pTransform = pGameObject->GetComponent<Transform>();
 	m_pSpriteRenderer = pGameObject->GetComponent<SpriteRenderer>();
+	m_pShoot = pGameObject->AddComponent<ShootComponent>(&m_vectorDirection, 1.f);
 	pGameObject->GetComponent<HealthComponent>()->GetSubject()->AddObserver(this);
 
 	const glm::vec2 size = m_pCollision->GetSize();
@@ -54,6 +58,7 @@ void dae::EnemyController::HandleMovement()
 			pos += direction;
 
 			m_direction = rand() % 4;
+			m_vectorDirection = DIRECTIONS[m_direction];
 			HandleRotation();
 		}
 	}
@@ -79,7 +84,7 @@ void dae::EnemyController::OnNotify(unsigned id, EnemyVision*)
 {
 	if (static_cast<EnemyVision::Event>(id) == EnemyVision::Fire)
 	{
-		std::cout << "Shoot\n";
+		m_pShoot->Shoot();
 	}
 }
 

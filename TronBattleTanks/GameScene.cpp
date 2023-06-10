@@ -57,11 +57,6 @@ void dae::GameScene::Load()
 	textObj->GetComponent<Transform>()->SetPosition(screenWidth / 2.f - imageSize.x / 2.f, 20);
 	scene->Add(textObj);
 
-	const auto fpsObj = new GameObject();
-	fpsObj->AddComponent<FPS>();
-	fpsObj->GetComponent<Transform>()->SetPosition(10, 10);
-	scene->Add(fpsObj);
-
 	const std::vector playerLayers{0, 1, 2};
 
 	const auto player0 = new GameObject();
@@ -123,4 +118,9 @@ void dae::GameScene::Load()
 	enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	enemy->AddComponent<EnemyController>();
 	scene->Add(enemy);
+
+	const auto fpsObj = new GameObject();
+	fpsObj->AddComponent<FPS>();
+	fpsObj->GetComponent<Transform>()->SetPosition(10, 10);
+	scene->Add(fpsObj);
 }

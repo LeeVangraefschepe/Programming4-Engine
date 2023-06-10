@@ -13,7 +13,7 @@ dae::EnemyVision::EnemyVision(GameObject* pGameObject, CollisionComponent* ignor
 	m_pIgnore.emplace_back(ignore);
 	m_direction = direction;
 
-	constexpr float visionLength = 50.f;
+	constexpr float visionLength = 200.f;
 	constexpr float visionWidth = 5.f;
 
 	//Left
