@@ -31,13 +31,13 @@ void dae::GameObject::Update()
 		m_pDeletedChildren.clear();
 	}
 
-	for (const auto& p : m_pComponents)
+	for (int i{}; i < static_cast<int>(m_pComponents.size()); ++i)
 	{
-		p->Update();
+		m_pComponents[i]->Update();
 	}
-	for (const auto& child : m_pChildren)
+	for (int i{}; i < static_cast<int>(m_pChildren.size()); ++i)
 	{
-		child->Update();
+		m_pChildren[i]->Update();
 	}
 }
 void dae::GameObject::Render() const
