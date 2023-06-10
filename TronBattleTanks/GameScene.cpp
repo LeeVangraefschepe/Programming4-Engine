@@ -78,7 +78,7 @@ void dae::GameScene::Load()
 	scene->Add(p0ScoreDisplay);
 
 	const auto player1 = new GameObject();
-	const auto p1Health = player1->AddComponent<HealthComponent>(10.f);
+	const auto p1Health = player1->AddComponent<HealthComponent>(3.f);
 	const auto p1Score = player1->AddComponent<ScoreComponent>();
 	imageSize = player1->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
 	player1->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
@@ -116,7 +116,7 @@ void dae::GameScene::Load()
 			player0->GetComponent<Transform>()->SetLocalPosition(position);
 			scene->Add(player0);
 		},
-			[&](const glm::vec2& position)
+		[&](const glm::vec2& position)
 		{
 			player1->GetComponent<Transform>()->SetLocalPosition(position);
 			scene->Add(player1);
@@ -130,11 +130,21 @@ void dae::GameScene::Load()
 		[&](const glm::vec2& position)
 		{
 			const auto enemy = new GameObject();
-			imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
+			imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BlueTank.png"))->GetDimensions();
 			enemy->GetComponent<Transform>()->SetLocalPosition(position);
-			enemy->AddComponent<HealthComponent>(1.f);
+			enemy->AddComponent<HealthComponent>(3.f);
 			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>();
+			enemy->AddComponent<EnemyController>(20.f);
+			scene->Add(enemy);
+		},
+		[&](const glm::vec2& position)
+		{
+			const auto enemy = new GameObject();
+			imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("Recognizer.png"))->GetDimensions();
+			enemy->GetComponent<Transform>()->SetLocalPosition(position);
+			enemy->AddComponent<HealthComponent>(3.f);
+			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
+			enemy->AddComponent<EnemyController>(40.f);
 			scene->Add(enemy);
 		}
 	);

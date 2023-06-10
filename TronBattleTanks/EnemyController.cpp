@@ -13,7 +13,7 @@
 #include "SpriteRenderer.h"
 #include "ShootComponent.h"
 
-dae::EnemyController::EnemyController(GameObject* pGameObject) : BaseComponent(pGameObject)
+dae::EnemyController::EnemyController(GameObject* pGameObject, float movementSpeed) : BaseComponent(pGameObject), m_movementSpeed(movementSpeed)
 {
 	m_vectorDirection = DIRECTIONS[m_direction];
 
@@ -39,8 +39,7 @@ void dae::EnemyController::HandleMovement()
 {
 	//Apply movement speed
 	glm::vec2 input = DIRECTIONS[m_direction];
-	constexpr float movementSpeed{ 50.f };
-	input *= Time::GetDeltaTime() * movementSpeed;
+	input *= Time::GetDeltaTime() * m_movementSpeed;
 
 	//Get position
 	auto pos = m_pTransform->GetLocalPosition();

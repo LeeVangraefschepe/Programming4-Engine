@@ -32,10 +32,15 @@ void dae::LevelComponent::SpawnPlayers(std::vector<std::function<void(const glm:
 	}
 }
 
-void dae::LevelComponent::SpawnEnemies(std::function<void(const glm::vec2& position)> enemy) const
+void dae::LevelComponent::SpawnEnemies(std::function<void(const glm::vec2& position)> enemy, std::function<void(const glm::vec2& position)> recognizer) const
 {
 	for (const auto& position : m_enemySpawns)
 	{
+		if (rand()%2 == 0)
+		{
+			recognizer(position);
+			continue;
+		}
 		enemy(position);
 	}
 }
