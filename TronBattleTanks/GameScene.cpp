@@ -63,7 +63,6 @@ void dae::GameScene::Load()
 	const auto p0Health = player0->AddComponent<HealthComponent>(3.f);
 	const auto p0Score = player0->AddComponent<ScoreComponent>();
 	imageSize = player0->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("RedTank.png"))->GetDimensions();
-	player0->GetComponent<Transform>()->SetLocalPosition(20.f, screenHeight / 2.f - imageSize.y / 2.f);
 	player0->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p0Component = player0->AddComponent<PlayerComponent>();
 
@@ -81,7 +80,6 @@ void dae::GameScene::Load()
 	const auto p1Health = player1->AddComponent<HealthComponent>(3.f);
 	const auto p1Score = player1->AddComponent<ScoreComponent>();
 	imageSize = player1->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
-	player1->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
 	player1->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p1Component = player1->AddComponent<PlayerComponent>();
 
@@ -134,7 +132,7 @@ void dae::GameScene::Load()
 			enemy->GetComponent<Transform>()->SetLocalPosition(position);
 			enemy->AddComponent<HealthComponent>(3.f);
 			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>(20.f);
+			enemy->AddComponent<EnemyController>(30.f);
 			scene->Add(enemy);
 		},
 		[&](const glm::vec2& position)
@@ -144,7 +142,7 @@ void dae::GameScene::Load()
 			enemy->GetComponent<Transform>()->SetLocalPosition(position);
 			enemy->AddComponent<HealthComponent>(3.f);
 			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>(40.f);
+			enemy->AddComponent<EnemyController>(60.f);
 			scene->Add(enemy);
 		}
 	);
