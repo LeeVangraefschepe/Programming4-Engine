@@ -9,7 +9,6 @@
 #include "HealthDisplayComponent.h"
 #include "InputManager.h"
 #include "PlayerComponent.h"
-#include "ShootComponent.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "ScoreComponent.h"
@@ -22,6 +21,7 @@
 #include <SDL_keycode.h>
 
 #include "EnemyController.h"
+#include "LevelComponent.h"
 
 void dae::GameScene::Load()
 {
@@ -66,7 +66,6 @@ void dae::GameScene::Load()
 	player0->GetComponent<Transform>()->SetLocalPosition(20.f, screenHeight / 2.f - imageSize.y / 2.f);
 	player0->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p0Component = player0->AddComponent<PlayerComponent>();
-	scene->Add(player0);
 
 	const auto p0HealthDisplay = new GameObject();
 	p0HealthDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 250.f);
@@ -85,7 +84,6 @@ void dae::GameScene::Load()
 	player1->GetComponent<Transform>()->SetLocalPosition(screenWidth - 50.f - imageSize.x, screenHeight / 2.f - imageSize.y / 2.f);
 	player1->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p1Component = player1->AddComponent<PlayerComponent>();
-	scene->Add(player1);
 
 	const auto p1HealthDisplay = new GameObject();
 	p1HealthDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 100.f);
@@ -108,7 +106,23 @@ void dae::GameScene::Load()
 	input.BindCommand<FireCommand>(p1Fire, SDLK_SPACE, InputManager::InputType::OnButtonDown);
 
 	const auto grid = new GameObject{};
-	grid->AddComponent<GridComponent>(glm::vec2{ 12, 12 })->LoadGrid("Level/LevelLayout1.csv");
+	const auto level = grid->AddComponent<LevelComponent>();
+	level->LoadLevel(1);
+
+	std::vector<std::function<void(const glm::vec2& position)>> players
+	{
+		[&](const glm::vec2& position)
+		{
+			player0->GetComponent<Transform>()->SetLocalPosition(position);
+			scene->Add(player0);
+		},
+			[&](const glm::vec2& position)
+		{
+			player1->GetComponent<Transform>()->SetLocalPosition(position);
+			scene->Add(player1);
+		}
+	};
+	level->SpawnPlayers(players);
 	scene->Add(grid);
 
 	const auto enemy = new GameObject();

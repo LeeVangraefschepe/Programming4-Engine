@@ -1,0 +1,31 @@
+#pragma once
+#include <functional>
+#include <glm/vec2.hpp>
+
+#include "BaseComponent.h"
+namespace dae
+{
+	class GridComponent;
+	class LevelComponent : public BaseComponent
+	{
+	public:
+		LevelComponent(GameObject* pGameObject);
+
+		void LoadLevel(int id);
+		void SpawnPlayers(std::vector<std::function<void(const glm::vec2& position)>>& players) const;
+
+		LevelComponent(const LevelComponent& other) = delete;
+		LevelComponent(LevelComponent&& other) = delete;
+		LevelComponent& operator=(const LevelComponent& other) = delete;
+		LevelComponent& operator=(LevelComponent&& other) = delete;
+	private:
+
+		void LoadSpawns();
+		void ReadOutRaw() const;
+
+		GridComponent* m_pGrid;
+		std::vector<glm::vec2> m_playerSpawns{};
+
+		static inline constexpr glm::vec2 m_cellSize { 12, 12 };
+	};
+}

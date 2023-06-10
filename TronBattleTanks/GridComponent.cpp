@@ -19,11 +19,10 @@ m_CellSize{cellSize}
 }
 void dae::GridComponent::LoadGrid(const std::string& path)
 {
-
+	m_gridData.clear();
 	if (std::ifstream input{ ResourceManager::GetInstance().GetPath() + path }; input.is_open())
 	{
 		std::string line;
-		std::vector<std::vector<int>> grid;
 		while (std::getline(input, line))
 		{
 			std::vector<int> row;
@@ -32,9 +31,9 @@ void dae::GridComponent::LoadGrid(const std::string& path)
 			while (std::getline(iss, token, ',')) {
 				row.push_back(std::stoi(token));
 			}
-			grid.push_back(row);
+			m_gridData.push_back(row);
 		}
-		GenerateGrid(grid);
+		GenerateGrid(m_gridData);
 	}
 	else
 	{
@@ -60,11 +59,7 @@ void dae::GridComponent::GenerateGrid(const std::vector<std::vector<int>>& data)
 		for (int width{}; width < widthSize; ++width)
 		{
 			const auto& id = dataWidth[width];
-			if (id == 5)
-			{
-				
-			}
-			else if (id == 0)
+			if (id == 0)
 			{
 				const auto cellObj = new GameObject{};
 				cellObj->SetParent(baseObject, false);

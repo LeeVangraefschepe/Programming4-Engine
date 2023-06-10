@@ -99,6 +99,9 @@
     <ClCompile Include="ShootComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="LevelComponent.cpp">
+      <Filter>Components\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="ShootComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelComponent.h">
+      <Filter>Components\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

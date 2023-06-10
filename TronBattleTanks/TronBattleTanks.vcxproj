@@ -220,6 +220,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="HealthDisplayComponent.cpp" />
+    <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
@@ -240,6 +241,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="HealthDisplayComponent.h" />
+    <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
