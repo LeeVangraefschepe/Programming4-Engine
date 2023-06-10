@@ -9,7 +9,7 @@ namespace dae
 	public:
 		explicit Minigin(const std::string& dataPath, int width = 640, int height = 480);
 		~Minigin();
-		void Run(const std::function<void()>& load);
+		void Run(const std::function<void()>& load, int desiredFPS);
 
 		Minigin(const Minigin& other) = delete;
 		Minigin(Minigin&& other) = delete;

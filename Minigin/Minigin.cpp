@@ -82,7 +82,7 @@ dae::Minigin::~Minigin()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run(const std::function<void()>& load)
+void dae::Minigin::Run(const std::function<void()>& load, int desiredFPS)
 {
 	load();
 
@@ -92,8 +92,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	bool doContinue = true;
 	auto end = std::chrono::high_resolution_clock::now();
-	constexpr float desiredFPS{60.f};
-	constexpr float frameTimeMs{1000/desiredFPS};
+	const float frameTimeMs{ static_cast<float>(1000)/static_cast<float>(desiredFPS) };
 
 	while (doContinue)
 	{
