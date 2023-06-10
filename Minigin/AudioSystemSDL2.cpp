@@ -1,11 +1,13 @@
 #include "AudioSystemSDL2.h"
+
+#include <fstream>
+
 #include "SDL.h"
 #include "SDL_mixer.h"
 #include <ranges>
 #include <sstream>
 #include <thread>
 #include <stop_token>
-
 #include "ResourceManager.h"
 
 dae::AudioSystemSDL2::AudioSystemSDL2()
@@ -86,15 +88,18 @@ void dae::AudioSystemSDL2::Run()
 		case load:
 		{
 			Mix_Chunk* sound{};
-			try
-			{
+
+			//Cant catch a (exception gets thrown on other thread)
+
+			//try
+			//{
 				sound = Mix_LoadWAV(event.path.c_str());
-			}
-			catch (...)
-			{
-				printf("Exception loading sound: %s\n", Mix_GetError());
-				continue;
-			}
+			//}
+			//catch (const std::exception& e)
+			//{
+			//	printf("Exception loading sound: %s\n", e.what());
+			//	continue;
+			//}
 			if (!sound)
 			{
 				printf("Error loading sound: %s\n", Mix_GetError());
