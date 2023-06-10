@@ -24,7 +24,7 @@ namespace dae
 		EnemyVision& operator=(const EnemyVision& other) = delete;
 		EnemyVision& operator=(EnemyVision&& other) = delete;
 	private:
-		static inline CollisionComponent* DIRECTIONS[4]{};
+		CollisionComponent* DIRECTIONS[4]{};
 		int* m_direction;
 
 		std::unique_ptr<Subject<EnemyVision>> m_subject = std::make_unique<Subject<EnemyVision>>();
