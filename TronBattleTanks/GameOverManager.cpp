@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "Commands.h"
+#include "GameModeManager.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "MainMenuScene.h"
@@ -79,6 +80,17 @@ dae::GameOverManager::GameOverManager(GameObject* pGameObject) : BaseComponent(p
 	input.BindCommand<LambdaCommand>(controllerCommand, 0, Controller::ControllerButton::DPadDown, InputManager::InputType::OnButtonDown);
 	m_pCommands.push_back(keyboardCommand);
 	m_pCommands.push_back(controllerCommand);
+
+	if (GameModeManager::GetGameMode() != GameModeManager::singleplayer)
+	{
+		for (int i{}; i < m_tagSize; ++i)
+		{
+			m_tag[i] = ' ';
+			m_text[i]->SetText(" ");
+		}
+		m_step = 2;
+		Next();
+	}
 }
 
 dae::GameOverManager::~GameOverManager()
@@ -100,9 +112,12 @@ void dae::GameOverManager::Next()
 		break;
 	case 3:
 		{
-		std::stringstream ss{};
-		for (int i{}; i < m_tagSize; ++i) { ss << m_tag[i]; }
-		ScoreManager::GetInstance().SubmitScore(ss.str());
+		if (GameModeManager::GetGameMode() == GameModeManager::singleplayer)
+		{
+			std::stringstream ss{};
+			for (int i{}; i < m_tagSize; ++i) { ss << m_tag[i]; }
+			ScoreManager::GetInstance().SubmitScore(ss.str());
+		}
 		LoadScores();
 		}
 		break;
