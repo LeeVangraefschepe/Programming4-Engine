@@ -26,13 +26,14 @@
 #include "EnemyController.h"
 #include "LevelComponent.h"
 #include "LevelManager.h"
+#include "GameOverScene.h"
 
 void dae::GameScene::Load()
 {
 	int levelId{};
 	if (ServiceLocator::GetGameState()->GetLevelId(levelId))
 	{
-		std::cout << "Game completed\n";
+		GameOverScene::Load();
 		return;
 	}
 
@@ -42,7 +43,7 @@ void dae::GameScene::Load()
 	ServiceLocator::GetAudioSystem()->Play(AudioManager::Music::MainMenu, 0.1f);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	const auto screenWidth = static_cast<float>(sceneManager.GetWidth());
+	//const auto screenWidth = static_cast<float>(sceneManager.GetWidth());
 	const auto screenHeight = static_cast<float>(sceneManager.GetHeight());
 
 	sceneManager.SetActiveScene(new Scene{ "GameScene" });
@@ -56,25 +57,13 @@ void dae::GameScene::Load()
 	tutorialComponent->AddComponent<TutorialComponent>();
 	scene->Add(tutorialComponent);
 
-	const auto logoObj = new GameObject();
-	const auto logoImage = logoObj->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("logo.tga"));
-	auto imageSize = logoImage->GetDimensions();
-	logoObj->GetComponent<Transform>()->SetPosition(screenWidth / 2.f - imageSize.x / 2.f, screenHeight / 2.f - imageSize.y / 2.f);
-	scene->Add(logoObj);
-
-	const auto textObj = new GameObject();
-	const auto textTitle = textObj->AddComponent<TextRenderer>("Programming 4 Assignment", font);
-	imageSize = textTitle->GetDimensions();
-	textObj->GetComponent<Transform>()->SetPosition(screenWidth / 2.f - imageSize.x / 2.f, 20);
-	scene->Add(textObj);
-
 	const std::vector playerLayers{0, 1, 2};
 	std::vector<GameObject*> players{};
 
 	const auto player0 = new GameObject();
 	const auto p0Health = player0->AddComponent<HealthComponent>(3.f);
 	const auto p0Score = player0->AddComponent<ScoreComponent>();
-	imageSize = player0->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("RedTank.png"))->GetDimensions();
+	auto imageSize = player0->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("RedTank.png"))->GetDimensions();
 	player0->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p0Component = player0->AddComponent<PlayerComponent>();
 	players.push_back(player0);

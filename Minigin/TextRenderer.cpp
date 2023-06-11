@@ -29,6 +29,8 @@ void dae::TextRenderer::Update()
 
 void dae::TextRenderer::UpdateTexture()
 {
+	const int textSize = static_cast<int>(m_text.size());
+	textSize;
 	if (m_text.empty()) { m_text = " "; }
 	m_needsUpdate = true;
 	const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_color);

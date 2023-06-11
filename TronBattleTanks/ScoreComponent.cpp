@@ -1,4 +1,5 @@
 #include "ScoreComponent.h"
+#include "ScoreManager.h"
 
 dae::ScoreComponent::ScoreComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
 {
@@ -14,6 +15,7 @@ void dae::ScoreComponent::AddScore(int amount)
 {
 	if (amount == 0) return;
 	m_score += amount;
+	ScoreManager::GetInstance().AddScore(amount);
 	m_subject->Notify(amount, this);
 }
 

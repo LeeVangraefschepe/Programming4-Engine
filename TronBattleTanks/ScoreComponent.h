@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+
 #include "BaseComponent.h"
 #include "Subject.h"
 
@@ -12,7 +13,6 @@ namespace dae
 		Subject<ScoreComponent>* GetSubject() const { return m_subject.get(); }
 
 		int GetScore() const;
-
 		void AddScore(int amount);
 		void ResetScore();
 

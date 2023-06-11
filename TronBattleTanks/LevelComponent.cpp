@@ -25,10 +25,9 @@ void dae::LevelComponent::LoadLevel(int id)
 void dae::LevelComponent::SpawnPlayers(std::vector<std::function<void(const glm::vec2& position)>>& players) const
 {
 	const int playerCount = static_cast<int>(players.size());
-	const int randomSpawnId = static_cast<int>(rand()) % m_playerSpawns.size() - (playerCount - 1);
 	for (int i{}; i < playerCount; ++i)
 	{
-		players[i](m_playerSpawns[randomSpawnId+i]);
+		players[i](m_playerSpawns[rand() % m_playerSpawns.size()]);
 	}
 }
 

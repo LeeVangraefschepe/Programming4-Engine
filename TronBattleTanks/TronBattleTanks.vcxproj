@@ -229,6 +229,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="ShootComponent.cpp" />
     <ClCompile Include="TutorialComponent.cpp" />
     <ClCompile Include="CellComponent.cpp" />
@@ -254,6 +255,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="ShootComponent.h" />
     <ClInclude Include="TutorialComponent.h" />
     <ClInclude Include="CellComponent.h" />
