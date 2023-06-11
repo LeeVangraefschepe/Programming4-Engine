@@ -17,6 +17,6 @@ int main(int, char* [])
 {
     dae::Minigin engine("../Data/", 700, 720);
     dae::AudioManager::GetInstance().SetService(std::make_unique<dae::AudioSystemSDL2>());
-    engine.Run(dae::GameScene::Load, 60);
+    engine.Run(dae::MainMenuScene::Load, 60);
     return 0;
 }

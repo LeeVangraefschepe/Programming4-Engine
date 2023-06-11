@@ -162,3 +162,18 @@ void dae::GameScene::Load()
 	fpsObj->GetComponent<Transform>()->SetPosition(10, 10);
 	scene->Add(fpsObj);
 }
+
+void dae::GameScene::LoadSinglePlayer(std::vector<GameObject*>& players)
+{
+
+}
+
+void dae::GameScene::LoadVersus(std::vector<GameObject*>& players)
+{
+
+}
+
+void dae::GameScene::LoadCoop(std::vector<GameObject*>& players)
+{
+
+}
