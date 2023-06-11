@@ -129,6 +129,8 @@ void dae::GameScene::Load()
 	level->SpawnPlayers(spawnPlayers);
 	scene->Add(grid);
 
+
+	std::vector<GameObject*> enemies{};
 	level->SpawnEnemies
 	(
 		[&](const glm::vec2& position)
@@ -140,6 +142,7 @@ void dae::GameScene::Load()
 			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 			enemy->AddComponent<EnemyController>(30.f);
 			scene->Add(enemy);
+			enemies.emplace_back(enemy);
 		},
 		[&](const glm::vec2& position)
 		{
@@ -150,10 +153,11 @@ void dae::GameScene::Load()
 			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 			enemy->AddComponent<EnemyController>(60.f);
 			scene->Add(enemy);
+			enemies.emplace_back(enemy);
 		}
 	);
 
-	grid->AddComponent<LevelManager>(players);
+	grid->AddComponent<LevelManager>(players, enemies);
 
 	const auto fpsObj = new GameObject();
 	fpsObj->AddComponent<FPS>();
