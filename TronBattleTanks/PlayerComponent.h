@@ -20,7 +20,8 @@ namespace dae
 		{
 			damage = 0,
 			score,
-			died
+			died,
+			teleport
 		};
 
 		struct PlayerData
@@ -38,6 +39,7 @@ namespace dae
 		void OnNotify(unsigned eventId, ScoreComponent* entity) override;
 
 		PlayerData* GetData() const;
+		Transform* GetTransform() const { return m_pTransform; }
 
 		PlayerComponent(const PlayerComponent& other) = delete;
 		PlayerComponent(PlayerComponent&& other) = delete;
@@ -46,7 +48,7 @@ namespace dae
 
 	private:
 		void HandleRotation() const;
-		void HandleMovement(glm::vec2 input) const;
+		void HandleMovement(glm::vec2 input);
 
 		Transform* m_pTransform;
 		SpriteRenderer* m_pSpriteRenderer;

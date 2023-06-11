@@ -154,7 +154,7 @@ void dae::GameScene::Load()
 		}
 	);
 
-	grid->AddComponent<LevelManager>(players, enemies);
+	grid->AddComponent<LevelManager>(level, players, enemies);
 	scene->Add(grid);
 
 	const auto fpsObj = new GameObject();

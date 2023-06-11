@@ -13,6 +13,7 @@
 #include "Transform.h"
 #include "Timer.h"
 #include "CellComponent.h"
+#include "DiamondCell.h"
 #include "ShootComponent.h"
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
@@ -79,7 +80,7 @@ void dae::PlayerComponent::HandleRotation() const
 	m_pSpriteRenderer->SetRotation(rotation);
 }
 
-void dae::PlayerComponent::HandleMovement(glm::vec2 input) const
+void dae::PlayerComponent::HandleMovement(glm::vec2 input)
 {
 	//Apply movement speed
 	constexpr float movementSpeed{ 100.f };
@@ -99,6 +100,11 @@ void dae::PlayerComponent::HandleMovement(glm::vec2 input) const
 			auto direction = pos - wallPos;
 			direction = glm::normalize(direction);
 			pos += direction;
+		}
+		else if (other->HasComponent<DiamondCell>())
+		{
+			m_subject->Notify(teleport, this);
+			return;
 		}
 	}
 

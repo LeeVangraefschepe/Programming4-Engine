@@ -14,6 +14,7 @@ namespace dae
 		void LoadLevel(int id);
 		void SpawnPlayers(std::vector<std::function<void(const glm::vec2& position)>>& players) const;
 		void SpawnEnemies(std::function<void(const glm::vec2& position)> enemy, std::function<void(const glm::vec2& position)> recognizer) const;
+		glm::vec2 GetRandomSpawn() const;
 
 		LevelComponent(const LevelComponent& other) = delete;
 		LevelComponent(LevelComponent&& other) = delete;

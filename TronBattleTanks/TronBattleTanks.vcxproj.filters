@@ -117,6 +117,9 @@
     <ClCompile Include="ScoreManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DiamondCell.cpp">
+      <Filter>Components\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="ScoreManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DiamondCell.h">
+      <Filter>Components\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

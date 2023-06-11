@@ -6,8 +6,10 @@
 #include "ServiceLocator.h"
 #include "GameOverScene.h"
 #include "GameScene.h"
+#include "LevelComponent.h"
+#include "Transform.h"
 
-dae::LevelManager::LevelManager(GameObject* pGameObject, const std::vector<GameObject*>& players, const std::vector<GameObject*>& enemies) : BaseComponent(pGameObject)
+dae::LevelManager::LevelManager(GameObject* pGameObject, LevelComponent* pLevel, const std::vector<GameObject*>& players, const std::vector<GameObject*>& enemies) : BaseComponent(pGameObject), m_pLevel(pLevel)
 {
 	for (const auto player : players)
 	{
@@ -36,11 +38,17 @@ void dae::LevelManager::StartGame()
 	m_score = 0;
 }
 
-void dae::LevelManager::OnNotify(unsigned event, PlayerComponent*)
+void dae::LevelManager::OnNotify(unsigned event, PlayerComponent* sender)
 {
-	if (static_cast<PlayerComponent::Events>(event) == PlayerComponent::died)
+	const auto enumEvent = static_cast<PlayerComponent::Events>(event);
+	if (enumEvent == PlayerComponent::died)
 	{
 		m_alivePlayers--;
+	}
+	else if (enumEvent == PlayerComponent::teleport)
+	{
+		std::cout << "Random pos\n";
+		sender->GetTransform()->SetLocalPosition(m_pLevel->GetRandomSpawn());
 	}
 }
 

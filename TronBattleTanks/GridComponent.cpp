@@ -10,6 +10,7 @@
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "CellComponent.h"
+#include "DiamondCell.h"
 
 dae::GridComponent::GridComponent(GameObject* pGameObject, const glm::vec2& cellSize):
 BaseComponent(pGameObject),
@@ -45,6 +46,7 @@ void dae::GridComponent::GenerateGrid(const std::vector<std::vector<int>>& data)
 {
 	const auto baseObject = BaseComponent::GetGameObject();
 	const auto cellImage = ResourceManager::GetInstance().LoadTexture("Wall.png");
+	const auto diamondImage = ResourceManager::GetInstance().LoadTexture("Diamond.png");
 	const std::vector layers{0,1};
 
 	const int heightSize = static_cast<int>(data.size());
@@ -73,6 +75,20 @@ void dae::GridComponent::GenerateGrid(const std::vector<std::vector<int>>& data)
 
 				const auto cell = cellObj->AddComponent<CellComponent>();
 				m_Cells[height][width] = cell;
+			}
+			else if (id == 3)
+			{
+				const auto cellObj = new GameObject{};
+				cellObj->SetParent(baseObject, false);
+
+				cellObj->AddComponent<SpriteRenderer>(diamondImage);
+
+				const auto cellTransform = cellObj->GetComponent<Transform>();
+				cellTransform->SetLocalPosition(static_cast<float>(width) * m_CellSize.x, static_cast<float>(height) * m_CellSize.y);
+
+				cellObj->AddComponent<CollisionComponent>(layers)->SetSize(m_CellSize.x, m_CellSize.y);
+
+				cellObj->AddComponent<DiamondCell>();
 			}
 		}
 	}

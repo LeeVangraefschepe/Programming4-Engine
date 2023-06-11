@@ -44,6 +44,11 @@ void dae::LevelComponent::SpawnEnemies(std::function<void(const glm::vec2& posit
 	}
 }
 
+glm::vec2 dae::LevelComponent::GetRandomSpawn() const
+{
+	return m_enemySpawns[rand() % m_enemySpawns.size()];
+}
+
 void dae::LevelComponent::LoadPlayerSpawns()
 {
 	const auto& data = m_pGrid->GetRawGrid();
