@@ -2,6 +2,7 @@
 
 #include "CellComponent.h"
 #include "CollisionComponent.h"
+#include "EnemyController.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "HealthComponent.h"
@@ -46,9 +47,14 @@ void dae::BulletComponent::Update()
 			{
 				const auto scoreCreator = m_pCreator->GetComponent<ScoreComponent>();
 				const bool kill = otherHealth->Damage(m_damage);
+				int killScore = 50;
+				if (const auto enemy = other->GetComponent<EnemyController>())
+				{
+					killScore = enemy->GetScore();
+				}
 				if (scoreCreator)
 				{
-					scoreCreator->AddScore(100 + (kill * 500));
+					scoreCreator->AddScore(10 + (kill * killScore));
 				}
 				GetGameObject()->Destroy();
 			}

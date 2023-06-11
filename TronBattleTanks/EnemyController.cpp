@@ -14,7 +14,7 @@
 #include "ShootComponent.h"
 #include "HealthComponent.h"
 
-dae::EnemyController::EnemyController(GameObject* pGameObject, float movementSpeed) : BaseComponent(pGameObject), m_movementSpeed(movementSpeed)
+dae::EnemyController::EnemyController(GameObject* pGameObject, float movementSpeed, int score) : BaseComponent(pGameObject), m_movementSpeed(movementSpeed), m_score(score)
 {
 	m_vectorDirection = DIRECTIONS[m_direction];
 

@@ -1,11 +1,14 @@
 #include "LevelManager.h"
 
 #include <iostream>
+#include <SDL_keycode.h>
 
+#include "Commands.h"
 #include "GameObject.h"
 #include "ServiceLocator.h"
 #include "GameOverScene.h"
 #include "GameScene.h"
+#include "InputManager.h"
 #include "LevelComponent.h"
 #include "Transform.h"
 
@@ -24,11 +27,23 @@ dae::LevelManager::LevelManager(GameObject* pGameObject, LevelComponent* pLevel,
 		enemy->GetComponent<HealthComponent>()->GetSubject()->AddObserver(this);
 	}
 
+	const auto upAction = [this]()
+	{
+		m_nextGame = true;
+	};
+	m_pCommand = new LambdaCommand{ upAction };
+	InputManager::GetInstance().BindCommand<LambdaCommand>(m_pCommand, SDLK_F1, InputManager::InputType::OnButtonDown);
+
 	m_playerCount = static_cast<int>(players.size());
 	m_alivePlayers = m_playerCount;
 
 	m_enemyCount = static_cast<int>(enemies.size());
 	m_aliveEnemies = m_enemyCount;
+}
+
+dae::LevelManager::~LevelManager()
+{
+	InputManager::GetInstance().RemoveCommand(m_pCommand);
 }
 
 void dae::LevelManager::StartGame()
@@ -72,7 +87,7 @@ void dae::LevelManager::Update()
 	{
 		GameOverScene::Load();
 	}
-	else if (m_aliveEnemies == 0)
+	else if (m_aliveEnemies == 0 || m_nextGame)
 	{
 		ServiceLocator::GetGameState()->OnLevelCompleted();
 		GameScene::Load();

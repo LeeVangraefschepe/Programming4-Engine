@@ -15,8 +15,10 @@ namespace dae
 	class EnemyController : public BaseComponent, Observer<EnemyVision>, Observer<HealthComponent>
 	{
 	public:
-		explicit EnemyController(GameObject* pGameObject, float movementSpeed);
+		explicit EnemyController(GameObject* pGameObject, float movementSpeed, int score);
 		void Update() override;
+
+		int GetScore() const { return m_score; }
 
 		EnemyController(const EnemyController& other) = delete;
 		EnemyController(EnemyController&& other) = delete;
@@ -26,6 +28,7 @@ namespace dae
 		void HandleMovement();
 		void HandleRotation() const;
 
+		int m_score;
 		float m_movementSpeed{};
 		int m_direction{};
 		glm::vec2 m_vectorDirection;

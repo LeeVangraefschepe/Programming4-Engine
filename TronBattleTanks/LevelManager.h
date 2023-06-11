@@ -8,11 +8,13 @@
 namespace dae
 {
 	class LevelComponent;
+	class LambdaCommand;
 
 	class LevelManager : public BaseComponent, Observer<PlayerComponent>, Observer<ScoreComponent>, Observer<HealthComponent>
 	{
 	public:
 		explicit LevelManager(GameObject* pGameObject, LevelComponent* pLevel, const std::vector<GameObject*>& players, const std::vector<GameObject*>& enemies);
+		~LevelManager() override;
 
 		void StartGame();
 		void OnNotify(unsigned, PlayerComponent*) override;
@@ -31,8 +33,10 @@ namespace dae
 
 		int m_enemyCount;
 		int m_aliveEnemies;
+		bool m_nextGame{};
 
 		LevelComponent* m_pLevel;
+		LambdaCommand* m_pCommand;
 
 		std::vector<ScoreComponent*> m_scores{};
 		int m_score{};

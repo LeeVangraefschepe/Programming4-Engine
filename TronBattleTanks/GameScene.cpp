@@ -99,7 +99,7 @@ void dae::GameScene::Load()
 			enemy->GetComponent<Transform>()->SetLocalPosition(position);
 			enemy->AddComponent<HealthComponent>(3.f);
 			enemy->AddComponent<CollisionComponent>(enemyLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>(30.f);
+			enemy->AddComponent<EnemyController>(30.f,100);
 			scene->Add(enemy);
 			enemies.emplace_back(enemy);
 		},
@@ -110,7 +110,7 @@ void dae::GameScene::Load()
 			enemy->GetComponent<Transform>()->SetLocalPosition(position);
 			enemy->AddComponent<HealthComponent>(3.f);
 			enemy->AddComponent<CollisionComponent>(enemyLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>(60.f);
+			enemy->AddComponent<EnemyController>(60.f,250);
 			scene->Add(enemy);
 			enemies.emplace_back(enemy);
 		}
