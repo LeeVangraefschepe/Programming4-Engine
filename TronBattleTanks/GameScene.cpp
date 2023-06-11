@@ -22,6 +22,7 @@
 
 #include "EnemyController.h"
 #include "LevelComponent.h"
+#include "LevelManager.h"
 
 void dae::GameScene::Load()
 {
@@ -58,6 +59,7 @@ void dae::GameScene::Load()
 	scene->Add(textObj);
 
 	const std::vector playerLayers{0, 1, 2};
+	std::vector<GameObject*> players{};
 
 	const auto player0 = new GameObject();
 	const auto p0Health = player0->AddComponent<HealthComponent>(3.f);
@@ -65,14 +67,15 @@ void dae::GameScene::Load()
 	imageSize = player0->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("RedTank.png"))->GetDimensions();
 	player0->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p0Component = player0->AddComponent<PlayerComponent>();
+	players.push_back(player0);
 
 	const auto p0HealthDisplay = new GameObject();
-	p0HealthDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 250.f);
+	p0HealthDisplay->GetComponent<Transform>()->SetLocalPosition(300, screenHeight - 60.f);
 	p0HealthDisplay->AddComponent<HealthDisplayComponent>(p0Health);
 	scene->Add(p0HealthDisplay);
 
 	const auto p0ScoreDisplay = new GameObject();
-	p0ScoreDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 200.f);
+	p0ScoreDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 60.f);
 	p0ScoreDisplay->AddComponent<ScoreDisplayComponent>(p0Score);
 	scene->Add(p0ScoreDisplay);
 
@@ -82,14 +85,15 @@ void dae::GameScene::Load()
 	imageSize = player1->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
 	player1->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
 	const auto p1Component = player1->AddComponent<PlayerComponent>();
+	players.push_back(player1);
 
 	const auto p1HealthDisplay = new GameObject();
-	p1HealthDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 100.f);
+	p1HealthDisplay->GetComponent<Transform>()->SetLocalPosition(300, screenHeight - 20.f);
 	p1HealthDisplay->AddComponent<HealthDisplayComponent>(p1Health);
 	scene->Add(p1HealthDisplay);
 
 	const auto p1ScoreDisplay = new GameObject();
-	p1ScoreDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 50.f);
+	p1ScoreDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 20.f);
 	p1ScoreDisplay->AddComponent<ScoreDisplayComponent>(p1Score);
 	scene->Add(p1ScoreDisplay);
 
@@ -107,20 +111,22 @@ void dae::GameScene::Load()
 	const auto level = grid->AddComponent<LevelComponent>();
 	level->LoadLevel(1);
 
-	std::vector<std::function<void(const glm::vec2& position)>> players
+	std::vector<std::function<void(const glm::vec2& position)>> spawnPlayers
 	{
 		[&](const glm::vec2& position)
 		{
 			player0->GetComponent<Transform>()->SetLocalPosition(position);
+			player0->GetComponent<HealthComponent>()->ResetHealth();
 			scene->Add(player0);
 		},
 		[&](const glm::vec2& position)
 		{
 			player1->GetComponent<Transform>()->SetLocalPosition(position);
+			player1->GetComponent<HealthComponent>()->ResetHealth();
 			scene->Add(player1);
 		}
 	};
-	level->SpawnPlayers(players);
+	level->SpawnPlayers(spawnPlayers);
 	scene->Add(grid);
 
 	level->SpawnEnemies
@@ -146,6 +152,8 @@ void dae::GameScene::Load()
 			scene->Add(enemy);
 		}
 	);
+
+	grid->AddComponent<LevelManager>(players);
 
 	const auto fpsObj = new GameObject();
 	fpsObj->AddComponent<FPS>();

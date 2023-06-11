@@ -102,6 +102,9 @@
     <ClCompile Include="LevelComponent.cpp">
       <Filter>Components\Level</Filter>
     </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>Components\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -189,6 +192,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="LevelComponent.h">
+      <Filter>Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
       <Filter>Components\Level</Filter>
     </ClInclude>
   </ItemGroup>

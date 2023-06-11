@@ -12,8 +12,9 @@ int dae::ScoreComponent::GetScore() const
 
 void dae::ScoreComponent::AddScore(int amount)
 {
+	if (amount == 0) return;
 	m_score += amount;
-	m_subject->Notify(0, this);
+	m_subject->Notify(amount, this);
 }
 
 void dae::ScoreComponent::ResetScore()
