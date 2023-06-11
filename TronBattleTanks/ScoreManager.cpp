@@ -22,6 +22,7 @@ dae::ScoreManager::ScoreManager()
 
 			m_scores.insert(std::pair(score, username));
 		}
+		input.close();
 	}
 	//else
 	//{
@@ -68,15 +69,24 @@ void dae::ScoreManager::ResetScore()
 
 void dae::ScoreManager::SubmitScore(const std::string& username)
 {
-	for (const auto& key : m_scores | std::views::keys)
+	for (auto it = m_scores.begin(); it != m_scores.end(); ++it)
 	{
-		if (key < m_score)
+		if (it->first < m_score)
 		{
-			m_scores.erase(key);
+			m_scores.erase(it);
 			m_scores.insert(std::pair{m_score, username});
 			break;
 		}
 	}
+	//for (const auto& key : m_scores | std::views::keys)
+	//{
+	//	if (key < m_score)
+	//	{
+	//		m_scores.erase(key);
+	//		m_scores.insert(std::pair{m_score, username});
+	//		break;
+	//	}
+	//}
 	ResetScore();
 }
 

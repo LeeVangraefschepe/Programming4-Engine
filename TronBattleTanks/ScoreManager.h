@@ -18,7 +18,7 @@ namespace dae
 		std::vector<std::string> GetScores() const;
 
 	private:
-		            friend class Singleton;
+		friend class Singleton;
 		ScoreManager();
 		~ScoreManager() override;
 
