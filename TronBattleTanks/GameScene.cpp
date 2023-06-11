@@ -24,6 +24,7 @@
 #include <SDL_keycode.h>
 
 #include "EnemyController.h"
+#include "GameModeManager.h"
 #include "LevelComponent.h"
 #include "LevelManager.h"
 #include "GameOverScene.h"
@@ -57,7 +58,18 @@ void dae::GameScene::Load()
 	scene->Add(tutorialComponent);
 
 	std::vector<GameObject*> players{};
-	LoadCoop(players);
+	switch (GameModeManager::GetGameMode())
+	{
+	case GameModeManager::singleplayer:
+		LoadSinglePlayer(players);
+		break;
+	case GameModeManager::versus:
+		LoadVersus(players);
+		break;
+	case GameModeManager::coop:
+		LoadCoop(players);
+		break;
+	}
 
 	const auto grid = new GameObject{};
 	const auto level = grid->AddComponent<LevelComponent>();
@@ -115,12 +127,43 @@ void dae::GameScene::Load()
 
 void dae::GameScene::LoadSinglePlayer(std::vector<GameObject*>& players)
 {
-	players;
+	auto& input = InputManager::GetInstance();
+	const auto scene = SceneManager::GetInstance().GetActiveScene();
+	const std::vector playerLayers{0, 1, 2};
+	const auto screenHeight = static_cast<float>(SceneManager::GetInstance().GetHeight());
+
+	const auto player1 = new GameObject();
+	const auto p1Health = player1->AddComponent<HealthComponent>(3.f);
+	const auto p1Score = player1->AddComponent<ScoreComponent>();
+	const auto imageSize = player1->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("GreenTank.png"))->GetDimensions();
+	player1->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
+	const auto p1Component = player1->AddComponent<PlayerComponent>();
+	players.push_back(player1);
+
+	const auto p1HealthDisplay = new GameObject();
+	p1HealthDisplay->GetComponent<Transform>()->SetLocalPosition(300, screenHeight - 20.f);
+	p1HealthDisplay->AddComponent<HealthDisplayComponent>(p1Health);
+	scene->Add(p1HealthDisplay);
+
+	const auto p1ScoreDisplay = new GameObject();
+	p1ScoreDisplay->GetComponent<Transform>()->SetLocalPosition(0, screenHeight - 20.f);
+	p1ScoreDisplay->AddComponent<ScoreDisplayComponent>(p1Score);
+	scene->Add(p1ScoreDisplay);
+
+	const auto p1Move = new MoveCommand{ p1Component };
+	const auto p11Move = new MoveCommand{ p1Component };
+	input.BindCommand<MoveCommand>(p1Move, SDLK_q, SDLK_z, SDLK_d, SDLK_s, InputManager::InputType::Axis);
+	input.BindCommand<MoveCommand>(p11Move, 0, Controller::ControllerButton::DPadLeft, Controller::ControllerButton::DPadUp, Controller::ControllerButton::DPadRight, Controller::ControllerButton::DPadDown, InputManager::InputType::Axis);
+
+	const auto p1Fire = new FireCommand{ p1Component };
+	const auto p11Fire = new FireCommand{ p1Component };
+	input.BindCommand<FireCommand>(p1Fire, SDLK_SPACE, InputManager::InputType::OnButtonDown);
+	input.BindCommand<FireCommand>(p11Fire, 0, Controller::ControllerButton::ButtonA, InputManager::InputType::OnButtonDown);
 }
 
 void dae::GameScene::LoadVersus(std::vector<GameObject*>& players)
 {
-	players;
+	LoadCoop(players);
 }
 
 void dae::GameScene::LoadCoop(std::vector<GameObject*>& players)
@@ -168,11 +211,15 @@ void dae::GameScene::LoadCoop(std::vector<GameObject*>& players)
 
 	const auto p0Move = new MoveCommand{ p0Component };
 	const auto p1Move = new MoveCommand{ p1Component };
+	const auto p11Move = new MoveCommand{ p1Component };
 	input.BindCommand<MoveCommand>(p0Move, 0, Controller::ControllerButton::DPadLeft, Controller::ControllerButton::DPadUp, Controller::ControllerButton::DPadRight, Controller::ControllerButton::DPadDown, InputManager::InputType::Axis);
 	input.BindCommand<MoveCommand>(p1Move, SDLK_q, SDLK_z, SDLK_d, SDLK_s, InputManager::InputType::Axis);
+	input.BindCommand<MoveCommand>(p11Move, 1, Controller::ControllerButton::DPadLeft, Controller::ControllerButton::DPadUp, Controller::ControllerButton::DPadRight, Controller::ControllerButton::DPadDown, InputManager::InputType::Axis);
 
 	const auto p0Fire = new FireCommand{ p0Component };
 	input.BindCommand<FireCommand>(p0Fire, 0, Controller::ControllerButton::ButtonA, InputManager::InputType::OnButtonDown);
 	const auto p1Fire = new FireCommand{ p1Component };
+	const auto p11Fire = new FireCommand{ p1Component };
 	input.BindCommand<FireCommand>(p1Fire, SDLK_SPACE, InputManager::InputType::OnButtonDown);
+	input.BindCommand<FireCommand>(p11Fire, 1, Controller::ControllerButton::ButtonA, InputManager::InputType::OnButtonDown);
 }
