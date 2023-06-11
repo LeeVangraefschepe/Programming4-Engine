@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "GameObject.h"
-#include "MainMenuScene.h"
+#include "GameOverScene.h"
 
 dae::LevelManager::LevelManager(GameObject* pGameObject, const std::vector<GameObject*>& players) : BaseComponent(pGameObject)
 {
@@ -42,6 +42,6 @@ void dae::LevelManager::Update()
 {
 	if (m_alivePlayers == 0)
 	{
-		MainMenuScene::Load();
+		GameOverScene::Load();
 	}
 }

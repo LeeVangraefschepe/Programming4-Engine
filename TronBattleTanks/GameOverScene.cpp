@@ -1,11 +1,12 @@
-#include "MainMenuScene.h"
+#include "GameOverScene.h"
 
-#include "GameModeManager.h"
+#include "GameOverManager.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "SpriteRenderer.h"
 
-void dae::MainMenuScene::Load()
+
+void dae::GameOverScene::Load()
 {
 	auto& sceneManager = SceneManager::GetInstance();
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
@@ -15,12 +16,11 @@ void dae::MainMenuScene::Load()
 	sceneManager.SetActiveScene(new Scene{ "MainMenu" });
 	const auto scene = sceneManager.GetActiveScene();
 
-	const auto background = new GameObject{};
-	background->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("backgroundHD.png"));
-	scene->Add(background);
+	const auto manager = new GameObject{};
+	manager->AddComponent<GameOverManager>();
+	scene->Add(manager);
 
-	std::vector<glm::vec2> positions{};
-	const auto gameModeManager = new GameObject{};
-	gameModeManager->AddComponent<GameModeManager>(positions);
-	scene->Add(gameModeManager);
+	const auto background = new GameObject{};
+	background->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("gameoverHD.png"));
+	scene->Add(background);
 }

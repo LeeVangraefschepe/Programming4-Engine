@@ -105,6 +105,12 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Components\Level</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
@@ -196,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="LevelManager.h">
       <Filter>Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
