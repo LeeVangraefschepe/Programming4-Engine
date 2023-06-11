@@ -142,7 +142,7 @@ void dae::LevelComponent::ReadOutRaw() const
 		}
 	}
 
-	for (int i{}; i < amount.size(); ++i)
+	for (int i{}; i < static_cast<int>(amount.size()); ++i)
 	{
 		std::cout << i << ": " << amount[i] << "\n";
 	}
