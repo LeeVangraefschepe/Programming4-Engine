@@ -68,6 +68,7 @@ void dae::LevelManager::OnNotify(unsigned amount, ScoreComponent*)
 
 void dae::LevelManager::Update()
 {
+	std::cout << m_aliveEnemies << " E\n";
 	if (m_alivePlayers == 0)
 	{
 		GameOverScene::Load();

@@ -26,7 +26,7 @@ dae::GameModeManager::GameModeManager(GameObject* pGameObject, std::vector<glm::
 		m_selectedGameMode++;
 		if (m_selectedGameMode > 2) { m_selectedGameMode = 2; }
 		m_gamemode = static_cast<GameModes>(m_selectedGameMode);
-		std::cout << "UP\n";
+		std::cout << "UPMENU\n";
 	};
 	auto keyboardCommand = new LambdaCommand{ upAction };
 	auto controllerCommand = new LambdaCommand{ upAction };
@@ -40,7 +40,7 @@ dae::GameModeManager::GameModeManager(GameObject* pGameObject, std::vector<glm::
 		m_selectedGameMode--;
 		if (m_selectedGameMode < 0) { m_selectedGameMode = 0; }
 		m_gamemode = static_cast<GameModes>(m_selectedGameMode);
-		std::cout << "DOWN\n";
+		std::cout << "DOWNMENU\n";
 	};
 	keyboardCommand = new LambdaCommand{ downAction };
 	controllerCommand = new LambdaCommand{ downAction };

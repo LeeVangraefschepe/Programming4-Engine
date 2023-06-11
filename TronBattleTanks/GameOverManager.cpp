@@ -107,8 +107,16 @@ void dae::GameOverManager::Next()
 		}
 		break;
 	default:
-		MainMenuScene::Load();
+		m_continueMenu = true;
 		break;
+	}
+}
+
+void dae::GameOverManager::Update()
+{
+	if (m_continueMenu)
+	{
+		MainMenuScene::Load();
 	}
 }
 

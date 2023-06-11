@@ -38,13 +38,12 @@ void dae::GameScene::Load()
 	}
 
 	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
 
 	ServiceLocator::GetAudioSystem()->Play(AudioManager::Music::MainMenu, 0.1f);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	//const auto screenWidth = static_cast<float>(sceneManager.GetWidth());
-	const auto screenHeight = static_cast<float>(sceneManager.GetHeight());
+	//const auto screenHeight = static_cast<float>(sceneManager.GetHeight());
 
 	sceneManager.SetActiveScene(new Scene{ "GameScene" });
 	const auto scene = sceneManager.GetActiveScene();
@@ -57,8 +56,79 @@ void dae::GameScene::Load()
 	tutorialComponent->AddComponent<TutorialComponent>();
 	scene->Add(tutorialComponent);
 
-	const std::vector playerLayers{0, 1, 2};
 	std::vector<GameObject*> players{};
+	LoadCoop(players);
+
+	const auto grid = new GameObject{};
+	const auto level = grid->AddComponent<LevelComponent>();
+	level->LoadLevel(levelId);
+
+	std::vector<std::function<void(const glm::vec2& position)>> spawnPlayers{};
+	spawnPlayers.reserve(players.size());
+	for (auto& player : players)
+	{
+		spawnPlayers.emplace_back([&](const glm::vec2& position)
+			{
+				player->GetComponent<Transform>()->SetLocalPosition(position);
+				player->GetComponent<HealthComponent>()->ResetHealth();
+				scene->Add(player);
+			});
+	}
+	level->SpawnPlayers(spawnPlayers);
+
+	std::vector<GameObject*> enemies{};
+	const std::vector enemyLayers{0, 1, 2};
+	level->SpawnEnemies
+	(
+		[&](const glm::vec2& position)
+		{
+			const auto enemy = new GameObject();
+			const auto imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BlueTank.png"))->GetDimensions();
+			enemy->GetComponent<Transform>()->SetLocalPosition(position);
+			enemy->AddComponent<HealthComponent>(3.f);
+			enemy->AddComponent<CollisionComponent>(enemyLayers)->SetSize(imageSize.x, imageSize.y);
+			enemy->AddComponent<EnemyController>(30.f);
+			scene->Add(enemy);
+			enemies.emplace_back(enemy);
+		},
+		[&](const glm::vec2& position)
+		{
+			const auto enemy = new GameObject();
+			const auto imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("Recognizer.png"))->GetDimensions();
+			enemy->GetComponent<Transform>()->SetLocalPosition(position);
+			enemy->AddComponent<HealthComponent>(3.f);
+			enemy->AddComponent<CollisionComponent>(enemyLayers)->SetSize(imageSize.x, imageSize.y);
+			enemy->AddComponent<EnemyController>(60.f);
+			scene->Add(enemy);
+			enemies.emplace_back(enemy);
+		}
+	);
+
+	grid->AddComponent<LevelManager>(level, players, enemies);
+	scene->Add(grid);
+
+	const auto fpsObj = new GameObject();
+	fpsObj->AddComponent<FPS>();
+	fpsObj->GetComponent<Transform>()->SetPosition(10, 10);
+	scene->Add(fpsObj);
+}
+
+void dae::GameScene::LoadSinglePlayer(std::vector<GameObject*>& players)
+{
+	players;
+}
+
+void dae::GameScene::LoadVersus(std::vector<GameObject*>& players)
+{
+	players;
+}
+
+void dae::GameScene::LoadCoop(std::vector<GameObject*>& players)
+{
+	auto& input = InputManager::GetInstance();
+	const auto scene = SceneManager::GetInstance().GetActiveScene();
+	const std::vector playerLayers{0, 1, 2};
+	const auto screenHeight = static_cast<float>(SceneManager::GetInstance().GetHeight());
 
 	const auto player0 = new GameObject();
 	const auto p0Health = player0->AddComponent<HealthComponent>(3.f);
@@ -105,75 +175,4 @@ void dae::GameScene::Load()
 	input.BindCommand<FireCommand>(p0Fire, 0, Controller::ControllerButton::ButtonA, InputManager::InputType::OnButtonDown);
 	const auto p1Fire = new FireCommand{ p1Component };
 	input.BindCommand<FireCommand>(p1Fire, SDLK_SPACE, InputManager::InputType::OnButtonDown);
-
-	const auto grid = new GameObject{};
-	const auto level = grid->AddComponent<LevelComponent>();
-	level->LoadLevel(levelId);
-
-	std::vector<std::function<void(const glm::vec2& position)>> spawnPlayers
-	{
-		[&](const glm::vec2& position)
-		{
-			player0->GetComponent<Transform>()->SetLocalPosition(position);
-			player0->GetComponent<HealthComponent>()->ResetHealth();
-			scene->Add(player0);
-		},
-		[&](const glm::vec2& position)
-		{
-			player1->GetComponent<Transform>()->SetLocalPosition(position);
-			player1->GetComponent<HealthComponent>()->ResetHealth();
-			scene->Add(player1);
-		}
-	};
-	level->SpawnPlayers(spawnPlayers);
-
-	std::vector<GameObject*> enemies{};
-	level->SpawnEnemies
-	(
-		[&](const glm::vec2& position)
-		{
-			const auto enemy = new GameObject();
-			imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("BlueTank.png"))->GetDimensions();
-			enemy->GetComponent<Transform>()->SetLocalPosition(position);
-			enemy->AddComponent<HealthComponent>(3.f);
-			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>(30.f);
-			scene->Add(enemy);
-			enemies.emplace_back(enemy);
-		},
-		[&](const glm::vec2& position)
-		{
-			const auto enemy = new GameObject();
-			imageSize = enemy->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("Recognizer.png"))->GetDimensions();
-			enemy->GetComponent<Transform>()->SetLocalPosition(position);
-			enemy->AddComponent<HealthComponent>(3.f);
-			enemy->AddComponent<CollisionComponent>(playerLayers)->SetSize(imageSize.x, imageSize.y);
-			enemy->AddComponent<EnemyController>(60.f);
-			scene->Add(enemy);
-			enemies.emplace_back(enemy);
-		}
-	);
-
-	grid->AddComponent<LevelManager>(level, players, enemies);
-	scene->Add(grid);
-
-	const auto fpsObj = new GameObject();
-	fpsObj->AddComponent<FPS>();
-	fpsObj->GetComponent<Transform>()->SetPosition(10, 10);
-	scene->Add(fpsObj);
-}
-
-void dae::GameScene::LoadSinglePlayer(std::vector<GameObject*>& players)
-{
-
-}
-
-void dae::GameScene::LoadVersus(std::vector<GameObject*>& players)
-{
-
-}
-
-void dae::GameScene::LoadCoop(std::vector<GameObject*>& players)
-{
-
 }

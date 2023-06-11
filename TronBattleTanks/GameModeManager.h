@@ -2,11 +2,11 @@
 #include <vector>
 #include <glm/vec2.hpp>
 #include "BaseComponent.h"
+#include "Commands.h"
 
 namespace dae
 {
 	class Transform;
-	class Command;
 	class GameModeManager : public BaseComponent
 	{
 	public:
@@ -29,7 +29,7 @@ namespace dae
 
 	private:
 		std::vector<glm::vec2> m_positions;
-		std::vector<Command*> m_commands{};
+		std::vector<LambdaCommand*> m_commands{};
 		int m_selectedGameMode{};
 
 		Transform* m_pCursorTransfrom;

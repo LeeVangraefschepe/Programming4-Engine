@@ -12,6 +12,7 @@
 #include "HealthComponent.h"
 #include "SpriteRenderer.h"
 #include "ShootComponent.h"
+#include "HealthComponent.h"
 
 dae::EnemyController::EnemyController(GameObject* pGameObject, float movementSpeed) : BaseComponent(pGameObject), m_movementSpeed(movementSpeed)
 {
@@ -64,6 +65,11 @@ void dae::EnemyController::HandleMovement()
 
 	//Apply position
 	m_pTransform->SetLocalPosition(pos);
+
+	if (pos.x < 0 || pos.x > 700.f || pos.y < 0 || pos.y > 700.f)
+	{
+		GetGameObject()->GetComponent<HealthComponent>()->Damage(1.f);
+	}
 }
 
 void dae::EnemyController::HandleRotation() const

@@ -13,13 +13,14 @@ namespace dae
 		~GameOverManager() override;
 
 		void Next();
+		void Update() override;
 
 		GameOverManager(const GameOverManager& other) = delete;
 		GameOverManager(GameOverManager&& other) = delete;
 		GameOverManager& operator=(const GameOverManager& other) = delete;
 		GameOverManager& operator=(GameOverManager&& other) = delete;
 	private:
-
+		bool m_continueMenu{};
 		void LoadScores() const;
 		std::vector<Command*> m_pCommands{};
 		int m_step{};
