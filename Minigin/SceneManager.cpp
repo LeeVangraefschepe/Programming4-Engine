@@ -3,11 +3,20 @@
 
 dae::Scene* dae::SceneManager::GetActiveScene()
 {
+	if (m_tempScene)
+	{
+		return m_tempScene;
+	}
 	return m_activeScene.get();
 }
 
 void dae::SceneManager::Update()
 {
+	if (m_tempScene)
+	{
+		m_activeScene = std::unique_ptr<Scene>(m_tempScene);
+		m_tempScene = nullptr;
+	}
 	if (!m_activeScene) {return;}
 	m_activeScene->Update();
 }
@@ -26,5 +35,5 @@ void dae::SceneManager::RemoveAllScenes()
 
 void dae::SceneManager::SetActiveScene(Scene* scene)
 {
-	m_activeScene = std::unique_ptr<Scene>(scene);
+	m_tempScene = scene;
 }

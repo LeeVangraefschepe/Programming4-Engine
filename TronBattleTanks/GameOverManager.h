@@ -5,7 +5,7 @@ namespace dae
 {
 	class Command;
 
-	class GameOverManager : public BaseComponent
+	class GameOverManager final : public BaseComponent
 	{
 	public:
 		explicit GameOverManager(GameObject* pGameObject);

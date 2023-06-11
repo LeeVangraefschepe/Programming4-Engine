@@ -1,4 +1,7 @@
 #include "GameScene.h"
+
+#include <iostream>
+
 #include "AudioManager.h"
 #include "AudioSystemSDL2.h"
 #include "CollisionComponent.h"
@@ -26,6 +29,13 @@
 
 void dae::GameScene::Load()
 {
+	int levelId{};
+	if (ServiceLocator::GetGameState()->GetLevelId(levelId))
+	{
+		std::cout << "Game completed\n";
+		return;
+	}
+
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
@@ -109,7 +119,7 @@ void dae::GameScene::Load()
 
 	const auto grid = new GameObject{};
 	const auto level = grid->AddComponent<LevelComponent>();
-	level->LoadLevel(1);
+	level->LoadLevel(levelId);
 
 	std::vector<std::function<void(const glm::vec2& position)>> spawnPlayers
 	{
@@ -127,8 +137,6 @@ void dae::GameScene::Load()
 		}
 	};
 	level->SpawnPlayers(spawnPlayers);
-	scene->Add(grid);
-
 
 	std::vector<GameObject*> enemies{};
 	level->SpawnEnemies
@@ -158,6 +166,7 @@ void dae::GameScene::Load()
 	);
 
 	grid->AddComponent<LevelManager>(players, enemies);
+	scene->Add(grid);
 
 	const auto fpsObj = new GameObject();
 	fpsObj->AddComponent<FPS>();

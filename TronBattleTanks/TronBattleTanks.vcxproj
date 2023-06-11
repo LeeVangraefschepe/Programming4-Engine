@@ -218,6 +218,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClCompile Include="GameOverManager.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="FPS.cpp" />
@@ -241,6 +242,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget)\*.dll" "$(OutputP
     <ClInclude Include="GameOverManager.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="BasicEvents.h" />
     <ClInclude Include="BulletComponent.h" />

@@ -3,7 +3,9 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "ServiceLocator.h"
 #include "GameOverScene.h"
+#include "GameScene.h"
 
 dae::LevelManager::LevelManager(GameObject* pGameObject, const std::vector<GameObject*>& players, const std::vector<GameObject*>& enemies) : BaseComponent(pGameObject)
 {
@@ -64,6 +66,7 @@ void dae::LevelManager::Update()
 	}
 	else if (m_aliveEnemies == 0)
 	{
-		std::cout << "Next level\n";
+		ServiceLocator::GetGameState()->OnLevelCompleted();
+		GameScene::Load();
 	}
 }

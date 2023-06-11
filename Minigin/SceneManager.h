@@ -26,6 +26,7 @@ namespace dae
 		SceneManager() = default;
 
 		std::unique_ptr<Scene> m_activeScene;
+		Scene* m_tempScene{nullptr};
 
 		int m_screenWidth{};
 		int m_screenHeight{};
