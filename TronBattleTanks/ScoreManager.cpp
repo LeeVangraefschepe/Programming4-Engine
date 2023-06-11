@@ -24,13 +24,8 @@ dae::ScoreManager::ScoreManager()
 		}
 		input.close();
 	}
-	//else
-	//{
-	//	for (int i{}; i < static_cast<int>(m_maxScores); ++i)
-	//	{
-	//		m_scores.insert(std::pair(0, "   "));
-	//	}
-	//}
+
+	//Fill up empty spots
 	const int amountOfLoadedScores = static_cast<int>(m_scores.size());
 	for (int i{amountOfLoadedScores}; i < static_cast<int>(m_maxScores); ++i)
 	{
@@ -69,6 +64,7 @@ void dae::ScoreManager::ResetScore()
 
 void dae::ScoreManager::SubmitScore(const std::string& username)
 {
+	//Remove lower score and add new one
 	for (auto it = m_scores.begin(); it != m_scores.end(); ++it)
 	{
 		if (it->first < m_score)
@@ -78,15 +74,8 @@ void dae::ScoreManager::SubmitScore(const std::string& username)
 			break;
 		}
 	}
-	//for (const auto& key : m_scores | std::views::keys)
-	//{
-	//	if (key < m_score)
-	//	{
-	//		m_scores.erase(key);
-	//		m_scores.insert(std::pair{m_score, username});
-	//		break;
-	//	}
-	//}
+
+	//Reset score value
 	ResetScore();
 }
 
