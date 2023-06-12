@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "AudioManager.h"
 #include "GameObject.h"
 #include "BulletComponent.h"
 #include "CollisionComponent.h"
@@ -14,6 +15,7 @@
 #include "Timer.h"
 #include "CellComponent.h"
 #include "DiamondCell.h"
+#include "ServiceLocator.h"
 #include "ShootComponent.h"
 
 dae::PlayerComponent::PlayerComponent(GameObject* pGameObject) : BaseComponent(pGameObject)
@@ -104,6 +106,7 @@ void dae::PlayerComponent::HandleMovement(glm::vec2 input)
 		else if (other->HasComponent<DiamondCell>())
 		{
 			m_subject->Notify(teleport, this);
+			ServiceLocator::GetAudioSystem()->Play(AudioManager::Sounds::Teleport, 1.f);
 			return;
 		}
 	}

@@ -15,10 +15,11 @@ namespace dae
 		AudioSystemSDL2();
 		~AudioSystemSDL2() override;
 		void LoadSound(const SoundId id, const std::string& path) override;
-		void Play(const SoundId id, const float volume) override;
+		void Play(const SoundId id, float volume) override;
 		void StopAll() override;
 		void PauseAll() override;
 		void ResumeAll() override;
+		void Mute(bool) override;
 	private:
 		enum Action
 		{
@@ -44,5 +45,7 @@ namespace dae
 		std::jthread m_thread;
 		std::mutex m_Mutex;
 		std::condition_variable m_ConditionVariable;
+
+		bool m_muted{};
 	};
 }

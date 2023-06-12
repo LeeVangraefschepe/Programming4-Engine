@@ -40,7 +40,7 @@ void dae::GameScene::Load()
 
 	auto& sceneManager = SceneManager::GetInstance();
 
-	ServiceLocator::GetAudioSystem()->Play(AudioManager::Music::MainMenu, 0.1f);
+	ServiceLocator::GetAudioSystem()->Play(AudioManager::Music::GameMenu, 1.f);
 
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	//const auto screenWidth = static_cast<float>(sceneManager.GetWidth());

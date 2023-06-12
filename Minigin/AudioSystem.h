@@ -13,6 +13,7 @@ namespace dae
 		virtual void StopAll() = 0;
 		virtual void PauseAll() = 0;
 		virtual void ResumeAll() = 0;
+		virtual void Mute(bool) = 0;
 	};
 
 	class DefaultAudioSystem final : public AudioSystem
@@ -23,6 +24,7 @@ namespace dae
 		void StopAll() override {}
 		void PauseAll() override {}
 		void ResumeAll() override {}
+		void Mute(bool) override {}
 	};
 	class AudioSystemLogger final : public AudioSystem
 	{
@@ -34,5 +36,6 @@ namespace dae
 		void StopAll() override { printf("Stopping all sounds\n"); m_logger->StopAll(); }
 		void PauseAll() override { printf("Pausing all sounds\n"); m_logger->PauseAll(); }
 		void ResumeAll() override { printf("Resume all sounds\n"); m_logger->ResumeAll(); }
+		void Mute(bool value) override { printf("Mute all sounds\n"); m_logger->Mute(value); }
 	};
 }

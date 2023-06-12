@@ -42,8 +42,9 @@ void dae::AudioSystemSDL2::LoadSound(const SoundId id, const std::string& path)
 	m_Queue.Enqueue(Event{ load, id, ss.str() });
 	m_ConditionVariable.notify_one();
 }
-void dae::AudioSystemSDL2::Play(const SoundId id, const float volume)
+void dae::AudioSystemSDL2::Play(const SoundId id, float volume)
 {
+	if (m_muted) { volume = 0.f; }
 	auto event = Event{ play, id };
 	event.volume = volume;
 	m_Queue.Enqueue(event);
@@ -65,6 +66,15 @@ void dae::AudioSystemSDL2::ResumeAll()
 {
 	m_Queue.Enqueue(Event{ resume });
 	m_ConditionVariable.notify_one();
+}
+
+void dae::AudioSystemSDL2::Mute(bool value)
+{
+	m_muted = value;
+	if (value)
+	{
+		StopAll();
+	}
 }
 
 void dae::AudioSystemSDL2::Run()

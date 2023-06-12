@@ -5,16 +5,20 @@
 
 namespace dae
 {
+	class LambdaCommand;
 	class AudioManager final : public dae::Singleton<AudioManager>
 	{
 	public:
 		enum Sounds
 		{
 			Fire = 0,
+			Teleport
 		};
 		enum Music
 		{
 			MainMenu = 100,
+			GameMenu,
+			HighscoreMenu
 		};
 
 		/**
@@ -25,6 +29,9 @@ namespace dae
 		void LoadSounds() const;
 	private:
 		friend class Singleton<AudioManager>;
-		AudioManager() = default;
+		AudioManager();
+
+		LambdaCommand* m_command;
+		bool m_muted{};
 	};
 }

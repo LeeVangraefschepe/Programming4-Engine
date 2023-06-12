@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "AudioManager.h"
 #include "GameOverManager.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
@@ -19,6 +20,8 @@ void dae::GameOverScene::Load()
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 	const auto screenWidth = static_cast<float>(sceneManager.GetWidth());
 	//const auto screenHeight = static_cast<float>(sceneManager.GetHeight());
+
+	ServiceLocator::GetAudioSystem()->Play(AudioManager::Music::HighscoreMenu, 1.f);
 
 	ServiceLocator::GetGameState()->OnLevelStarted();
 

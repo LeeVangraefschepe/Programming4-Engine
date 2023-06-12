@@ -1,8 +1,10 @@
 #include "MainMenuScene.h"
 
+#include "AudioManager.h"
 #include "GameModeManager.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include "ServiceLocator.h"
 #include "SpriteRenderer.h"
 
 void dae::MainMenuScene::Load()
@@ -11,6 +13,8 @@ void dae::MainMenuScene::Load()
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	//const auto screenWidth = static_cast<float>(sceneManager.GetWidth());
 	//const auto screenHeight = static_cast<float>(sceneManager.GetHeight());
+
+	ServiceLocator::GetAudioSystem()->Play(AudioManager::Music::MainMenu, 1.f);
 
 	sceneManager.SetActiveScene(new Scene{ "MainMenu" });
 	const auto scene = sceneManager.GetActiveScene();
