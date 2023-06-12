@@ -11,16 +11,17 @@ void dae::TutorialComponent::Render()
 	ImGui::SetNextWindowSize(ImVec2(200, 500));
 	if (ImGui::Begin("How to play"))
 	{
-		ImGui::Text("GOAL");
-		ImGui::Text("Kill the other player.\nWhen you have 500+ score\nyou will unlock an\nachievement.");
-
-		ImGui::Text("\n\n\nCONTROLLER INPUT (red)");
+		ImGui::Text("CONTROLLER INPUT");
 		ImGui::Text("DPAD: Move");
 		ImGui::Text("South button: Shoot");
+		ImGui::Text("A: Confirm");
+		ImGui::Text("DPAD: NAME");
 
-		ImGui::Text("\n\n\nKEYBOARD INPUT (green)");
+		ImGui::Text("\n\n\nKEYBOARD INPUT");
 		ImGui::Text("WASD: Move");
 		ImGui::Text("Space bar: Shoot");
+		ImGui::Text("A: Confirm");
+		ImGui::Text("ARROWS: NAME");
 	}
 	ImGui::End();
 }

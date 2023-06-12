@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "ServiceLocator.h"
 #include "SpriteRenderer.h"
+#include "TutorialComponent.h"
 
 void dae::MainMenuScene::Load()
 {
@@ -18,6 +19,10 @@ void dae::MainMenuScene::Load()
 
 	sceneManager.SetActiveScene(new Scene{ "MainMenu" });
 	const auto scene = sceneManager.GetActiveScene();
+
+	const auto tutorialComponent = new GameObject{};
+	tutorialComponent->AddComponent<TutorialComponent>();
+	scene->Add(tutorialComponent);
 
 	const auto background = new GameObject{};
 	background->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("mainmenuHD.png"));

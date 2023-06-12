@@ -19,7 +19,6 @@
 #include "ServiceLocator.h"
 #include "TextRenderer.h"
 #include "Transform.h"
-#include "TutorialComponent.h"
 
 #include <SDL_keycode.h>
 
@@ -52,10 +51,6 @@ void dae::GameScene::Load()
 	const auto background = new GameObject{};
 	background->AddComponent<SpriteRenderer>(ResourceManager::GetInstance().LoadTexture("backgroundHD.png"));
 	scene->Add(background);
-
-	const auto tutorialComponent = new GameObject{};
-	tutorialComponent->AddComponent<TutorialComponent>();
-	scene->Add(tutorialComponent);
 
 	std::vector<GameObject*> players{};
 	switch (GameModeManager::GetGameMode())
