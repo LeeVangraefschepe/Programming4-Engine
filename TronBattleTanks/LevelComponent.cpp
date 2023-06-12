@@ -17,7 +17,6 @@ void dae::LevelComponent::LoadLevel(int id)
 	std::stringstream ss{};
 	ss << "Level/LevelLayout" << id << ".csv";
 	m_pGrid->LoadGrid(ss.str());
-	ReadOutRaw();
 	LoadPlayerSpawns();
 	LoadEnemySpawns();
 }
